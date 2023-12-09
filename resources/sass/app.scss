@@ -1,0 +1,61 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// override
+.btn-primary{
+    background: #f82249 !important;
+    border: 0 !important;
+    border-radius: 30px;
+    padding: 10px 40px;
+}
+
+
+// login page
+.login{
+    background: #040919;
+    padding: 200px 0;
+
+    .card{
+        max-width: 500px;
+        margin: 0 auto;
+
+        input{
+            border-radius: 30px !important;
+            padding: 10px;
+            background: #0f1731;
+            border: 0;
+            color: #7a7575;
+        }
+        input::placeholder{
+            color: #646464 !important;
+        }
+    }
+}
+
+// login page
+.register{
+    background: #040919;
+    padding: 200px 0;
+
+    .card{
+        max-width: 500px;
+        margin: 0 auto;
+
+        input{
+            border-radius: 30px !important;
+            padding: 10px;
+            background: #0f1731;
+            border: 0;
+            color: #7a7575;
+        }
+        input::placeholder{
+            color: #646464 !important;
+        }
+    }
+}
