@@ -6,14 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
-    <!-- Vendor CSS Files -->
-    <link href="{{asset('assets/vendor/aos/aos.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
-    <link href="{{asset('assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+    <!-- CSS Files -->
+    <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
-    <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
@@ -29,16 +28,20 @@
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
                     @guest
-                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#about">About</a></li>
-                    <li><a class="nav-link scrollto" href="#services">Services</a></li>
-                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                        <li><a class="nav-link scrollto" href="#about">About</a></li>
+                        <li><a class="nav-link scrollto" href="#services">Services</a></li>
+                        <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
                     @endguest
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
             @guest
-                <a class="buy-tickets scrollto" href="{{route('login')}}">Login</a>
+                @if (\Route::currentRouteName() == 'login')
+                    <a class="buy-tickets scrollto" href="{{ route('register') }}">Sign up</a>
+                @else
+                    <a class="buy-tickets scrollto" href="{{ route('login') }}">Sign in</a>
+                @endif
             @endguest
             @auth
                 <a class="buy-tickets scrollto" href="#buy-tickets">Logout</a>
@@ -57,7 +60,11 @@
 
                     <div class="col-lg-4 col-md-6 footer-info">
                         <h1><a href="index.html">REPAIR<span>BUDDY</span></a></h1>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat, tempore? Autem doloribus veniam esse vero quae, magnam, ea hic iste impedit nihil sit officia quas officiis aliquam odio doloremque corrupti omnis amet excepturi repellendus velit voluptas delectus. Provident dolorum temporibus debitis, exercitationem fugiat voluptatum hic enim numquam porro nisi tenetur!</p>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat, tempore? Autem doloribus
+                            veniam esse vero quae, magnam, ea hic iste impedit nihil sit officia quas officiis aliquam
+                            odio doloremque corrupti omnis amet excepturi repellendus velit voluptas delectus. Provident
+                            dolorum temporibus debitis, exercitationem fugiat voluptatum hic enim numquam porro nisi
+                            tenetur!</p>
                     </div>
 
                     <div class="col-lg-4 col-md-6 footer-links">
@@ -100,16 +107,24 @@
         </div>
     </footer><!-- End  Footer -->
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
-    <script src="{{asset('assets/vendor/purecounter/purecounter_vanilla.js')}}"></script>
-    <script src="{{asset('assets/vendor/aos/aos.js')}}"></script>
-    <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{asset('assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
-    <script src="{{asset('assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
-    <script src="{{asset('assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
-    <script src="{{asset('assets/vendor/php-email-form/validate.js')}}"></script>
-    <script src="{{asset('assets/js/main.js')}}"></script>
+    <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    @include('alerts.alert')
+    <script>
+        function closeNotificationPopup() {
+            const notificationDialog = document.querySelector('[role="notification"]');
+
+            notificationDialog.classList.add('hide-popup');
+        }
+    </script>
+    @yield('scripts')
 </body>
 
 </html>
