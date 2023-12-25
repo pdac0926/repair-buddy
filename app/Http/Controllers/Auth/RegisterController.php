@@ -50,6 +50,7 @@ class RegisterController extends Controller
                 'firstName' => ['required', 'string', 'max:255'],
                 'middleName' => ['required', 'string', 'max:255'],
                 'lastName' => ['required', 'string', 'max:255'],
+                'address' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'phoneNumber' => [
                     'required',
@@ -96,7 +97,7 @@ class RegisterController extends Controller
             'driverCertificatePhoto' => ['required', 'image', 'mimes:jpg,png', 'max:2048'],
         ]);
         $registerSessionData = Session::get('sessionRegisterDriverData');
-        $avatar = $request->file('driverAvatar')->store('driverFiles', 'public');
+        $avatar = $request->file('driverAvatar')->store('profiles', 'public');
 
         $registerSessionData['password'] = Hash::make($registerSessionData['password']);
 

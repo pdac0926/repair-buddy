@@ -20206,6 +20206,7 @@ fieldset:disabled .btn {
   width: 36px !important;
   height: 36px !important;
   font-size: 0.875rem;
+  object-fit: cover;
 }
 
 .avatar-sm.avatar-raised {

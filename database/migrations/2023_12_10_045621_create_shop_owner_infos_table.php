@@ -16,9 +16,11 @@ return new class extends Migration
             $table->uuid('user_id');
             $table->string('shopName');
             $table->string('shopPhone');
-            $table->string('shopAddress');
+            $table->longText('shopAddress');
             $table->string('shopLong');
             $table->string('shopLat');
+            $table->longText('shopDescription');
+            $table->timestamps();
             // relation to user id
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

@@ -16,6 +16,7 @@ class ShopOwnerInfo extends Model
         'shopAddress',
         'shopLong',
         'shopLat',
+        'shopDescription',
     ];
 
     public function user()

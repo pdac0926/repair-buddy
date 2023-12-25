@@ -30,6 +30,11 @@
                                         name="email" value="{{ old('email') }}">
                                 </div>
                                 <div class="form-group mb-4">
+                                    <input id="address" type="text"
+                                        class="form-control @error('address') is-invalid @enderror" placeholder="Address"
+                                        name="address" value="{{ old('address') }}">
+                                </div>
+                                <div class="form-group mb-4">
                                     <input type="text" class="form-control @error('phoneNumber') is-invalid @enderror"
                                         placeholder="Phone Number" name="phoneNumber" value="{{ old('phoneNumber') }}"
                                         autofocus>

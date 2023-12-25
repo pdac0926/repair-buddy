@@ -263,3 +263,13 @@ body::-webkit-scrollbar-track {
         }
     }
 }
+
+#map {
+    height: 400px;
+}
+.avatar img {
+    width: 100%;
+    width: 70px !important;
+    height: 70px;
+    object-fit: cover;
+}
