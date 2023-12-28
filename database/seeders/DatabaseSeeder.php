@@ -16,13 +16,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'firstName' => 'vencer',
-            'middleName' => 'consul',
-            'lastName' => 'olermo',
+            'firstName' => 'Pablo',
+            'middleName' => 'Donmari',
+            'lastName' => 'Cabilitazan',
             'address' => 'Baguio City Philippines',
-            'phoneNumber' => '09555845304',
-            'email' => 'vencer@gmail.com',
-            'password' => Hash::make('vencer@gmail.com'),
+            'phoneNumber' => '09345678543',
+            'email' => 'pablo.admin@repairbuddy.com',
+            'password' => Hash::make('pablo.admin@repairbuddy.com'),
             'role' => 'admin',
             'privacyPolicy' => true,
             'status' => true,

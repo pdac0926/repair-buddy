@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Shop Owner : List')
+@section('title', 'Shop Owner - List')
 
 @section('content')
     <div class="container-fluid py-4">
@@ -20,7 +20,7 @@
                                             Name</th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Shop Name</th>
+                                            Shop Info</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Status</th>
@@ -31,6 +31,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if(count($shopOwners) > 0)
                                     @foreach ($shopOwners as $shopOwner)
                                         <tr>
                                             <td>
@@ -47,13 +48,13 @@
                                             </td>
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{$shopOwner->shopOwnerInfo->shopName}}</p>
-                                                <p class="text-xs text-secondary mb-0">{{$shopOwner->shopOwnerInfo->shopAddress}}</p>
+                                                <p class="text-xs text-secondary mb-0">{{$shopOwner->shopOwnerInfo->shopPhone}}</p>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">{{$shopOwner->shopOwnerInfo->shopPhone}}</span>
+                                                <span class="badge badge-sm bg-gradient-success">{{ $shopOwner->status == true ? 'Approved' : 'pending' }}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">4</span>
+                                                <span class="text-secondary text-xs font-weight-bold">{{$shopOwner->mechanicInfo->count()}}</span>
                                             </td>
                                             <td class="align-middle">
                                                 <a href="{{route('admin.edit.shop.owners', $shopOwner->id)}}" class="text-secondary font-weight-bold text-xs"
@@ -63,6 +64,11 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="4" class="text-center p-5">No Driver found</td>
+                                        </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

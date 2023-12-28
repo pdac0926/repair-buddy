@@ -2,9 +2,8 @@
 
 namespace App\Helper;
 
-use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Http;
 use File;
 
 class Helper
@@ -15,6 +14,11 @@ class Helper
             $path = 'storage/public/' . $avatar;
         } else {
             $path = 'storage/' . $avatar;
+        }
+
+        $avatarsFromDatabase = User::pluck('avatar')->toArray();
+        if (!in_array($avatar, $avatarsFromDatabase)) {
+            File::delete(public_path($avatar));
         }
         return $path;
     }

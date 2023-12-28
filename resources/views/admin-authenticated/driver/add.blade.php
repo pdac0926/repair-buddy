@@ -1,14 +1,11 @@
 @extends('layouts.admin')
 
-@section('title', 'Shop Owner - Add')
+@section('title', 'Drivers - Add')
 
 @section('content')
     <div class="container-fluid py-4">
-        <form action="{{route('admin.store.shop.owners')}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('admin.store.drivers')}}" method="post" enctype="multipart/form-data">
             @csrf
-            <input type="hidden" name="shopLong">
-            <input type="hidden" name="shopLat">
-            <input type="hidden" name="shopAddress">
             <div class="card shadow-lg mx-3 @error('avatar') border border-danger @enderror ">
                 <div class="card-body p-3">
                     <div class="row gx-4">
@@ -47,12 +44,12 @@
             </div>
             <div class="container-fluid py-4">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-header pb-0">
                                 <div class="d-flex align-items-center">
                                     <p class="mb-0">Profile Information</p>
-                                    <button class="btn btn-primary btn-sm ms-auto">Add Shop Owner</button>
+                                    <button class="btn btn-primary btn-sm ms-auto">Add Driver</button>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -119,57 +116,20 @@
                                     </div>
                                 </div>
                                 <hr class="horizontal dark">
-                                <p class="text-uppercase text-sm">Shop Information</p>
+                                <p class="text-uppercase text-sm">Certificates</p>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="form-control-label">Shop Name</label>
-                                            <input class="form-control @error('shopName') is-invalid @enderror" type="text" name="shopName"
-                                                value="{{ old('shopName') }}">
+                                            <label class="form-control-label">Driver's License</label>
+                                            <input class="form-control @error('driversLicensePhoto') is-invalid @enderror" type="file" name="driversLicensePhoto"
+                                                value="{{ old('driversLicensePhoto') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="form-control-label">Shop Phone Number</label>
-                                            <input class="form-control @error('shopPhone') is-invalid @enderror" type="text" name="shopPhone"
-                                                value="{{ old('shopPhone') }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="form-control-label">Shop Description</label>
-                                            <textarea class="form-control @error('shopDescription') is-invalid @enderror" name="shopDescription"
-                                                value="{{ old('shopDescription') }}" cols="30" rows="4"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-profile 
-                        @error('shopLong') border border-danger @enderror
-                        @error('shopLat') border border-danger @enderror
-                        @error('shopAddress') border border-danger @enderror">
-                            <div id="map"></div>
-                            <div class="card-body p-3">
-                                <div class="text-center mt-4">
-                                    <h5>
-                                        Pin the shop location
-                                    </h5>
-                                    <div class="h6 font-weight-300">
-                                        <div class="row">
-                                            <div class="col-lg-6 text-center">
-                                                <p>Longitude</p>
-                                                <small id="shopLong">---------</small>
-                                            </div>
-                                            <div class="col-lg-6 text-center">
-                                                <p>Latitude</p>
-                                                <small id="shopLat">---------</small>
-                                            </div>
-                                            <div class="col-lg-12 mt-5">
-                                                <p><small id="shopAddress">---------</small></p>
-                                            </div>
+                                            <label class="form-control-label">Driver's Certificate</label>
+                                            <input class="form-control @error('driverCertificatePhoto') is-invalid @enderror" type="file" name="driverCertificatePhoto"
+                                                value="{{ old('driverCertificatePhoto') }}">
                                         </div>
                                     </div>
                                 </div>
