@@ -1,11 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', 'Drivers - Add')
+@section('title', 'Mechanics - Add')
 
 @section('content')
     <div class="container-fluid py-4">
-        <form action="{{route('admin.store.drivers')}}" method="post" enctype="multipart/form-data">
+        <form action="{{route('shop.owners.store.mechanics')}}" method="post" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="mechanicRating" value="0">
             <div class="card shadow-lg mx-3 @error('avatar') border border-danger @enderror ">
                 <div class="card-body p-3">
                     <div class="row gx-4">
@@ -31,8 +32,7 @@
                                     <li class="nav-item" onclick="document.getElementById('avatar').click()">
                                         <button role="button" type="button"
                                             class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center">
-                                            <i class="ni ni-app"></i>
-                                            <span class="ms-2">Choose Profile</span>
+                                            Choose Profile
                                         </button>
                                         <input type="file" id="avatar" class="d-none" name="avatar" onchange="selectedImage(this, 'avatarphoto')">
                                     </li>
@@ -49,7 +49,7 @@
                             <div class="card-header pb-0">
                                 <div class="d-flex align-items-center">
                                     <p class="mb-0">Profile Information</p>
-                                    <button class="btn btn-primary btn-sm ms-auto">Add Driver</button>
+                                    <button class="btn btn-primary btn-sm ms-auto">Add Mechanic</button>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -116,20 +116,20 @@
                                     </div>
                                 </div>
                                 <hr class="horizontal dark">
-                                <p class="text-uppercase text-sm">Certificates</p>
+                                <p class="text-uppercase text-sm">Mechanic Information</p>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="form-control-label">Driver's License</label>
-                                            <input class="form-control @error('driversLicensePhoto') is-invalid @enderror" type="file" name="driversLicensePhoto"
-                                                value="{{ old('driversLicensePhoto') }}">
+                                            <label class="form-control-label">Mechanic Phone</label>
+                                            <input class="form-control @error('mechanicPhone') is-invalid @enderror" type="text" name="mechanicPhone"
+                                                value="{{ old('mechanicPhone') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="form-control-label">Driver's Certificate</label>
-                                            <input class="form-control @error('driverCertificatePhoto') is-invalid @enderror" type="file" name="driverCertificatePhoto"
-                                                value="{{ old('driverCertificatePhoto') }}">
+                                            <label class="form-control-label">Mechanic Address</label>
+                                            <input class="form-control @error('mechanicAddress') is-invalid @enderror" type="text" name="mechanicAddress"
+                                                value="{{ old('mechanicAddress') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +137,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </form>
     </div>
@@ -145,39 +144,7 @@
 
 
 @section('scripts')
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        var map = L.map('map').setView([16.41122194797963, 120.59623719046016], 16);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        // Add a marker to the map
-        var marker = L.marker([16.41122194797963, 120.59623719046016], {
-            draggable: true
-        }).addTo(map);
-
-        marker.on('dragend', function(event) {
-            var marker = event.target;
-            var position = marker.getLatLng();
-
-            document.querySelector('#shopLong').innerHTML = position.lng;
-            document.querySelector('#shopLat').innerHTML = position.lat;
-            document.querySelector('[name="shopLong"]').value = position.lng;
-            document.querySelector('[name="shopLat"]').value = position.lat;
-            
-
-            fetch('https://api.opencagedata.com/geocode/v1/json?q=' + position.lat + '+' + position.lng +
-                    '&key=84b8f8b5b31c450485b329c38cad5c23')
-                .then(response => response.json())
-                .then(data => {
-                    var address = data.results[0].formatted;
-                    document.querySelector('#shopAddress').innerHTML = address;
-                    document.querySelector('[name="shopAddress"]').value = address;
-                });
-        });
-
         function selectedImage(input, target) {
             let reader = new FileReader();
             reader.onload = function(e) {

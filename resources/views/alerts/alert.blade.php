@@ -2,7 +2,7 @@
 @if ($errors->any())
     <div class="notification-dialog" role="notification">
         <div class="notification-popup">
-            <img src="{{ asset('/assets/img/notifications/error.png') }}" alt="success">
+            <img src="{{ asset('/alerts/error.png') }}" alt="success">
             <div class="notification-messages">
                 <ul>
                     @php $counter = 0; @endphp
@@ -21,7 +21,7 @@
 @if (session()->has('success'))
     <div class="notification-dialog" role="notification">
         <div class="notification-popup">
-            <img src="{{ asset('/assets/img/notifications/success.png') }}" alt="success">
+            <img src="{{ asset('/alerts/success.png') }}" alt="success">
             <div class="notification-messages">
                 <p class="mt-2">{{ session()->get('success') }}</p>
             </div>
@@ -34,7 +34,7 @@
 @if (session()->has('info'))
     <div class="notification-dialog" role="notification">
         <div class="notification-popup">
-            <img src="{{ asset('/assets/img/notifications/info.png') }}" alt="success">
+            <img src="{{ asset('/alerts/info.png') }}" alt="success">
             <div class="notification-messages">
                 <p class="mt-2">{{ session()->get('info') }}</p>
             </div>
@@ -47,7 +47,7 @@
 @if (session()->has('warning'))
     <div class="notification-dialog" role="notification">
         <div class="notification-popup">
-            <img src="{{ asset('/assets/img/notifications/warning.png') }}" alt="success">
+            <img src="{{ asset('/alerts/warning.png') }}" alt="success">
             <div class="notification-messages">
                 <p class="mt-2">{!! session()->get('warning') !!}</p>
             </div>
@@ -60,7 +60,7 @@
 @if (session()->has('error'))
     <div class="notification-dialog" role="notification">
         <div class="notification-popup">
-            <img src="{{ asset('/assets/img/notifications/error.png') }}" alt="success">
+            <img src="{{ asset('/alerts/error.png') }}" alt="success">
             <div class="notification-messages">
                 <p class="mt-2">{{ session()->get('error') }}</p>
             </div>

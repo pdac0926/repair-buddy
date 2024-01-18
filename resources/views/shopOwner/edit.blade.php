@@ -1,18 +1,24 @@
 @extends('layouts.admin')
 
-@section('title', 'Drivers - Add')
+@section('title', 'Mechanic - ' . $mechanics->firstName . ' ' . $mechanics->lastName)
 
 @section('content')
     <div class="container-fluid py-4">
-        <form action="{{route('admin.store.drivers')}}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('admin.approve.shop.owner', $mechanics->id) }}" method="post" id="approval">
+            @csrf
+        </form>
+        <form action="{{ route('admin.delete.shop.owner', $mechanics->id) }}" method="post" id="deletion">
+            @csrf
+        </form>
+        <form action="{{ route('shop.owners.update.mechanics', $mechanics->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="card shadow-lg mx-3 @error('avatar') border border-danger @enderror ">
                 <div class="card-body p-3">
                     <div class="row gx-4">
                         <div class="col-auto">
                             <div class="avatar avatar-xl position-relative">
-                                <img src="{{asset('assets_auth/img/profile.png')}}" alt="profile_image"
-                                    class="border-radius-lg shadow-sm avatarphoto">
+                                <img src="{{ asset((new \App\Helper\Helper())->userAvatar($mechanics->avatar)) }}"
+                                    alt="profile_image" class="border-radius-lg shadow-sm avatarphoto">
                             </div>
                         </div>
                         <div class="col-auto my-auto">
@@ -34,7 +40,8 @@
                                             <i class="ni ni-app"></i>
                                             <span class="ms-2">Choose Profile</span>
                                         </button>
-                                        <input type="file" id="avatar" class="d-none" name="avatar" onchange="selectedImage(this, 'avatarphoto')">
+                                        <input type="file" id="avatar" class="d-none" name="avatar"
+                                            onchange="selectedImage(this, 'avatarphoto')" value="{{ $mechanics->avatar }}">
                                     </li>
                                 </ul>
                             </div>
@@ -49,7 +56,7 @@
                             <div class="card-header pb-0">
                                 <div class="d-flex align-items-center">
                                     <p class="mb-0">Profile Information</p>
-                                    <button class="btn btn-primary btn-sm ms-auto">Add Driver</button>
+                                    <button class="btn btn-primary btn-sm ms-auto">Update Mechanic</button>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -58,43 +65,48 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label">First Name</label>
-                                            <input class="form-control @error('firstName') is-invalid @enderror" type="text" name="firstName"
-                                                value="{{ old('firstName') }}">
+                                            <input class="form-control @error('firstName') is-invalid @enderror"
+                                                type="text" name="firstName"
+                                                value="{{ old('firstName', $mechanics->firstName) }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label">Middle Name</label>
-                                            <input class="form-control @error('middleName') is-invalid @enderror" type="text" name="middleName"
-                                                value="{{ old('middleName') }}">
+                                            <input class="form-control @error('middleName') is-invalid @enderror"
+                                                type="text" name="middleName"
+                                                value="{{ old('middleName', $mechanics->middleName) }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label">Last Name</label>
-                                            <input class="form-control @error('lastName') is-invalid @enderror" type="text" name="lastName"
-                                                value="{{ old('lastName') }}">
+                                            <input class="form-control @error('lastName') is-invalid @enderror"
+                                                type="text" name="lastName"
+                                                value="{{ old('lastName', $mechanics->lastName) }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label">Email Address</label>
-                                            <input class="form-control @error('email') is-invalid @enderror" type="email" name="email"
-                                                value="{{ old('email') }}">
+                                            <input class="form-control @error('email') is-invalid @enderror" type="email"
+                                                name="email" value="{{ old('email', $mechanics->email) }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label">Password</label>
-                                            <input class="form-control @error('password') is-invalid @enderror" type="password" name="password"
-                                                value="{{ old('password') }}">
+                                            <input class="form-control @error('password') is-invalid @enderror"
+                                                type="password" name="password"
+                                                value="{{ old('password', 'Laravel@123') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label">Password Confirmation</label>
-                                            <input class="form-control @error('password_confirmation') is-invalid @enderror" type="password" name="password_confirmation"
-                                                value="{{ old('password_confirmation') }}">
+                                            <input class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                type="password" name="password_confirmation"
+                                                value="{{ old('password_confirmation', 'Laravel@123') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -104,32 +116,37 @@
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <label class="form-control-label">Address</label>
-                                            <input class="form-control @error('address') is-invalid @enderror" type="text" name="address" value="{{ old('address') }}">
+                                            <input class="form-control @error('address') is-invalid @enderror"
+                                                type="text" name="address"
+                                                value="{{ old('address', $mechanics->address) }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="form-control-label">Phone Number</label>
-                                            <input class="form-control @error('phoneNumber') is-invalid @enderror" type="text" name="phoneNumber"
-                                                value="{{ old('phoneNumber') }}">
+                                            <input class="form-control @error('phoneNumber') is-invalid @enderror"
+                                                type="text" name="phoneNumber"
+                                                value="{{ old('phoneNumber', $mechanics->phoneNumber) }}">
                                         </div>
                                     </div>
                                 </div>
                                 <hr class="horizontal dark">
-                                <p class="text-uppercase text-sm">Certificates</p>
+                                <p class="text-uppercase text-sm">Mechanic Information</p>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="form-control-label">Driver's License</label>
-                                            <input class="form-control @error('driversLicensePhoto') is-invalid @enderror" type="file" name="driversLicensePhoto"
-                                                value="{{ old('driversLicensePhoto') }}">
+                                            <label class="form-control-label">Mechanic Phone</label>
+                                            <input class="form-control @error('mechanicPhone') is-invalid @enderror"
+                                                type="text" name="mechanicPhone"
+                                                value="{{ old('mechanicPhone', $mechanics->mechanicPhone) }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="form-control-label">Driver's Certificate</label>
-                                            <input class="form-control @error('driverCertificatePhoto') is-invalid @enderror" type="file" name="driverCertificatePhoto"
-                                                value="{{ old('driverCertificatePhoto') }}">
+                                            <label class="form-control-label">Mechanic Address</label>
+                                            <input class="form-control @error('mechanicAddress') is-invalid @enderror"
+                                                type="text" name="mechanicAddress"
+                                                value="{{ old('mechanicAddress', $mechanics->mechanicAddress) }}">
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +154,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </form>
     </div>
@@ -145,39 +161,7 @@
 
 
 @section('scripts')
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        var map = L.map('map').setView([16.41122194797963, 120.59623719046016], 16);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        // Add a marker to the map
-        var marker = L.marker([16.41122194797963, 120.59623719046016], {
-            draggable: true
-        }).addTo(map);
-
-        marker.on('dragend', function(event) {
-            var marker = event.target;
-            var position = marker.getLatLng();
-
-            document.querySelector('#shopLong').innerHTML = position.lng;
-            document.querySelector('#shopLat').innerHTML = position.lat;
-            document.querySelector('[name="shopLong"]').value = position.lng;
-            document.querySelector('[name="shopLat"]').value = position.lat;
-            
-
-            fetch('https://api.opencagedata.com/geocode/v1/json?q=' + position.lat + '+' + position.lng +
-                    '&key=84b8f8b5b31c450485b329c38cad5c23')
-                .then(response => response.json())
-                .then(data => {
-                    var address = data.results[0].formatted;
-                    document.querySelector('#shopAddress').innerHTML = address;
-                    document.querySelector('[name="shopAddress"]').value = address;
-                });
-        });
-
         function selectedImage(input, target) {
             let reader = new FileReader();
             reader.onload = function(e) {

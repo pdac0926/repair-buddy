@@ -1,51 +1,53 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\ShopOwner;
 
 use App\Http\Controllers\Controller;
-use App\Models\ShopOwnerInfo;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class ShopOwnerConstroller extends Controller
+class MechanicController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['isAdmin', 'auth']);
+        $this->middleware(['auth', 'isOwner']);
     }
 
     public function index()
     {
-        $shopOwners = User::where('role', 'shopOwner')->orderBy('created_at', 'desc')->get();
+        $mechanics = User::join('mechanic_infos', 'users.id', '=', 'mechanic_infos.user_id')
+            ->where('users.role', 'mechanic')
+            ->where('mechanic_infos.mechanicShopOwnerId', Auth::id())
+            ->get(['users.*', 'mechanic_infos.mechanicAddress', 'mechanic_infos.mechanicPhone', 'mechanic_infos.mechanicRating']);
 
-        return view('admin-authenticated.owner.index', compact('shopOwners'));
+        // dd($mechanics);
+
+        return view('shopOwner.index', compact('mechanics'));
     }
 
-    public function viewAddShopOwner()
+    public function addMechanics()
     {
-        return view('admin-authenticated.owner.add');
+        return view('shopOwner.add');
     }
 
-    public function storeAddShopOwner(Request $request, User $shopOwner)
+    public function storeMechanics(Request $request, User $mechanic)
     {
-        $shopOwnerValidate = $request->validate(
+        $mechanicValidate = $request->validate(
             [
                 'firstName' => ['required', 'string', 'max:255'],
                 'middleName' => ['required', 'string', 'max:255'],
                 'lastName' => ['required', 'string', 'max:255'],
                 'address' => ['required', 'string', 'max:255'],
                 'avatar' => ['required', 'image', 'mimes:jpg,png', 'max:2048'],
-                'shopName' => ['required'],
-                'shopPhone' => [
+                'mechanicPhone' => [
                     'required',
                     'numeric',
                     'regex:/^09\d{9}$/'
                 ],
-                'shopAddress' => ['required'],
-                'shopLong' => ['required'],
-                'shopLat' => ['required'],
-                'shopDescription' => ['required'],
+                'mechanicAddress' => ['required'],
+                'mechanicRating' => ['required'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'phoneNumber' => [
                     'required',
@@ -64,46 +66,49 @@ class ShopOwnerConstroller extends Controller
                 ],
             ],
             [
-                'password.regex' => 'Please make sure your password includes at least one uppercase letter, one lowercase letter, one digit, and one special character (e.g., @, #, $).',
-                'contactNumber.regex' => 'Please ensure that your contact number starts with "09" and consists of exactly 11 digits.',
+                'password.regex' => 'Please make sure password includes at least one uppercase letter, one lowercase letter, one digit, and one special character (e.g., @, #, $).',
+                'contactNumber.regex' => 'Please ensure that contact number starts with "09" and consists of exactly 11 digits.',
             ]
         );
 
         $avatarName = $request->file('avatar')->store('profiles', 'public');
 
-        $shopOwnerValidate['password'] = Hash::make($shopOwnerValidate['password']);
-        $shopOwnerValidate['avatar'] = $avatarName;
+        $mechanicValidate['password'] = Hash::make($mechanicValidate['password']);
+        $mechanicValidate['avatar'] = $avatarName;
 
         $data = [
-            'role' => 'shopOwner',
+            'role' => 'mechanic',
             'privacyPolicy' => true,
             'status' => true
         ];
 
-        $user = $shopOwner->create(array_merge($data, $shopOwnerValidate));
+        $user = $mechanic->create(array_merge($data, $mechanicValidate));
         if ($user) {
-            $user->shopOwnerInfo()->create([
-                'shopName' => $shopOwnerValidate['shopName'],
-                'shopPhone' => $shopOwnerValidate['shopPhone'],
-                'shopAddress' => $shopOwnerValidate['shopAddress'],
-                'shopLong' => $shopOwnerValidate['shopLong'],
-                'shopLat' => $shopOwnerValidate['shopLat'],
-                'shopDescription' => $shopOwnerValidate['shopDescription']
+            $user->mechanicInfo()->create([
+                'mechanicShopOwnerId' => Auth::id(),
+                'mechanicAddress' => $mechanicValidate['mechanicAddress'],
+                'mechanicPhone' => $mechanicValidate['mechanicPhone'],
+                'mechanicRating' => $mechanicValidate['mechanicRating'],
             ]);
 
-            return redirect(route('admin.shop.owners'))->with('success', 'Successful Addition of ' . $shopOwnerValidate['firstName'] . ' as owner of ' . $shopOwnerValidate['shopName']);
+            return redirect(route('shop.owners.mechanics'))->with('success', 'Successful Added ' . $mechanicValidate['firstName'] . ' as mechanic.');
         }
     }
 
-    // edit shop owner
-    public function viewEditShopOwner($id)
+    // edit
+    public function editMechanics($id)
     {
-        $shopOwner = User::findOrFail($id);
+        $user = User::findOrFail($id);
+        $mechanics = $user->join('mechanic_infos', 'users.id', '=', 'mechanic_infos.user_id')
+        ->where('users.role', 'mechanic')
+        ->where('mechanic_infos.mechanicShopOwnerId', Auth::id())
+        ->first(['users.*', 'mechanic_infos.mechanicAddress', 'mechanic_infos.mechanicPhone', 'mechanic_infos.mechanicRating']);
 
-        return view('admin-authenticated.owner.edit', compact('shopOwner'));
+        return view('shopOwner.edit', compact('mechanics'));
     }
 
-    public function updateShopOwner($id, Request $request)
+    // update mechanics
+    public function updateMechanics($id, Request $request)
     {
         $owner = User::findOrFail($id);
         $shopOwnerValidate = $request->validate(
@@ -112,17 +117,15 @@ class ShopOwnerConstroller extends Controller
                 'middleName' => ['required', 'string', 'max:255'],
                 'lastName' => ['required', 'string', 'max:255'],
                 'address' => ['required', 'string', 'max:255'],
-                'shopName' => ['required'],
-                'shopPhone' => [
+                'avatar' => ['required', 'image', 'mimes:jpg,png', 'max:2048'],
+                'mechanicPhone' => [
                     'required',
                     'numeric',
                     'regex:/^09\d{9}$/'
                 ],
-                'shopAddress' => ['required'],
-                'shopLong' => ['required'],
-                'shopLat' => ['required'],
-                'shopDescription' => ['required'],
-                'email' => ['required', 'string', 'email', 'max:255'],
+                'mechanicAddress' => ['required'],
+                'mechanicRating' => ['required'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'phoneNumber' => [
                     'required',
                     'numeric',
@@ -183,23 +186,4 @@ class ShopOwnerConstroller extends Controller
         }
     }
 
-    // approval
-    public function approveShopOwner($id, User $user)
-    {
-        $shopOwner = $user->findOrFail($id);
-
-        $shopOwner->update([
-            'status' => ($shopOwner->status == true ? false : true)
-        ]);
-
-        return back()->with('success', $shopOwner->firstName . ($shopOwner->status == true ? ' has been approved.' : ' has move to pending.'));
-    }
-
-    // deletion
-    public function deleteShopOwner($id, User $user)
-    {
-        $shopOwner = $user->findOrFail($id);
-        $shopOwner->delete();
-        return redirect(route('admin.shop.owners'))->with('success', $shopOwner->firstName . ' has been remove permanently.');
-    }
 }

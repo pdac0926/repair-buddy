@@ -62,7 +62,7 @@ class User extends Authenticatable
 
     public function mechanicInfo()
     {
-        return $this->hasMany(MechanicInfo::class, 'mechanicShopOwnerId');
+        return $this->hasMany(MechanicInfo::class, 'user_id');
     }
 
     public function shopOwnerInfo()

@@ -43,14 +43,20 @@ Route::middleware('auth')->group(function () {
 
 
     Route::middleware('isOwner')->group(function () {
-        Route::get('/manage-mechanics', [App\Http\Controllers\HomeController::class, 'index'])->name('shop.owners.manage.mechanics');
+        Route::get('/mechanics', [App\Http\Controllers\ShopOwner\MechanicController::class, 'index'])->name('shop.owners.mechanics');
+        Route::get('/add-mechanics', [App\Http\Controllers\ShopOwner\MechanicController::class, 'addMechanics'])->name('shop.owners.add.mechanics');
+        Route::post('/add-mechanics', [App\Http\Controllers\ShopOwner\MechanicController::class, 'storeMechanics'])->name('shop.owners.store.mechanics');
+        Route::get('/edit-mechanics/{id}', [App\Http\Controllers\ShopOwner\MechanicController::class, 'editMechanics'])->name('shop.owners.edit.mechanics');
+        Route::post('/update-mechanics/{id}', [App\Http\Controllers\ShopOwner\MechanicController::class, 'updateMechanics'])->name('shop.owners.update.mechanics');
     });
 
 
+    // load locations from map
+    Route::get('/load-shop-locations', [App\Http\Controllers\Driver\DashboardController::class, 'loadShopLocations'])->name('driver.load.shop.locations');
+
     Route::middleware('isDriver')->group(function () {
-        Route::get('/load-shop-locations', [App\Http\Controllers\Driver\DashboardController::class, 'loadShopLocations'])->name('driver.load.shop.locations');
         Route::get('/manage-account', [App\Http\Controllers\Driver\ManageAccountController::class, 'index'])->name('driver.manage.account');
-        Route::get('/shop-owner/{id}', [App\Http\Controllers\Driver\DashboardController::class, 'index'])->name('driver.view.shop.owner');
+        Route::get('/shop-owner/{id}', [App\Http\Controllers\Driver\ShopOwnerController::class, 'index'])->name('driver.view.shop.owner');
         // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('driver.manage.account');
     });
 });

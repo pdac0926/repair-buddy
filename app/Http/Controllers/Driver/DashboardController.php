@@ -11,7 +11,7 @@ class DashboardController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'isDriver']);
+        $this->middleware(['auth']);
     }
 
     public function loadShopLocations() {

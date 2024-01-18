@@ -14,7 +14,7 @@
                     <div class="row gx-4">
                         <div class="col-auto">
                             <div class="avatar avatar-xl position-relative">
-                                <img src="../assets/img/team-1.jpg" alt="profile_image"
+                                <img src="{{asset('assets_auth/img/profile.png')}}" alt="profile_image"
                                     class="border-radius-lg shadow-sm avatarphoto">
                             </div>
                         </div>
@@ -34,8 +34,7 @@
                                     <li class="nav-item" onclick="document.getElementById('avatar').click()">
                                         <button role="button" type="button"
                                             class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center">
-                                            <i class="ni ni-app"></i>
-                                            <span class="ms-2">Choose Profile</span>
+                                            Choose Profile
                                         </button>
                                         <input type="file" id="avatar" class="d-none" name="avatar" onchange="selectedImage(this, 'avatarphoto')">
                                     </li>
