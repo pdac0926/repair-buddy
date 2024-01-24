@@ -8,7 +8,7 @@
     <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
         <h1 class="mb-4 pb-0">Unleash<br><span>the</span> Power</h1>
         <p class="mb-4 pb-0">of Precision with Our Expert Car Repair Services!</p>
-        <a href="#about" class="about-btn scrollto">Available Shops</a>
+        <a href="#about" class="about-btn scrollto">Scroll Down</a>
     </div>
 </section><!-- End Hero Section -->
 
@@ -110,7 +110,7 @@
         <div class="container-fluid" data-aos="fade-up">
 
             <div class="section-header">
-                <h2>Our Galeery</h2>
+                <h2>Our Gallery</h2>
                 <p>Explore Excellence Our Impressive Gallery.</p>
             </div>
 
@@ -189,44 +189,7 @@
     </section><!-- End Venue Section -->
 
     <!-- ======= Supporters Section ======= -->
-    <section id="supporters" class="section-with-bg">
-
-        <div class="container" data-aos="fade-up">
-            <div class="section-header">
-                <h2>Sponsors</h2>
-            </div>
-
-            <div class="row no-gutters supporters-wrap clearfix" data-aos="zoom-in" data-aos-delay="100">
-
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <div class="supporter-logo">
-                        <img src="assets/img/supporters/1.png" class="img-fluid" alt="">
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <div class="supporter-logo">
-                        <img src="assets/img/supporters/2.png" class="img-fluid" alt="">
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <div class="supporter-logo">
-                        <img src="assets/img/supporters/3.png" class="img-fluid" alt="">
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                    <div class="supporter-logo">
-                        <img src="assets/img/supporters/4.png" class="img-fluid" alt="">
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section><!-- End Sponsors Section -->
+    <!-- End Sponsors Section -->
 
     <!-- =======  F.A.Q Section ======= -->
     <section id="faq">

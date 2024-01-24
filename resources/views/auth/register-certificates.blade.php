@@ -8,15 +8,15 @@
             <div class="card-body">
                 <form method="POST" action="{{ route('store.register.certificate') }}" enctype="multipart/form-data">
                     @csrf
-                    <h1 class="text-light mb-3">Certificates/License</h1>
+                    <h1 class="text-light mb-3">Authentication</h1>
                     <div class="form-group mt-5 mb-2">
                         <input class="d-none" type="file" id="driversLicensePhoto"
                             onchange="selectedImage(this, 'driversLicensePhoto')" name="driversLicensePhoto">
                         <div class="cert-image-container" onclick="handleUpload('driversLicensePhoto')">
                             <img class="driversLicensePhoto"
                                 data-old-img="{{ asset('assets/img/certificates/drivers-license.png') }}"
-                                src="{{ asset('assets/img/certificates/drivers-license.png') }}" alt="Driver's License">
-                            <p>Upload License</p>
+                                src="{{ asset('assets/img/certificates/drivers-license.png') }}" alt="">
+                            <p>Driver's License</p>
                         </div>
                     </div>
                     <div class="form-group mb-2">
@@ -25,8 +25,8 @@
                         <div class="cert-image-container" onclick="handleUpload('driverCertificatePhoto')">
                             <img class="driverCertificatePhoto"
                                 data-old-img="{{ asset('assets/img/certificates/certificate.png') }}"
-                                src="{{ asset('assets/img/certificates/certificate.png') }}" alt="Driver's Certificate">
-                            <p>Upload Certificate</p>
+                                src="{{ asset('assets/img/certificates/certificate.png') }}" alt="">
+                            <p>Other Valid ID</p>
                         </div>
                     </div>
                     <div class="form-group mb-4">
@@ -34,7 +34,7 @@
                             onchange="selectedImage(this, 'driverAvatar')" name="driverAvatar">
                         <div class="cert-image-container" onclick="handleUpload('driverAvatar')">
                             <img class="driverAvatar" data-old-img="{{ asset('assets/img/certificates/avatar.png') }}"
-                                src="{{ asset('assets/img/certificates/avatar.png') }}" alt="Driver's Avatar">
+                                src="{{ asset('assets/img/certificates/avatar.png') }}" alt="">
                             <p>Upload Avatar</p>
                         </div>
                     </div>

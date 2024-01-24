@@ -27,7 +27,7 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Certificates
+                                            Documents
                                         </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
@@ -66,8 +66,7 @@
                                                             License</button>
                                                         <button type="button" class="btn btn-secondary btn-sm"
                                                             data-bs-toggle="modal" data-bs-target="#driversPreviews"
-                                                            data-bs-whatever="{{ asset((new \App\Helper\Helper())->userAvatar($driver->driverInfo->driverCertificatePhoto)) }}">Driver's
-                                                            Certificate</button>
+                                                            data-bs-whatever="{{ asset((new \App\Helper\Helper())->userAvatar($driver->driverInfo->driverCertificatePhoto)) }}">Other Valid ID</button>
                                                     </div>
                                                 </td>
                                                 <td class="align-middle">
