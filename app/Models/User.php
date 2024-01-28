@@ -69,4 +69,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(ShopOwnerInfo::class);
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Messages::class, 'user_id');
+    }
 }

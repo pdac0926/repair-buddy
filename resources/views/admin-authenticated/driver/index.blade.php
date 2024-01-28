@@ -56,7 +56,7 @@
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
                                                     <span
-                                                        class="badge badge-sm bg-gradient-success">{{ $driver->status == true ? 'Approved' : 'pending' }}</span>
+                                                        class="badge badge-sm bg-gradient-{{ $driver->status == true ? 'success' : 'warning' }}">{{ $driver->status == true ? 'Approved' : 'pending' }}</span>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
                                                     <div class="d-flex align-items-center justify-content-center gap-1">
@@ -64,9 +64,6 @@
                                                             data-bs-toggle="modal" data-bs-target="#driversPreviews"
                                                             data-bs-whatever="{{ asset((new \App\Helper\Helper())->userAvatar($driver->driverInfo->driversLicensePhoto)) }}">Driver's
                                                             License</button>
-                                                        <button type="button" class="btn btn-secondary btn-sm"
-                                                            data-bs-toggle="modal" data-bs-target="#driversPreviews"
-                                                            data-bs-whatever="{{ asset((new \App\Helper\Helper())->userAvatar($driver->driverInfo->driverCertificatePhoto)) }}">Other Valid ID</button>
                                                     </div>
                                                 </td>
                                                 <td class="align-middle">

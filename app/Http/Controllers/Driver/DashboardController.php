@@ -28,7 +28,8 @@ class DashboardController extends Controller
                 <h4>' . $user->shopOwnerInfo->shopName . '</h4>
                 <p>' . $user->shopOwnerInfo->shopAddress . '</p>
                 <p>' . $user->shopOwnerInfo->shopPhone . '</p>
-                <a class="btn btn-sm btn-primary text-white" href="' . route('driver.view.shop.owner', $user->id) . '">View Shop</a></div>';
+                <a class="btn btn-sm btn-primary text-white" href="' . route('driver.view.shop.owner', $user->id) . '">View Shop</a>
+                <a class="btn btn-sm btn-primary text-white" href="' . route('driver.view.contact.shop.owner', $user->id) . '">Contact</a></div>';
 
                 $data[] = [
                         'coords' => $coords,

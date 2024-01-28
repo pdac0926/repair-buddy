@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('driver_infos', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('user_id');
-            $table->string('driversLicensePhoto');
-            // relation to user id
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->uuid('referenceID');
+            $table->longText('message');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('referenceID')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('driver_infos');
+        Schema::dropIfExists('messages');
     }
 };

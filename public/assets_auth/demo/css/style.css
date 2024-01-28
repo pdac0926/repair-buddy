@@ -215,3 +215,7 @@ icons
   content: "\ea0b";
 }
 
+.rb-msgs::before {
+  content: "\ea0c";
+}
+

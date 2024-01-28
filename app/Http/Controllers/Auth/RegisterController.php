@@ -94,7 +94,6 @@ class RegisterController extends Controller
             'driverAvatar' => ['required', 'image', 'mimes:jpg,png', 'max:2048'],
             'privacyPolicy' => ['accepted'],
             'driversLicensePhoto' => ['required', 'image', 'mimes:jpg,png', 'max:2048'],
-            'driverCertificatePhoto' => ['required', 'image', 'mimes:jpg,png', 'max:2048'],
         ]);
         $registerSessionData = Session::get('sessionRegisterDriverData');
         $avatar = $request->file('driverAvatar')->store('profiles', 'public');
@@ -111,13 +110,11 @@ class RegisterController extends Controller
         $mergeData = array_merge($data, $registerSessionData);
 
         $driversLicense = $request->file('driversLicensePhoto')->store('driverFiles', 'public');
-        $driverCertificate = $request->file('driverCertificatePhoto')->store('driverFiles', 'public');
 
         $user = $userModel->create($mergeData);
         if ($user) {
             $user->driverInfo()->create([
                 'driversLicensePhoto' => $driversLicense,
-                'driverCertificatePhoto' => $driverCertificate,
             ]);
 
             Session::forget('sessionRegisterDriverData');

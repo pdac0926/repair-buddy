@@ -141,15 +141,6 @@
                                                 value="{{ old('driversLicensePhoto', $driver->driverInfo->driversLicensePhoto) }}">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label">Driver's Certificate</label>
-                                            <input
-                                                class="form-control @error('driverCertificatePhoto') is-invalid @enderror"
-                                                type="file" name="driverCertificatePhoto"
-                                                value="{{ old('driverCertificatePhoto', $driver->driverInfo->driverCertificatePhoto) }}">
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>

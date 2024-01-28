@@ -114,3 +114,7 @@ Generated using nucleoapp.com
 .rb-tasks-2::before {
   content: "\ea0b";
 }
+
+.rb-msgs::before {
+  content: "\ea0c";
+}

@@ -19,16 +19,6 @@
                             <p>Driver's License</p>
                         </div>
                     </div>
-                    <div class="form-group mb-2">
-                        <input class="d-none" type="file" id="driverCertificatePhoto"
-                            onchange="selectedImage(this, 'driverCertificatePhoto')" name="driverCertificatePhoto">
-                        <div class="cert-image-container" onclick="handleUpload('driverCertificatePhoto')">
-                            <img class="driverCertificatePhoto"
-                                data-old-img="{{ asset('assets/img/certificates/certificate.png') }}"
-                                src="{{ asset('assets/img/certificates/certificate.png') }}" alt="">
-                            <p>Other Valid ID</p>
-                        </div>
-                    </div>
                     <div class="form-group mb-4">
                         <input class="d-none" type="file" id="driverAvatar"
                             onchange="selectedImage(this, 'driverAvatar')" name="driverAvatar">

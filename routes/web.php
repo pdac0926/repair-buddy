@@ -48,6 +48,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/add-mechanics', [App\Http\Controllers\ShopOwner\MechanicController::class, 'storeMechanics'])->name('shop.owners.store.mechanics');
         Route::get('/edit-mechanics/{id}', [App\Http\Controllers\ShopOwner\MechanicController::class, 'editMechanics'])->name('shop.owners.edit.mechanics');
         Route::post('/update-mechanics/{id}', [App\Http\Controllers\ShopOwner\MechanicController::class, 'updateMechanics'])->name('shop.owners.update.mechanics');
+
+        // messages
+        Route::get('/messages', [App\Http\Controllers\ShopOwner\MessagesController::class, 'index'])->name('shop.owners.messages');
     });
 
 
@@ -57,6 +60,9 @@ Route::middleware('auth')->group(function () {
     Route::middleware('isDriver')->group(function () {
         Route::get('/manage-account', [App\Http\Controllers\Driver\ManageAccountController::class, 'index'])->name('driver.manage.account');
         Route::get('/shop-owner/{id}', [App\Http\Controllers\Driver\ShopOwnerController::class, 'index'])->name('driver.view.shop.owner');
-        // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('driver.manage.account');
+        Route::get('/contact-shop-owner/{id}', [App\Http\Controllers\Driver\ContactShopOwnerController::class, 'index'])->name('driver.view.contact.shop.owner');
+
+        // messages
+        Route::post('/send-message/{shopOwnerId}', [App\Http\Controllers\Driver\ContactShopOwnerController::class, 'sendMessage'])->name('driver.send.message');
     });
 });

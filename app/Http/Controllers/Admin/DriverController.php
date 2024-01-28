@@ -35,7 +35,6 @@ class DriverController extends Controller
                 'address' => ['required', 'string', 'max:255'],
                 'avatar' => ['required', 'image', 'mimes:jpg,png', 'max:2048'],
                 'driversLicensePhoto' => ['required', 'image', 'mimes:jpg,png', 'max:2048'],
-                'driverCertificatePhoto' => ['required', 'image', 'mimes:jpg,png', 'max:2048'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'phoneNumber' => [
                     'required',
@@ -61,7 +60,6 @@ class DriverController extends Controller
 
         $avatarName = $request->file('avatar')->store('profiles', 'public');
         $driversLicensePhoto = $request->file('driversLicensePhoto')->store('driverFiles', 'public');
-        $driverCertificatePhoto = $request->file('driverCertificatePhoto')->store('driverFiles', 'public');
 
         $driverValidate['password'] = Hash::make($driverValidate['password']);
         $driverValidate['avatar'] = $avatarName;
@@ -76,7 +74,6 @@ class DriverController extends Controller
         if ($user) {
             $user->driverInfo()->create([
                 'driversLicensePhoto' => $driversLicensePhoto,
-                'driverCertificatePhoto' => $driverCertificatePhoto
             ]);
 
             return redirect(route('admin.drivers'))->with('success', 'Successful Added ' . $driverValidate['firstName'] .' as a Driver');
@@ -146,12 +143,10 @@ class DriverController extends Controller
 
             if (!empty($request->file('driversLicensePhoto')) || !empty($request->file('driverCertificatePhoto'))) {
                 $driversLicensePhoto = $request->file('driversLicensePhoto')->store('driverFiles', 'public');
-                $driverCertificatePhoto = $request->file('driverCertificatePhoto')->store('driverFiles', 'public');
 
                 if ($user) {
                     $driver->driverInfo()->update([
                         'driversLicensePhoto' => $driversLicensePhoto,
-                        'driverCertificatePhoto' => $driverCertificatePhoto
                     ]);
                     return back()->with('success', 'Successful update ' . $driverValidate['firstName'] . ' with License and certificate.');
                 }

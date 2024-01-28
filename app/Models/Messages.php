@@ -6,16 +6,18 @@ use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DriverInfo extends Model
+class Messages extends Model
 {
     use HasFactory, Uuid;
 
     protected $fillable = [
-        'driversLicensePhoto',
+        'user_id',
+        'referenceID',
+        'message'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
