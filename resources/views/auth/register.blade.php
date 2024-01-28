@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="form-group mb-4">
                                     <input type="text" class="form-control @error('lastName') is-invalid @enderror"
-                                        placeholder="Name" name="lastName" value="{{ old('lastName') }}" autofocus>
+                                        placeholder="LastName" name="lastName" value="{{ old('lastName') }}" autofocus>
                                 </div>
                                 <div class="form-group mb-4">
                                     <input id="email" type="email"
@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="form-group mb-4">
                                     <input id="address" type="text"
-                                        class="form-control @error('address') is-invalid @enderror" placeholder="Address"
+                                        class="form-control @error('address') is-invalid @enderror" placeholder="Current Address"
                                         name="address" value="{{ old('address') }}">
                                 </div>
                                 <div class="form-group mb-4">
