@@ -69,7 +69,7 @@
                                                 <td class="align-middle">
                                                     <a href="{{ route('admin.edit.drivers', $driver->id) }}"
                                                         class="text-secondary font-weight-bold text-xs" title="Edit Driver">
-                                                        Edit
+                                                        Review
                                                     </a>
                                                 </td>
                                             </tr>
