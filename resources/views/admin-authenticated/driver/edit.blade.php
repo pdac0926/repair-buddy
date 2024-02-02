@@ -24,28 +24,11 @@
                         <div class="col-auto my-auto">
                             <div class="h-100">
                                 <h5 class="mb-1">
-                                    Profile avatar
+                                    User Profile
                                 </h5>
-                                <p class="mb-0 font-weight-bold text-sm">
-                                    Choose a profile from your device.
-                                </p>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
-                            <div class="nav-wrapper position-relative end-0">
-                                <ul class="nav nav-pills nav-fill p-1" role="tablist">
-                                    <li class="nav-item" onclick="document.getElementById('avatar').click()">
-                                        <button role="button" type="button"
-                                            class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center">
-                                            <i class="ni ni-app"></i>
-                                            <span class="ms-2">Choose Profile</span>
-                                        </button>
-                                        <input type="file" id="avatar" class="d-none" name="avatar"
-                                            onchange="selectedImage(this, 'avatarphoto')" value="{{ $driver->avatar }}">
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -130,18 +113,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr class="horizontal dark">
-                                <p class="text-uppercase text-sm">Certificates</p>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label">Driver's License</label>
-                                            <input class="form-control @error('driversLicensePhoto') is-invalid @enderror"
-                                                type="file" name="driversLicensePhoto"
-                                                value="{{ old('driversLicensePhoto', $driver->driverInfo->driversLicensePhoto) }}">
-                                        </div>
-                                    </div>
-                                </div>
+        
                             </div>
                         </div>
                     </div>
@@ -159,7 +131,7 @@
                         </div>
                         <div class="card mb-3 border border-danger">
                             <div class="card-header">
-                                <p class="mb-0">Danger Zone</p>
+                                <p class="mb-0">Deletion of Account</p>
                             </div>
                             <div class="card-body">
                                 <p>Proceeding with the deletion of this user may result in irretrievable data loss, as all

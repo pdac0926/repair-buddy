@@ -12,7 +12,7 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Users</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Registered Accounts</p>
                                     <h5 class="font-weight-bolder">
                                         {{ $users->count() }}
                                     </h5>
@@ -36,7 +36,7 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Drivers</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Drivers</p>
                                     <h5 class="font-weight-bolder">
                                         {{ $users->where('role', 'driver')->count() }}
                                     </h5>
