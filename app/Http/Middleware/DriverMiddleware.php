@@ -20,7 +20,7 @@ class DriverMiddleware
             if(Auth::user()->role == 'driver'){
                 return $next($request);
             }else{
-                return back()->with('warning', 'You do not have sufficient permissions to access this area.');
+                return back()->with('warning', 'You do not have sufficient permissions to access this area (Driver will).');
             }
         }else{
             return redirect(route('welcome'))->with('warning', 'Login first.');

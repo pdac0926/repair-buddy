@@ -18,48 +18,66 @@
                                         @php
                                             $defaultMsgId = null;
                                         @endphp
-                                        @if ($user_id->count() > 0)
-                                            @foreach ($user_id as $id => $user)
+                                        @if ($sender_id->count() > 0)
+                                            @foreach ($sender_id as $id => $user)
                                                 @php
-                                                    $defaultMsgId = $id;
                                                     date_default_timezone_set('Asia/Manila');
-                                                    $uniqueuser = (new \App\Models\User())->where('id', $id)->first();
-                                                    $message = (new \App\Models\Messages())
-                                                        ->where('user_id', $id)
-                                                        ->orderBy('created_at', 'DESC')
+                                                    $uniqueuser = (new \App\Models\User())
+                                                        ->where('id', $id)
+                                                        ->where('role', 'driver')
                                                         ->first();
-                                                @endphp
+                                                    $message = (new \App\Models\Messages())
+                                                        ->where('sender_id', $id)
+                                                        ->orWhere('sender_id', Auth::id())
+                                                        ->orderBy('updated_at', 'DESC')
+                                                        ->first();
 
-                                                <a href="?msg={{ $uniqueuser->id }}" class="message-list">
-                                                    <img src="{{ asset((new \App\Helper\Helper())->userAvatar($uniqueuser->avatar)) }}"
-                                                        alt="{{ $uniqueuser->firstName }}">
-                                                    <div class="message-content">
-                                                        <h6>{{ $uniqueuser->firstName . ' ' . $uniqueuser->lastName }}</h6>
-                                                        <p>{{ $message->message }}</p>
-                                                    </div>
-                                                </a>
+                                                    $msgID = isset($_GET['msg']) ? $_GET['msg'] : '';
+                                                @endphp
+                                                @if ($id != Auth::id())
+                                                    @php $defaultMsgId = $uniqueuser->id; @endphp
+                                                    <a href="?msg={{ $uniqueuser->id }}"
+                                                        class="message-list @if ($uniqueuser->id == $msgID) msg-active @endif">
+                                                        <img src="{{ asset((new \App\Helper\Helper())->userAvatar($uniqueuser->avatar)) }}"
+                                                            alt="{{ $uniqueuser->firstName }}">
+                                                        <div class="message-content">
+                                                            <h6>{{ $uniqueuser->firstName . ' ' . $uniqueuser->lastName }}
+                                                            </h6>
+                                                            <p>{{ $message->message }}</p>
+                                                        </div>
+                                                    </a>
+                                                @endif
                                             @endforeach
                                         @else
-                                        <h6>No Message</h6>
+                                            <h6>No Message</h6>
                                         @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-9">
+                                @php
+                                    $msgID = isset($_GET['msg']) ? $_GET['msg'] : $defaultMsgId;
+                                    $messagelist = (new \App\Models\Messages())
+                                        ->where('sender_id', $msgID)
+                                        ->orWhere('sender_id', Auth::id())
+                                        ->where('shopID', Auth::id())
+                                        ->where('convoID', $msgID . '-' . Auth::id())
+                                        ->orderBy('updated_at', 'ASC')
+                                        ->get();
+
+                                    $userClicked = (new \App\Models\User())->where('id', $msgID)->first();
+                                @endphp
                                 <div class="card border-0">
-                                    <div class="card-body">
+                                    @if ($msgID)
+                                        <div class="card-header">{{ $userClicked->firstName }}</div>
+                                    @endif
+                                    <div class="card-body msg-h">
                                         <div class="messages">
-                                            @php
-                                                $msgID = (isset($_GET['msg']) ? $_GET['msg'] : $defaultMsgId);
-                                                $messagelist = (new \App\Models\Messages())
-                                                    ->where('user_id', $msgID)
-                                                    ->where('referenceID', Auth::id())
-                                                    ->orderBy('created_at', 'ASC')
-                                                    ->get();
-                                            @endphp
+
                                             @if ($msgID)
                                                 @foreach ($messagelist as $msg)
-                                                    <div class="{{ $msg->user_id == Auth::id() ? 'sender' : 'receiver' }}">
+                                                    <div
+                                                        class="{{ $msg->sender_id == Auth::id() ? 'sender' : 'receiver' }}">
                                                         <div class="msg">
                                                             <p>{{ $msg->message }}</p>
                                                             <hr class="p-0 m-0">
@@ -75,7 +93,8 @@
                                     </div>
                                     @if (isset($_GET['msg']))
                                         <div class="card-footer">
-                                            <form action="" method="POST"
+                                            <form action="{{ route('shop.owners.send.messages', $_GET['msg']) }}"
+                                                method="POST"
                                                 class="d-flex justify-content-center align-items-center gap-3">
                                                 @csrf
                                                 <textarea name="message" class="form-control" rows="1" placeholder="Message"></textarea>
@@ -91,4 +110,14 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        function scrollToBottom() {
+            var container = document.querySelector(".card-body.msg-h");
+            container.scrollTop = container.scrollHeight;
+        }
+        scrollToBottom();
+    </script>
 @endsection

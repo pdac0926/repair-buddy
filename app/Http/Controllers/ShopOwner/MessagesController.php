@@ -17,13 +17,36 @@ class MessagesController extends Controller
 
     public function index()
     {
-        $user_id = Messages::join('users', 'messages.user_id', 'users.id')
-            ->where('referenceID', Auth::id())
-            ->select('users.firstName', 'users.lastName', 'users.avatar', 'users.created_at', 'messages.user_id', 'messages.referenceID', 'messages.message', 'messages.created_at as msg_date')
-            ->orderBy('created_at', 'ASC')
+        $sender_id = Messages::join('users', 'messages.sender_id', 'users.id')
+            ->where('shopID', Auth::id())
+            ->select('users.firstName', 'users.lastName', 'users.avatar', 'users.created_at', 'messages.sender_id', 'messages.shopID', 'messages.message', 'messages.created_at as msg_date')
+            ->orderBy('messages.updated_at', 'DESC')
             ->get()
-            ->groupBy('user_id');
+            ->groupBy('sender_id');
 
-        return view('admin-authenticated.messages.index', compact('user_id'));
+        return view('admin-authenticated.messages.index', compact('sender_id'));
+    }
+
+    public function sendMessage($driverID, Request $request){
+        User::findOrFail($driverID);
+
+        $validatedData = $request->validate(
+            [
+                'message' => ['required', 'string'],
+            ]
+        );
+        $sender = auth()->user();
+        $sendMessage = Messages::create([
+            'sender_id' => $sender->id,
+            'receiver_id' => $driverID,
+            'shopID' => $sender->id,
+            'convoID' => $driverID . '-' . $sender->id,
+            'message' => $validatedData['message']
+        ]);
+
+        if(!$sendMessage){
+            return back()->with('error', 'Something went wrong, message not sent. please try again next year.');
+        }
+        return back();
     }
 }

@@ -18,20 +18,29 @@ class ContactShopOwnerController extends Controller
     public function index($id){
         $shopOwner = User::findOrFail($id);
 
-        $messages = Messages::where('user_id', Auth::id())->where('referenceID', $id)->orderBy('created_at', 'ASC')->get();
+        $messages = Messages::where('sender_id', Auth::id())
+        ->orWhere('sender_id', $id)
+        ->where('shopID', $id)
+        ->where('convoID', Auth::id() . '-' . $id)
+        ->orderBy('created_at', 'ASC')
+        ->get();
+
         return view('driver-authenticated.contact-shop-owner', compact('shopOwner', 'messages'));
     }
 
-    public function sendMessage($shopOwnerId, Request $request){
-        $user = User::findOrFail($shopOwnerId);
+    public function sendToOwner($shopOwnerId, Request $request){
+        User::findOrFail($shopOwnerId);
         $validatedData = $request->validate(
             [
                 'message' => ['required', 'string'],
             ]
         );
         $sender = auth()->user();
-        $sendMessage = $sender->messages()->create([
-            'referenceID' => $shopOwnerId,
+        $sendMessage = Messages::create([
+            'sender_id' => $sender->id,
+            'receiver_id' => $shopOwnerId,
+            'shopID' => $shopOwnerId,
+            'convoID' => $sender->id . '-' . $shopOwnerId,
             'message' => $validatedData['message']
         ]);
 

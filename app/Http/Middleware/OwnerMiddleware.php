@@ -20,7 +20,7 @@ class OwnerMiddleware
             if(Auth::user()->role == 'shopOwner'){
                 return $next($request);
             }else{
-                return back()->with('warning', 'You do not have sufficient permissions to access this area.');
+                return back()->with('warning', 'You do not have sufficient permissions to access this area (Shop Owner will).');
             }
         }else{
             return redirect(route('welcome'))->with('warning', 'Login first.');

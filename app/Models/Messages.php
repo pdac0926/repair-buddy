@@ -11,13 +11,10 @@ class Messages extends Model
     use HasFactory, Uuid;
 
     protected $fillable = [
-        'user_id',
-        'referenceID',
+        'sender_id',
+        'receiver_id',
+        'shopID',
+        'convoID',
         'message'
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 }

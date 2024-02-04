@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+    // Administrator routes
     Route::middleware('isAdmin')->group(function () {
         //Shop Owner (admin panel)
         Route::get('/shop-owners', [App\Http\Controllers\Admin\ShopOwnerConstroller::class, 'index'])->name('admin.shop.owners');
@@ -41,7 +42,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/mechanics', [App\Http\Controllers\Admin\MechanicController::class, 'index'])->name('admin.mechanics');
     });
 
-
+    // Shop Owner Routes
     Route::middleware('isOwner')->group(function () {
         Route::get('/mechanics', [App\Http\Controllers\ShopOwner\MechanicController::class, 'index'])->name('shop.owners.mechanics');
         Route::get('/add-mechanics', [App\Http\Controllers\ShopOwner\MechanicController::class, 'addMechanics'])->name('shop.owners.add.mechanics');
@@ -51,18 +52,20 @@ Route::middleware('auth')->group(function () {
 
         // messages
         Route::get('/messages', [App\Http\Controllers\ShopOwner\MessagesController::class, 'index'])->name('shop.owners.messages');
+        Route::post('/send-to-driver/{driverID}', [App\Http\Controllers\ShopOwner\MessagesController::class, 'sendMessage'])->name('shop.owners.send.messages');
     });
 
 
     // load locations from map
     Route::get('/load-shop-locations', [App\Http\Controllers\Driver\DashboardController::class, 'loadShopLocations'])->name('driver.load.shop.locations');
 
+    // Dirver routes
     Route::middleware('isDriver')->group(function () {
         Route::get('/manage-account', [App\Http\Controllers\Driver\ManageAccountController::class, 'index'])->name('driver.manage.account');
         Route::get('/shop-owner/{id}', [App\Http\Controllers\Driver\ShopOwnerController::class, 'index'])->name('driver.view.shop.owner');
         Route::get('/contact-shop-owner/{id}', [App\Http\Controllers\Driver\ContactShopOwnerController::class, 'index'])->name('driver.view.contact.shop.owner');
 
         // messages
-        Route::post('/send-message/{shopOwnerId}', [App\Http\Controllers\Driver\ContactShopOwnerController::class, 'sendMessage'])->name('driver.send.message');
+        Route::post('/send-to-shop-owner/{shopOwnerId}', [App\Http\Controllers\Driver\ContactShopOwnerController::class, 'sendToOwner'])->name('driver.send.message');
     });
 });

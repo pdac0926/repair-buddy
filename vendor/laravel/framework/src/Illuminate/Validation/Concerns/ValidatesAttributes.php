@@ -253,7 +253,13 @@ trait ValidatesAttributes
         }
 
         if (is_null($date = $this->getDateTimestamp($parameters[0]))) {
-            $date = $this->getDateTimestamp($this->getValue($parameters[0]));
+            $comparedValue = $this->getValue($parameters[0]);
+
+            if (! is_string($comparedValue) && ! is_numeric($comparedValue) && ! $comparedValue instanceof DateTimeInterface) {
+                return false;
+            }
+
+            $date = $this->getDateTimestamp($comparedValue);
         }
 
         return $this->compare($this->getDateTimestamp($value), $date, $operator);
@@ -1430,11 +1436,11 @@ trait ValidatesAttributes
      */
     public function validateJson($attribute, $value)
     {
-        if (is_array($value)) {
+        if (is_array($value) || is_null($value)) {
             return false;
         }
 
-        if (! is_scalar($value) && ! is_null($value) && ! method_exists($value, '__toString')) {
+        if (! is_scalar($value) && ! method_exists($value, '__toString')) {
             return false;
         }
 
