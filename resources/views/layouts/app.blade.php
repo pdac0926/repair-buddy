@@ -29,8 +29,6 @@
                 <ul>
                     @guest
                         <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                        <li><a class="nav-link scrollto" href="#about">About</a></li>
-                        <li><a class="nav-link scrollto" href="#services">Services</a></li>
                         <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
                     @endguest
                 </ul>
@@ -60,11 +58,7 @@
 
                     <div class="col-lg-4 col-md-6 footer-info">
                         <h1><a href="index.html">REPAIR<span>BUDDY</span></a></h1>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat, tempore? Autem doloribus
-                            veniam esse vero quae, magnam, ea hic iste impedit nihil sit officia quas officiis aliquam
-                            odio doloremque corrupti omnis amet excepturi repellendus velit voluptas delectus. Provident
-                            dolorum temporibus debitis, exercitationem fugiat voluptatum hic enim numquam porro nisi
-                            tenetur!</p>
+                        <p>Driver assistance web application that will help out drivers fast and reliable.</p>
                     </div>
 
                     <div class="col-lg-4 col-md-6 footer-links">
@@ -81,11 +75,11 @@
                     <div class="col-lg-4 col-md-6 footer-contact">
                         <h4>Contact Us</h4>
                         <p>
-                            A108 Adam Street <br>
-                            New York, NY 535022<br>
-                            United States <br>
-                            <strong>Phone:</strong> +1 5589 55488 55<br>
-                            <strong>Email:</strong> info@example.com<br>
+                            Camp 7, <br>
+                            Baguio City,<br>
+                            Benguet <br>
+                            <strong>Phone:</strong> +63 9664 331 207<br>
+                            <strong>Email:</strong> dancabilitazan@gmail.com<br>
                         </p>
 
                         <div class="social-links">
