@@ -36,7 +36,7 @@
         <div class="notification-popup">
             <img src="{{ asset('/alerts/info.png') }}" alt="success">
             <div class="notification-messages">
-                <p class="mt-2">{{ session()->get('info') }}</p>
+                <p class="mt-2">{!! session()->get('info') !!}</p>
             </div>
             <button onclick="closeNotificationPopup()">Continue</button>
         </div>

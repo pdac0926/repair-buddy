@@ -71,8 +71,18 @@
                 @endif
                 @if (Auth::user()->role == 'driver')
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('admin.shop.owners') || request()->routeIs('admin.add.shop.owners') || request()->routeIs('admin.edit.shop.owners') ? 'active' : '' }}"
-                            href="{{ route('admin.shop.owners') }}">
+                        <a class="nav-link {{ request()->routeIs('driver.service.availed') ? 'active' : '' }}"
+                            href="{{ route('driver.service.availed') }}">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="icon rb-forklift text-danger text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Service Availed</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('driver.maintenance.history') || request()->routeIs('driver.maintenance.history') || request()->routeIs('driver.maintenance.history') ? 'active' : '' }}"
+                            href="{{ route('driver.maintenance.history') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="icon rb-tasks-2 text-success text-sm opacity-10"></i>
@@ -83,11 +93,31 @@
                 @endif
                 @if (Auth::user()->role == 'shopOwner')
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('shop.owners.services') || request()->routeIs('shop.owners.add.services') || request()->routeIs('shop.owners.edit.services') ? 'active' : '' }}"
+                            href="{{ route('shop.owners.services') }}">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="icon rb-sliders text-danger text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Services</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('shop.owners.services.avail') || request()->routeIs('ashop.owners.services.avail') || request()->routeIs('shop.owners.services.avail') ? 'active' : '' }}"
+                            href="{{ route('shop.owners.services.avail') }}">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="icon rb-tasks-2-1 text-info text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Services Avail</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('shop.owners.mechanics') || request()->routeIs('ashop.owners.mechanics') || request()->routeIs('shop.owners.mechanics') ? 'active' : '' }}"
                             href="{{ route('shop.owners.mechanics') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="icon rb-shop text-success text-sm opacity-10"></i>
+                                <i class="icon rb-users text-warning text-sm opacity-10"></i>
                             </div>
                             <span class="nav-link-text ms-1">Mechanics</span>
                         </a>

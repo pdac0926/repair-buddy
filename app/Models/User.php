@@ -74,4 +74,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Messages::class, 'user_id');
     }
+
+    public function avail()
+    {
+        return $this->hasMany(Avail::class, 'user_id');
+    }
 }

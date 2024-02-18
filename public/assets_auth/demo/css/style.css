@@ -219,3 +219,15 @@ icons
   content: "\ea0c";
 }
 
+.rb-sliders::before {
+  content: "\ea0d";
+}
+
+.rb-tasks-2-1::before {
+  content: "\ea0e";
+}
+
+.rb-forklift::before {
+  content: "\ea0f";
+}
+

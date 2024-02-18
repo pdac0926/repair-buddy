@@ -5,6 +5,7 @@
 @section('content')
     <!-- End Navbar -->
     <div class="container-fluid py-4">
+        @if (Auth::user()->role == 'admin')
         <div class="row">
             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                 <div class="card">
@@ -103,6 +104,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="row mt-4">
             @if (Auth::user()->role == 'admin')
                 <div class="col-lg-12 mb-lg-0 mb-4">

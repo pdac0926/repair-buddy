@@ -50,11 +50,23 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit-mechanics/{id}', [App\Http\Controllers\ShopOwner\MechanicController::class, 'editMechanics'])->name('shop.owners.edit.mechanics');
         Route::post('/update-mechanics/{id}', [App\Http\Controllers\ShopOwner\MechanicController::class, 'updateMechanics'])->name('shop.owners.update.mechanics');
 
+        Route::get('/services', [App\Http\Controllers\ShopOwner\ServicesController::class, 'index'])->name('shop.owners.services');
+        Route::get('/add-services', [App\Http\Controllers\ShopOwner\ServicesController::class, 'addServices'])->name('shop.owners.add.services');
+        Route::post('/add-services', [App\Http\Controllers\ShopOwner\ServicesController::class, 'storeServices'])->name('shop.owners.store.services');
+        Route::get('/edit-services/{id}', [App\Http\Controllers\ShopOwner\ServicesController::class, 'editServices'])->name('shop.owners.edit.services');
+        Route::post('/update-services/{id}', [App\Http\Controllers\ShopOwner\ServicesController::class, 'updateServices'])->name('shop.owners.update.services');
+        Route::post('/delete-services/{id}', [App\Http\Controllers\ShopOwner\ServicesController::class, 'deleteServices'])->name('shop.owners.delete.services');
+
+        Route::get('/services-avail', [App\Http\Controllers\ShopOwner\ServicesController::class, 'avail'])->name('shop.owners.services.avail');
+        Route::post('/update-service-status/{id}', [App\Http\Controllers\ShopOwner\ServicesController::class, 'updateServiceStatus'])->name('shop.owners.update.services.status');
+
+        //pending / paid
+        Route::get('/paid-avail', [App\Http\Controllers\ShopOwner\ServicesController::class, 'paidAvail'])->name('shop.owners.pending.avail');
+
         // messages
         Route::get('/messages', [App\Http\Controllers\ShopOwner\MessagesController::class, 'index'])->name('shop.owners.messages');
         Route::post('/send-to-driver/{driverID}', [App\Http\Controllers\ShopOwner\MessagesController::class, 'sendMessage'])->name('shop.owners.send.messages');
     });
-
 
     // load locations from map
     Route::get('/load-shop-locations', [App\Http\Controllers\Driver\DashboardController::class, 'loadShopLocations'])->name('driver.load.shop.locations');
@@ -62,8 +74,17 @@ Route::middleware('auth')->group(function () {
     // Dirver routes
     Route::middleware('isDriver')->group(function () {
         Route::get('/manage-account', [App\Http\Controllers\Driver\ManageAccountController::class, 'index'])->name('driver.manage.account');
+        Route::get('/maintenance-history', [App\Http\Controllers\Driver\MaintenanceController::class, 'index'])->name('driver.maintenance.history');
         Route::get('/shop-owner/{id}', [App\Http\Controllers\Driver\ShopOwnerController::class, 'index'])->name('driver.view.shop.owner');
         Route::get('/contact-shop-owner/{id}', [App\Http\Controllers\Driver\ContactShopOwnerController::class, 'index'])->name('driver.view.contact.shop.owner');
+
+        // avail services
+        Route::get('/avail-service/{id}/{shopId}', [App\Http\Controllers\Driver\AvailServiceController::class, 'availService'])->name('driver.avail.service');
+        Route::post('/avail-service/{id}', [App\Http\Controllers\Driver\AvailServiceController::class, 'storeService'])->name('driver.store.service');
+        Route::post('/cancel-service/{id}', [App\Http\Controllers\Driver\AvailServiceController::class, 'cancelService'])->name('driver.cancel.service');
+
+        // service availed
+        Route::get('/service-availed', [App\Http\Controllers\Driver\AvailServiceController::class, 'serviceAvailed'])->name('driver.service.availed');
 
         // messages
         Route::post('/send-to-shop-owner/{shopOwnerId}', [App\Http\Controllers\Driver\ContactShopOwnerController::class, 'sendToOwner'])->name('driver.send.message');
