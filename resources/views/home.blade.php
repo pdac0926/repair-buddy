@@ -106,23 +106,11 @@
         </div>
         @endif
         <div class="row mt-4">
-            @if (Auth::user()->role == 'admin')
-                <div class="col-lg-12 mb-lg-0 mb-4">
-                    <div class="card z-index-2 h-100">
-                        <div class="card-header pb-0 pt-3 bg-transparent">
-                            <h6 class="text-capitalize">Messages</h6>
-                            
-                        </div>
-                        <div class="card-body p-3">
-                            <div class="chart">
-                            <canvas id="emailCanvas" width="300" height="200"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            @if (Auth::user()->role == 'shopOwner')
+                
             @endif
-            @if (Auth::user()->role == 'driver' || Auth::user()->role == 'shopOwner')
-                <div class="col-lg-12">
+            @if (Auth::user()->role == 'driver')
+            <div class="col-lg-12">
                     <div class="card z-index-2">
                         <div class="card-header pb-0 pt-3 bg-transparent">
                             <h6 class="text-capitalize">List Shop Locations</h6>
@@ -132,6 +120,7 @@
                         </div>
                     </div>
                 </div>
+                
             @endif
         </div>
     </div>

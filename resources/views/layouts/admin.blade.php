@@ -38,16 +38,19 @@
         <hr class="horizontal dark mt-0">
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="icon rb-gauge-3-1 text-primary text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Dashboard</span>
-                    </a>
-                </li>
+                
+                
                 @if (Auth::user()->role == 'admin')
+                <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}"
+                            href="{{ route('admin.shop.owners') }}">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="icon rb-users text-lg  text-warning text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Registered Accounts</span>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('admin.shop.owners') || request()->routeIs('admin.add.shop.owners') || request()->routeIs('admin.edit.shop.owners') ? 'active' : '' }}"
                             href="{{ route('admin.shop.owners') }}">
@@ -71,13 +74,22 @@
                 @endif
                 @if (Auth::user()->role == 'driver')
                     <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="icon rb-gauge-3-1 text-primary text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Locate Shop</span>
+                    </a>
+                     </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('driver.service.availed') ? 'active' : '' }}"
                             href="{{ route('driver.service.availed') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="icon rb-forklift text-danger text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Service Availed</span>
+                            <span class="nav-link-text ms-1">Appointment</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -87,7 +99,7 @@
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="icon rb-tasks-2 text-success text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Maintenance History</span>
+                            <span class="nav-link-text ms-1">History</span>
                         </a>
                     </li>
                 @endif
@@ -109,7 +121,7 @@
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="icon rb-tasks-2-1 text-info text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Services Avail</span>
+                            <span class="nav-link-text ms-1">Availed Services</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -123,7 +135,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('shop.owners.messages') || request()->routeIs('ashop.owners.messages') || request()->routeIs('shop.owners.messages') ? 'active' : '' }}"
+                        <a class="nav-link {{ request()->routeIs('shop.owners.messages') || request()->routeIs('shop.owners.messages') || request()->routeIs('shop.owners.messages') ? 'active' : '' }}"
                             href="{{ route('shop.owners.messages') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
