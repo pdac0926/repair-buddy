@@ -20,7 +20,6 @@
     $path = request()->path();
     $slug = strtolower(str_replace('/', '-', $path));
 @endphp
-
 <body class="g-sidenav-show bg-gray-100 {{ $slug }}">
     <div class="min-height-300 bg-rep position-absolute w-100"></div>
     <aside
@@ -39,8 +38,28 @@
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 
-                
+            @auth
+            <li class="nav-item">
+    <nav class="navbar navbar-main navbar-expand-lg px-2 mx-6 shadow-none border-radius-l " id="navbarBlur" data-scroll="false">
+        <div class="container-fluid py-1 px-1 d-flex align-items-center">
+            <!-- Avatar -->
+            <!-- User Name -->
+            <h3 class="text-capitalize mb-0" style="font-size: 15px; margin-top: -14px;">
+                @if(Auth::check())
+                    {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}
+                @else
+                    Guest
+                @endif
+            </h3>
+        </div>
+    </nav>
+</li>
+<hr class="horizontal dark mt-0">
+
+@endauth
+
                 @if (Auth::user()->role == 'admin')
+
                 <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}"
                             href="{{ route('admin.shop.owners') }}">
@@ -73,6 +92,7 @@
                     </li>
                 @endif
                 @if (Auth::user()->role == 'driver')
+                
                     <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
                         <div
@@ -104,17 +124,17 @@
                     </li>
                 @endif
                 @if (Auth::user()->role == 'shopOwner')
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('shop.owners.services') || request()->routeIs('shop.owners.add.services') || request()->routeIs('shop.owners.edit.services') ? 'active' : '' }}"
-                            href="{{ route('shop.owners.services') }}">
+                <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('shop.owners.messages') || request()->routeIs('shop.owners.messages') || request()->routeIs('shop.owners.messages') ? 'active' : '' }}"
+                            href="{{ route('shop.owners.messages') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="icon rb-sliders text-danger text-sm opacity-10"></i>
+                                <i class="icon rb-msgs text-success text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Services</span>
+                            <span class="nav-link-text ms-1">Messages</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('shop.owners.services.avail') || request()->routeIs('ashop.owners.services.avail') || request()->routeIs('shop.owners.services.avail') ? 'active' : '' }}"
                             href="{{ route('shop.owners.services.avail') }}">
                             <div
@@ -125,6 +145,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('shop.owners.services') || request()->routeIs('shop.owners.add.services') || request()->routeIs('shop.owners.edit.services') ? 'active' : '' }}"
+                            href="{{ route('shop.owners.services') }}">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="icon rb-sliders text-danger text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1">Services Offered</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('shop.owners.mechanics') || request()->routeIs('ashop.owners.mechanics') || request()->routeIs('shop.owners.mechanics') ? 'active' : '' }}"
                             href="{{ route('shop.owners.mechanics') }}">
                             <div
@@ -132,16 +162,6 @@
                                 <i class="icon rb-users text-warning text-sm opacity-10"></i>
                             </div>
                             <span class="nav-link-text ms-1">Mechanics</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('shop.owners.messages') || request()->routeIs('shop.owners.messages') || request()->routeIs('shop.owners.messages') ? 'active' : '' }}"
-                            href="{{ route('shop.owners.messages') }}">
-                            <div
-                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="icon rb-msgs text-success text-sm opacity-10"></i>
-                            </div>
-                            <span class="nav-link-text ms-1">Messages</span>
                         </a>
                     </li>
                 @endif
@@ -165,18 +185,7 @@
     </aside>
     <main class="main-content position-relative border-radius-lg ">
         <!-- Navbar -->
-        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur"
-            data-scroll="false">
-            <div class="container-fluid py-1 px-3">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                        <li class="breadcrumb-item text-sm text-white active" aria-current="page">
-                            <h3 class="text-capitalize text-light">
-                                {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }}
-                            </h3>
-                        </li>
-                    </ol>
-                </nav>
+        
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <ul class="navbar-nav  justify-content-end">
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">

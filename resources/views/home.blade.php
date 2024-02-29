@@ -106,16 +106,13 @@
         </div>
         @endif
         <div class="row mt-4">
-            @if (Auth::user()->role == 'shopOwner')
-                
-            @endif
             @if (Auth::user()->role == 'driver')
             <div class="col-lg-12">
                     <div class="card z-index-2">
-                        <div class="card-header pb-0 pt-3 bg-transparent">
+                        <div class="card-header pb-0 pt-2 bg-transparent">
                             <h6 class="text-capitalize">List Shop Locations</h6>
                         </div>
-                        <div class="card-body p-0" style="height: 1000px;">
+                        <div class="card-body p-0" style="height: 600px;">
                             <div id="listShopLocation" style="height: 100%;width:100%;"></div>
                         </div>
                     </div>
