@@ -88,5 +88,8 @@ Route::middleware('auth')->group(function () {
 
         // messages
         Route::post('/send-to-shop-owner/{shopOwnerId}', [App\Http\Controllers\Driver\ContactShopOwnerController::class, 'sendToOwner'])->name('driver.send.message');
+
+        //ratings and reviews
+        
     });
 });

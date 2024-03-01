@@ -105,14 +105,14 @@
             </div>
         </div>
         @endif
-        <div class="row mt-4">
+        <div class="row mt-1">
             @if (Auth::user()->role == 'driver')
             <div class="col-lg-12">
                     <div class="card z-index-2">
                         <div class="card-header pb-0 pt-2 bg-transparent">
-                            <h6 class="text-capitalize">List Shop Locations</h6>
+                            <h6 class="text-capitalize">Locate Automotive Service Centers</h6>
                         </div>
-                        <div class="card-body p-0" style="height: 600px;">
+                        <div class="card-body p-0" style="height: 850px;">
                             <div id="listShopLocation" style="height: 100%;width:100%;"></div>
                         </div>
                     </div>
@@ -213,7 +213,7 @@
                     L.marker(e.latlng, {
                             icon: currentLocationIcon
                         }).addTo(map)
-                        .bindPopup("You are here now.").openPopup();
+                        .bindPopup("Admin Location").openPopup();
 
                     L.circle(e.latlng, radius).addTo(map);
                 }

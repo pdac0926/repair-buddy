@@ -3,20 +3,20 @@
 @section('title', 'Shop - ' . $shopOwner->shopOwnerInfo->shopName)
 
 @section('content')
-    <div class="container-fluid py-4 driver-panel">
-        <div class="card shadow-lg mx-3 @error('avatar') border border-danger @enderror ">
-            <div class="card-body p-3 ">
-                <div class="row gx-4">
-                    <div class="col-auto my-auto">
-                        <div class="h-100">
-                            <h1 class="mb-1">
-                                {{ $shopOwner->shopOwnerInfo->shopName }} Shop
-                            </h1>
-                        </div>
+<div class="container-fluid py-4 driver-panel">
+    <div class="card shadow-lg mx-3 @error('avatar') border border-danger @enderror ">
+        <div class="card-body p-3 ">
+            <div class="row gx-4">
+                <div class="col-auto my-auto">
+                    <div class="h-100">
+                        <h1 class="mb-1">
+                            {{ $shopOwner->shopOwnerInfo->shopName }} Shop
+                        </h1>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-md-12">
@@ -50,6 +50,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="col-md-6">
                     <div class="card mb-3">
                         <div class="card-header pb-0">
@@ -67,9 +68,6 @@
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                                 Phone</th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Rating</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Mechanics</th>
