@@ -70,7 +70,7 @@
                                                 Phone</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Mechanics</th>
+                                                Ratings</th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
@@ -95,8 +95,6 @@
                                                     </td>
                                                     <td><small>{{ $mechanic->phoneNumber }}</small></td>
                                                     <td><small>{{ $mechanic->mechanicRating }}</small></td>
-                                                    <td><small>{{ $mechanic->phoneNumber }}</small></td>
-
                                                 </tr>
                                             @endforeach
                                         @else
