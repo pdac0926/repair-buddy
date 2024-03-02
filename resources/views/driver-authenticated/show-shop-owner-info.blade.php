@@ -3,20 +3,6 @@
 @section('title', 'Shop - ' . $shopOwner->shopOwnerInfo->shopName)
 
 @section('content')
-<div class="container-fluid py-4 driver-panel">
-    <div class="card shadow-lg mx-3 @error('avatar') border border-danger @enderror ">
-        <div class="card-body p-3 ">
-            <div class="row gx-4">
-                <div class="col-auto my-auto">
-                    <div class="h-100">
-                        <h1 class="mb-1">
-                            {{ $shopOwner->shopOwnerInfo->shopName }} Shop
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-md-12">
@@ -28,23 +14,25 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-6 s-owner">
+                                <div class="col-lg-4 s-owner">
                                     <img src="{{ asset((new \App\Helper\Helper())->userAvatar($shopOwner->avatar)) }}"
-                                        alt="profile image" class="border-radius-lg shadow-sm img-fluid shopOwnerAvatar">
+                                        alt="profile image" class="border-radius-lg shadow-sm img-fluid shopOwnerAvatar" style="max-width: 400px; height: auto;">
                                     <h4 class="my-3">
-                                        {{ $shopOwner->firstName . ' ' . $shopOwner->middleName . ' ' . $shopOwner->lastName }}
+                                    {{ $shopOwner->shopOwnerInfo->shopName }}
                                     </h4>
-                                    <p>{{ $shopOwner->email }}</p>
-                                    <p>{{ $shopOwner->email }}</p>
                                 </div>
                                 <div class="col-lg-6">
-                                    {{ $shopOwner->shopOwnerInfo->shopName }}
+                                <h4 class="my-3">
+                                        {{ $shopOwner->firstName . ' ' . $shopOwner->middleName . ' ' . $shopOwner->lastName }}
+                                    </h4> 
                                     <hr>
                                     {{ $shopOwner->shopOwnerInfo->shopPhone }}
                                     <hr>
                                     {{ $shopOwner->shopOwnerInfo->shopAddress }}
                                     <hr>
                                     {{ $shopOwner->shopOwnerInfo->shopDescription }}
+                                    <hr>
+                                    {{ $shopOwner->email }}
                                 </div>
                             </div>
                         </div>
