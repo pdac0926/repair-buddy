@@ -60,7 +60,13 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="4" class="text-center p-5">No Services yet</td>
+                                            <td colspan="2" class="text-center p-5">
+                                                <div class="card-body text-center">
+                                                    <img src="{{ asset('assets_auth/img/pending.png') }}"
+                                                        class="no-message mb-5" alt="messages">
+                                                    <p>No Service yet</p>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endif
                                 </tbody>

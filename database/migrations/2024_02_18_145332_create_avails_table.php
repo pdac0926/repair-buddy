@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('last_odometer_reading');
             $table->text('notes')->nullable();
             $table->string('arrival');
-            $table->boolean('status')->default(false);
+            $table->enum('status', ['Reject', 'Approved', 'Pending', 'Paid'])->default('Pending');
 
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

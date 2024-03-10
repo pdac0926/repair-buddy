@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Driver;
 
 use App\Http\Controllers\Controller;
+use App\Models\ShopRating;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,10 +25,13 @@ class DashboardController extends Controller
                     $user->shopOwnerInfo->shopLong
                 ];
 
+                $reviews = ShopRating::where('shop_id', $user->shopOwnerInfo->id)->count();
+
                 $popupText = '<div class="d-flex flex-column align-items-center text-center">
                 <h4>' . $user->shopOwnerInfo->shopName . '</h4>
-                <p>' . $user->shopOwnerInfo->shopAddress . '</p>
-                <p>' . $user->shopOwnerInfo->shopPhone . '</p>
+                <p class="p-0 m-0">' . $user->shopOwnerInfo->shopAddress . '</p>
+                <p class="p-0 m-0">' . $user->shopOwnerInfo->shopPhone . '</p>
+                <p class="p-0 m-0">Reviews: '.$reviews.'</p>
                 <a class="btn btn-sm btn-primary text-white" href="' . route('driver.view.shop.owner', $user->id) . '">View Shop</a>
                 <a class="btn btn-sm btn-primary text-white" href="' . route('driver.view.contact.shop.owner', $user->id) . '">Contact</a></div>';
 

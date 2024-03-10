@@ -130,3 +130,7 @@ Generated using nucleoapp.com
 .rb-forklift::before {
   content: "\ea0f";
 }
+
+.rb-stopwatch-1::before {
+  content: "\ea11";
+}

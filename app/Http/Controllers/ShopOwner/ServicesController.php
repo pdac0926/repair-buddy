@@ -98,25 +98,35 @@ class ServicesController extends Controller
         }
     }
 
-    public function avail()
+    public function pendingAvail()
     {
-        $services = Avail::where('shop_id', Auth::user()->shopOwnerInfo->id)->where('status', false)->orderBy('created_at', 'DESC')->get();
+        $services = Avail::where('shop_id', Auth::user()->shopOwnerInfo->id)->where('status', 'Pending')->orderBy('created_at', 'DESC')->get();
 
-        return view('shopOwner.services.avail', compact('services'));
+        return view('shopOwner.services.pending', compact('services'));
+    }
+
+    public function ongoingAvail()
+    {
+        $services = Avail::where('shop_id', Auth::user()->shopOwnerInfo->id)->where('status', 'Approved')->orderBy('created_at', 'DESC')->get();
+        return view('shopOwner.services.ongoing', compact('services'));
     }
 
     public function paidAvail()
     {
-        $services = Avail::where('shop_id', Auth::user()->shopOwnerInfo->id)->where('status', true)->orderBy('created_at', 'DESC')->get();
+        $services = Avail::where('shop_id', Auth::user()->shopOwnerInfo->id)->where('status', 'Paid')->orderBy('created_at', 'DESC')->get();
         return view('shopOwner.services.paid', compact('services'));
     }
 
-    public function updateServiceStatus($id, Avail $avails)
+    public function updateServiceStatus($id, Request $request, Avail $avails)
     {
+        $field = $request->validate([
+            'status' => ['required', 'string', 'in:Reject,Approved,Pending,Paid']
+        ]);
+
         $avail = $avails->findOrFail($id);
 
         $updated = $avail->update([
-            'status' => $avail->status ? false : true
+            'status' => $field['status']
         ]);
 
         if (!$updated) {

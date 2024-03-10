@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ShopOwner;
 
 use App\Http\Controllers\Controller;
+use App\Models\MechanicInfo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,9 +21,7 @@ class MechanicController extends Controller
         $mechanics = User::join('mechanic_infos', 'users.id', '=', 'mechanic_infos.user_id')
             ->where('users.role', 'mechanic')
             ->where('mechanic_infos.mechanicShopOwnerId', Auth::id())
-            ->get(['users.*', 'mechanic_infos.mechanicAddress', 'mechanic_infos.mechanicPhone', 'mechanic_infos.mechanicRating']);
-
-        // dd($mechanics);
+            ->get(['users.*', 'mechanic_infos.id as mechanic_id', 'mechanic_infos.mechanicAddress', 'mechanic_infos.mechanicPhone', 'mechanic_infos.mechanicAvailability']);
 
         return view('shopOwner.index', compact('mechanics'));
     }
@@ -100,9 +99,9 @@ class MechanicController extends Controller
     {
         $user = User::findOrFail($id);
         $mechanics = $user->join('mechanic_infos', 'users.id', '=', 'mechanic_infos.user_id')
-        ->where('users.role', 'mechanic')
-        ->where('mechanic_infos.mechanicShopOwnerId', Auth::id())
-        ->first(['users.*', 'mechanic_infos.mechanicAddress', 'mechanic_infos.mechanicPhone', 'mechanic_infos.mechanicRating']);
+            ->where('users.role', 'mechanic')
+            ->where('mechanic_infos.mechanicShopOwnerId', Auth::id())
+            ->first(['users.*', 'mechanic_infos.mechanicAddress', 'mechanic_infos.mechanicPhone']);
 
         return view('shopOwner.edit', compact('mechanics'));
     }
@@ -117,15 +116,13 @@ class MechanicController extends Controller
                 'middleName' => ['required', 'string', 'max:255'],
                 'lastName' => ['required', 'string', 'max:255'],
                 'address' => ['required', 'string', 'max:255'],
-                'avatar' => ['required', 'image', 'mimes:jpg,png', 'max:2048'],
                 'mechanicPhone' => [
                     'required',
                     'numeric',
                     'regex:/^09\d{9}$/'
                 ],
                 'mechanicAddress' => ['required'],
-                'mechanicRating' => ['required'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'email' => ['required', 'string', 'email', 'max:255'],
                 'phoneNumber' => [
                     'required',
                     'numeric',
@@ -169,12 +166,8 @@ class MechanicController extends Controller
 
             if ($user) {
                 $owner->shopOwnerInfo()->update([
-                    'shopName' => $shopOwnerValidate['shopName'],
-                    'shopPhone' => $shopOwnerValidate['shopPhone'],
-                    'shopAddress' => $shopOwnerValidate['shopAddress'],
-                    'shopLong' => $shopOwnerValidate['shopLong'],
-                    'shopLat' => $shopOwnerValidate['shopLat'],
-                    'shopDescription' => $shopOwnerValidate['shopDescription']
+                    'mechanicAddress' => $shopOwnerValidate['mechanicAddress'],
+                    'mechanicPhone' => $shopOwnerValidate['mechanicPhone'],
                 ]);
 
                 return back()->with('success', 'Successful update of ' . $shopOwnerValidate['firstName'] . ' as owner of ' . $shopOwnerValidate['shopName']);
@@ -186,4 +179,20 @@ class MechanicController extends Controller
         }
     }
 
+    public function updateMechanicsAvailability($id, Request $request, MechanicInfo $mechanicInfos)
+    {
+        $fields = $request->validate(['mechanicAvailability' => ['required']]);
+
+        $mechanicInfo = $mechanicInfos->findOrFail($id);
+
+        $updateAvailability = $mechanicInfo->update([
+            'mechanicAvailability' => $fields['mechanicAvailability']
+        ]);
+
+        if (!$updateAvailability) {
+            return back()->with('error', 'An error occurred.');
+        }
+
+        return back()->with('success', 'Successful update');
+    }
 }

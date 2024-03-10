@@ -18,9 +18,9 @@ class AvailServiceController extends Controller
 
     public function serviceAvailed()
     {
-        $services = Avail::where('user_id', Auth::id())->where('status', false)->get();
+        $services = Avail::where('user_id', Auth::id())->where('status', 'Pending')->orWhere('status', 'Reject')->orWhere('status', 'Approved')->get();
 
-        return view('driver-authenticated.service-availed', compact('services'));
+        return view('driver-authenticated.appointment', compact('services'));
     }
 
     public function availService($id, $shopId, Services $services)
@@ -29,10 +29,11 @@ class AvailServiceController extends Controller
 
         $currentShopAvail = Avail::where('user_id', Auth::id())
             ->where('shop_id', $shopId)
-            ->where('status', false)
+            ->where('service_id', $service->id)
+            ->where('status', 'Pending')
             ->first();
 
-        if (!$currentShopAvail && Avail::where('user_id', Auth::id())->first()) {
+        if ($currentShopAvail) {
             return back()->with('info', 'Currently, you are exclusively associated to another shop. Concurrent availabilities at different shops are not permitted. <br> Kindly cancel your existing availability with the current shop before attempting to avail service elsewhere.');
         }
 
@@ -56,6 +57,7 @@ class AvailServiceController extends Controller
             ->where('user_id', Auth::id())
             ->where('shop_name', $shop->shopName)
             ->where('service_name', $service->service_name)
+            ->where('status', 'Pending')
             ->where('service_price', $service->service_price)->exists();
 
         if ($isServiceAvailExist) {
@@ -72,8 +74,7 @@ class AvailServiceController extends Controller
                 'service_price' => $service->service_price,
                 'last_odometer_reading' => $availData['last_odometer_reading'] . ' ' . $availData['odometer_type'],
                 'notes' => $request->notes,
-                'arrival' => $availData['arrival'],
-                'status' => false
+                'arrival' => $availData['arrival']
             ]);
 
             if (!$storeAvail) {
@@ -86,10 +87,9 @@ class AvailServiceController extends Controller
         }
     }
 
-    public function cancelService($id, Services $services, Avail $avails)
+    public function cancelService($id, Avail $avails)
     {
-        $service = $services->findOrFail($id);
-        $avail = $avails->where('service_id', $service->id)->firstOrFail();
+        $avail = $avails->where('id', $id)->firstOrFail();
 
         $canceled = $avail->delete();
 

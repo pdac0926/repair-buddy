@@ -14,7 +14,7 @@ class MechanicInfo extends Model
         'mechanicShopOwnerId',
         'mechanicAddress',
         'mechanicPhone',
-        'mechanicRating',
+        'mechanicAvailability'
     ];
 
     public function user()

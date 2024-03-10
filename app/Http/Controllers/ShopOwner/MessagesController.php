@@ -24,7 +24,7 @@ class MessagesController extends Controller
             ->get()
             ->groupBy('sender_id');
 
-        return view('admin-authenticated.messages.index', compact('sender_id'));
+        return view('shopOwner.messages.index', compact('sender_id'));
     }
 
     public function sendMessage($driverID, Request $request){

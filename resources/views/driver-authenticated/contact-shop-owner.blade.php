@@ -24,7 +24,11 @@
                                         </div>
                                     @endforeach
                                 @else
-                                <h6>No Messages</h6>
+                                <div class="card-body no-message-body">
+                                    <img src="{{ asset('assets_auth/img/message.png') }}"
+                                        class="no-message" alt="messages">
+                                    <p>No conversations yet</p>
+                                </div>
                                 @endif
                             </div>
                         </div>

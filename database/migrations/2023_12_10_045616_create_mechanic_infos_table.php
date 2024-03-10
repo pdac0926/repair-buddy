@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('mechanicShopOwnerId');
             $table->string('mechanicAddress');
             $table->string('mechanicPhone');
-            $table->string('mechanicRating');
+            $table->enum('mechanicAvailability', ['Available', 'Unavailable'])->default('Unavailable');
             // relation to user id
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

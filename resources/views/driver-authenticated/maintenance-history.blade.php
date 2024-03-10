@@ -21,7 +21,7 @@
                                             Shop</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Your Estimated Arrival</th>
+                                            Date</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Status</th>
@@ -51,18 +51,45 @@
                                                 <td class="align-middle text-center">
                                                     @php
                                                         $arrivalDateTime = new DateTime($service->arrival);
-                                                        $formattedArrival = $arrivalDateTime->format('F j, Y | g:i A | l');
+                                                        $formattedArrival = $arrivalDateTime->format(
+                                                            'F j, Y | g:i A | l',
+                                                        );
                                                     @endphp
                                                     <p class="text-xs font-weight-bold mb-0">{{ $formattedArrival }}</p>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <p class="text-xs font-weight-bold mb-0">{{ ($service->status ? 'Paid' : 'Pending') }}</p>
+                                                    <p class="text-xs font-weight-bold mb-0 badge bg-success">
+                                                        {{ $service->status }}</p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    @php
+                                                        $review = (new \App\Models\ShopRating())
+                                                            ->where('user_id', Auth::id())
+                                                            ->where('shop_id', $service->shop_id)
+                                                            ->where('service_id', $service->service_id)
+                                                            ->latest('created_at')
+                                                            ->first();
+                                                    @endphp
+
+                                                    @if ($review)
+                                                    <p class="text-xs font-weight-bold mb-0 badge bg-warning ">
+                                                        Reviewed</p>
+                                                    @else
+                                                        <a href="/review/{{ $service->shop_id }}/{{ $service->service_id }}"
+                                                            class="btn">Rate Service</a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="4" class="text-center p-5">No Maintenance history yet</td>
+                                            <td colspan="4" class="text-center p-5">
+                                                <div class="card-body text-center">
+                                                    <img src="{{ asset('assets_auth/img/pending.png') }}"
+                                                        class="no-message mb-5" alt="messages">
+                                                    <p>No Maintenance History yet</p>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endif
                                 </tbody>

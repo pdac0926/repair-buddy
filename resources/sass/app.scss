@@ -380,8 +380,16 @@ body::-webkit-scrollbar-track {
     height: 100%;
 
     .card-body.msg-h {
-        max-height: 500px;
-        overflow-y: scroll;
+        height: 100%;
+    }
+
+    .no-message-body {
+        text-align: center;
+
+        .no-message {
+            width: 200px;
+            text-align: center;
+        }
     }
 
     .messages {
@@ -462,5 +470,64 @@ body::-webkit-scrollbar-track {
 
     .message-list.msg-active {
         background: #e2e2e2;
+    }
+}
+
+// star rating
+
+.start-rating {
+    align-items: center;
+    transform: rotateY(180deg);
+    justify-content: end;
+
+    input {
+        position: relative;
+        display: none;
+    }
+
+    input:checked {
+        ~label {
+            &::after {
+                opacity: 1;
+            }
+        }
+    }
+
+    label {
+        position: relative;
+        display: block;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+
+        &:before {
+            content: '★';
+            position: relative;
+            display: block;
+            font-size: 50px;
+            color: #bdbdbd;
+        }
+
+        &:after {
+            content: '★';
+            position: absolute;
+            display: block;
+            font-size: 50px;
+            color: #ffd400;
+            top: 0;
+            opacity: 0;
+        }
+
+        &:hover {
+            &:after {
+                opacity: 1;
+            }
+        }
+
+        &:hover {
+            ~label::after {
+                opacity: 1;
+            }
+        }
     }
 }

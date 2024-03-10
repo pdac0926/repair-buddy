@@ -26,7 +26,7 @@
                                             Status</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Rating</th>
+                                            Status</th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                 </thead>
@@ -59,13 +59,26 @@
                                                     <span
                                                         class="badge badge-sm bg-gradient-success">{{ $mechanic->status == true ? 'Approved' : 'pending' }}</span>
                                                 </td>
-                                                <td class="align-middle text-center">
-                                                    <span
-                                                        class="text-secondary text-xs font-weight-bold">{{ $mechanic->mechanicRating }}</span>
+                                                <td class="align-middle d-flex align-items-center justify-content-center">
+                                                    <form
+                                                        action="{{ route('shop.owners.update.mechanics.availability', $mechanic->mechanic_id) }}"
+                                                        method="POST" id="formChangeAvailability" class="w-50">
+                                                        @csrf
+                                                        <select name="mechanicAvailability" class="form-select"
+                                                            aria-label="Default select example"
+                                                            onchange="document.getElementById('formChangeAvailability').submit()">
+                                                            <option value="Available"
+                                                                @if ($mechanic->mechanicAvailability == 'Available') selected @endif>Available
+                                                            </option>
+                                                            <option value="Unavailable"
+                                                                @if ($mechanic->mechanicAvailability == 'Unavailable') selected @endif>
+                                                                Unavailable</option>
+                                                        </select>
+                                                    </form>
                                                 </td>
                                                 <td class="align-middle">
                                                     <a href="{{ route('shop.owners.edit.mechanics', $mechanic->id) }}"
-                                                        class="text-secondary font-weight-bold text-xs"
+                                                        class="text-secondary font-weight-bold text-xs btn btn-secondary text-white"
                                                         title="Edit Shop Owner">
                                                         Edit
                                                     </a>
@@ -74,7 +87,13 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="4" class="text-center p-5">No Mechanic yet</td>
+                                            <td colspan="4" class="text-center p-5">
+                                                <div class="card-body text-center">
+                                                    <img src="{{ asset('assets_auth/img/pending.png') }}"
+                                                        class="no-message mb-5" alt="messages">
+                                                    <p>No Mechanics yet</p>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endif
                                 </tbody>

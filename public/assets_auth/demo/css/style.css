@@ -231,3 +231,7 @@ icons
   content: "\ea0f";
 }
 
+.rb-stopwatch-1::before {
+  content: "\ea11";
+}
+
