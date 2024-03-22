@@ -126,9 +126,6 @@
 
 @if (Auth::user()->role == 'driver' || Auth::user()->role == 'shopOwner')
     @section('scripts')
-        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-        <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
-        <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
         <script>
             var map = L.map('listShopLocation').setView([16.41122194797963, 120.59623719046016], 15);
 

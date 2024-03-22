@@ -184,7 +184,6 @@
 
 
 @section('scripts')
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         var map = L.map('map').setView([16.41122194797963, 120.59623719046016], 16);
 

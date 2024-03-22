@@ -9,9 +9,9 @@
     @auth
         <link href="{{ asset('/assets_auth/css/icons.css') }}" rel="stylesheet" />
         <link href="{{ asset('/dashboard/dashboard.css') }}" rel="stylesheet" />
-        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
-        <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+        <link rel="stylesheet" href="{{asset('/assets/leaflet/leaflet.css')}}" />
+        <link rel="stylesheet" href="{{asset('/assets/leaflet/leaflet-routing.css')}}" />
+        <link rel="stylesheet" href="{{asset('/assets/leaflet/geocontrol.css')}}" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     @endauth
 
@@ -230,92 +230,6 @@
         <script src="{{ asset('/assets_auth/js/core/bootstrap.min.js') }}"></script>
         <script src="{{ asset('/assets_auth/js/plugins/perfect-scrollbar.min.js') }}"></script>
         <script src="{{ asset('/assets_auth/js/plugins/smooth-scrollbar.min.js') }}"></script>
-        @if (Auth::user()->role == 'admin')
-            <script src="{{ asset('/assets/js/plugins/chartjs.min.js') }}"></script>
-            <script>
-                var ctx1 = document.getElementById("chart-line").getContext("2d");
-
-                var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
-
-                gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
-                gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
-                gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
-                new Chart(ctx1, {
-                    type: "line",
-                    data: {
-                        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                        datasets: [{
-                            label: "Mobile apps",
-                            tension: 0.4,
-                            borderWidth: 0,
-                            pointRadius: 0,
-                            borderColor: "#5e72e4",
-                            backgroundColor: gradientStroke1,
-                            borderWidth: 3,
-                            fill: true,
-                            data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-                            maxBarThickness: 6
-
-                        }],
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                display: false,
-                            }
-                        },
-                        interaction: {
-                            intersect: false,
-                            mode: 'index',
-                        },
-                        scales: {
-                            y: {
-                                grid: {
-                                    drawBorder: false,
-                                    display: true,
-                                    drawOnChartArea: true,
-                                    drawTicks: false,
-                                    borderDash: [5, 5]
-                                },
-                                ticks: {
-                                    display: true,
-                                    padding: 10,
-                                    color: '#fbfbfb',
-                                    font: {
-                                        size: 11,
-                                        family: "Open Sans",
-                                        style: 'normal',
-                                        lineHeight: 2
-                                    },
-                                }
-                            },
-                            x: {
-                                grid: {
-                                    drawBorder: false,
-                                    display: false,
-                                    drawOnChartArea: false,
-                                    drawTicks: false,
-                                    borderDash: [5, 5]
-                                },
-                                ticks: {
-                                    display: true,
-                                    color: '#ccc',
-                                    padding: 20,
-                                    font: {
-                                        size: 11,
-                                        family: "Open Sans",
-                                        style: 'normal',
-                                        lineHeight: 2
-                                    },
-                                }
-                            },
-                        },
-                    },
-                });
-            </script>
-        @endif
         <script>
             var win = navigator.platform.indexOf('Win') > -1;
             if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -327,7 +241,7 @@
         </script>
         <script async defer src="https://buttons.github.io/buttons.js"></script>
         <script src="{{ asset('/assets_auth/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.3/axios.min.js"></script>
+        <script src="{{ asset('/assets/js/axios.js') }}"></script>
     @endauth
     @include('alerts.alert')
     <script>
@@ -336,6 +250,9 @@
             notificationDialog.classList.add('hide-popup');
         }
     </script>
+    <script src="{{asset('assets/leaflet/leaflet.js')}}"></script>
+    <script src="{{asset('assets/leaflet/routing-machine.js')}}"></script>
+    <script src="{{asset('assets/leaflet/geocoder.js')}}"></script>
     @yield('scripts')
 </body>
 

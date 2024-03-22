@@ -138,39 +138,7 @@
 
 
 @section('scripts')
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        var map = L.map('map').setView([16.41122194797963, 120.59623719046016], 16);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        // Add a marker to the map
-        var marker = L.marker([16.41122194797963, 120.59623719046016], {
-            draggable: true
-        }).addTo(map);
-
-        marker.on('dragend', function(event) {
-            var marker = event.target;
-            var position = marker.getLatLng();
-
-            document.querySelector('#shopLong').innerHTML = position.lng;
-            document.querySelector('#shopLat').innerHTML = position.lat;
-            document.querySelector('[name="shopLong"]').value = position.lng;
-            document.querySelector('[name="shopLat"]').value = position.lat;
-            
-
-            fetch('https://api.opencagedata.com/geocode/v1/json?q=' + position.lat + '+' + position.lng +
-                    '&key=84b8f8b5b31c450485b329c38cad5c23')
-                .then(response => response.json())
-                .then(data => {
-                    var address = data.results[0].formatted;
-                    document.querySelector('#shopAddress').innerHTML = address;
-                    document.querySelector('[name="shopAddress"]').value = address;
-                });
-        });
-
         function selectedImage(input, target) {
             let reader = new FileReader();
             reader.onload = function(e) {

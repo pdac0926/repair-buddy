@@ -213,7 +213,6 @@
 
 
 @section('scripts')
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         var map = L.map('map').setView([{{ $shopOwner->shopOwnerInfo->shopLat }},
             {{ $shopOwner->shopOwnerInfo->shopLong }}
