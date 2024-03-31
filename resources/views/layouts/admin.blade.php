@@ -153,7 +153,7 @@
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="icon rb-stopwatch-1 text-warning text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">On Going Services</span>
+                            <span class="nav-link-text ms-1">On Going</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -163,7 +163,7 @@
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="icon rb-stopwatch-1 text-warning text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Paid Services</span>
+                            <span class="nav-link-text ms-1">Paid</span>
                         </a>
                     </li>
                     <li class="nav-item">
