@@ -1,1 +1,20 @@
-{ "rb-gauge-3-1": 59907, "rb-shop": 59908, "rb-gear-2": 59909, "rb-plus": 59910, "rb-users": 59911, "rb-user-laptop": 59912, "rb-accessibility": 59913, "rb-arrow-door-out-3": 59914, "rb-tasks-2": 59915, "rb-msgs": 59916, "rb-sliders": 59917, "rb-tasks-2-1": 59918, "rb-forklift": 59919, "rb-stopwatch-1": 59921}
+{
+    "rb-calendar-days": 59906,
+    "rb-clipboard-check": 59907,
+    "rb-clipboard-check-1": 59908,
+    "rb-gauge-3": 59909,
+    "rb-shop": 59910,
+    "rb-gear-2": 59911,
+    "rb-plus": 59912,
+    "rb-users": 59913,
+    "rb-user-laptop": 59914,
+    "rb-accessibility": 59915,
+    "rb-arrow-door-out-3": 59916,
+    "rb-tasks-2": 59917,
+    "rb-msgs": 59918,
+    "rb-sliders": 59919,
+    "rb-tasks-2-1": 59920,
+    "rb-forklift": 59921,
+    "rb-stopwatch": 59922,
+    "rb-clipboard-check-2": 59923
+}

@@ -9,10 +9,10 @@ Generated using nucleoapp.com
   font-family: 'Repair Buddy';
   src: url('../fonts/Repair Buddy.eot');
   src: url('../fonts/Repair Buddy.eot') format('embedded-opentype'),
-       url('../fonts/Repair Buddy.woff2') format('woff2'),
-       url('../fonts/Repair Buddy.woff') format('woff'),
-       url('../fonts/Repair Buddy.ttf') format('truetype'),
-       url('../fonts/Repair Buddy.svg') format('svg');
+    url('../fonts/Repair Buddy.woff2') format('woff2'),
+    url('../fonts/Repair Buddy.woff') format('woff'),
+    url('../fonts/Repair Buddy.ttf') format('truetype'),
+    url('../fonts/Repair Buddy.svg') format('svg');
 }
 
 /* base class */
@@ -52,6 +52,7 @@ Generated using nucleoapp.com
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -133,4 +134,8 @@ Generated using nucleoapp.com
 
 .rb-stopwatch-1::before {
   content: "\ea11";
+}
+
+.rb-clipboard-check-2::before {
+  content: "\ea13";
 }

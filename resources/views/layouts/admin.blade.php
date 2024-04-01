@@ -16,16 +16,16 @@
     @endauth
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    
 </head>
 @php
     $path = request()->path();
     $slug = strtolower(str_replace('/', '-', $path));
 @endphp
 
-<body class="g-sidenav-show bg-gray-100 {{ $slug }}">
+<body class="g-sidenav-show bg-gray-100 {{ $slug }}" >
     <div class="min-height-300 bg-rep position-absolute w-100"></div>
-    <aside
-        class="sidenav navbar navbar-vertical navbar-expand-xs bg-white border-0 border-radius-xl my-3 fixed-start ms-4 "
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs bg-white border-0 border-radius-xl my-3 fixed-start ms-4 "
         id="sidenav-main">
         <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
@@ -38,8 +38,13 @@
         </div>
         <hr class="horizontal dark mt-0">
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+        <style>
+        #sidenav-collapse-main {
+            height: 80vh; /* Adjust the height value as needed */
+            overflow-y: auto; /* Add scrollbars if content exceeds the height */
+        }
+    </style>
             <ul class="navbar-nav">
-
                 @auth
                     <li class="nav-item">
                         <nav class="navbar navbar-main navbar-expand-lg px-2 shadow-none border-radius-l " id="navbarBlur"
@@ -62,6 +67,7 @@
                 @endauth
 
                 @if (Auth::user()->role == 'admin')
+              
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}"
                             href="{{ route('admin.shop.owners') }}">
@@ -99,7 +105,7 @@
                             href="{{ route('home') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="icon rb-gauge-3-1 text-primary text-sm opacity-10"></i>
+                                <i class="icon rb-user-laptop text-success text-sm opacity-10"></i>
                             </div>
                             <span class="nav-link-text ms-1">Locate Shop</span>
                         </a>
@@ -119,19 +125,21 @@
                             href="{{ route('driver.maintenance.history') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="icon rb-tasks-2 text-success text-sm opacity-10"></i>
+                                <i class="icon rb-gauge-3-1 text-primary text-sm opacity-10"></i>
+                                
                             </div>
                             <span class="nav-link-text ms-1">History</span>
                         </a>
                     </li>
                 @endif
                 @if (Auth::user()->role == 'shopOwner')
+                
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('shop.owners.messages') || request()->routeIs('shop.owners.messages') || request()->routeIs('shop.owners.messages') ? 'active' : '' }}"
                             href="{{ route('shop.owners.messages') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="icon rb-msgs text-success text-sm opacity-10"></i>
+                                <i class="icon rb-tasks-2-1 text-info text-sm opacity-10"></i> 
                             </div>
                             <span class="nav-link-text ms-1">Messages</span>
                         </a>
@@ -141,7 +149,7 @@
                             href="{{ route('shop.owners.pending.avail') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="icon rb-tasks-2-1 text-info text-sm opacity-10"></i>
+                                                        <i class="icon rb-arrow-door-out-3 text-dark text-sm opacity-10"></i> 
                             </div>
                             <span class="nav-link-text ms-1">Pending Appointments</span>
                         </a>
@@ -161,7 +169,7 @@
                             href="{{ route('shop.owners.ongoing.paid') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="icon rb-stopwatch-1 text-warning text-sm opacity-10"></i>
+                                <i class="icon rb-clipboard-check-2 text-success text-sm opacity-10"></i>
                             </div>
                             <span class="nav-link-text ms-1">Paid</span>
                         </a>
@@ -194,7 +202,8 @@
                     <a class="nav-link" onclick="document.querySelector('#logoutForm').submit()">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="icon rb-arrow-door-out-3 text-dark text-sm opacity-10"></i>
+                            <i class="icon rb-msgs text-success text-sm opacity-10"></i>
+   
                         </div>
                         <span class="nav-link-text ms-1">Logout</span>
                     </a>

@@ -234,4 +234,8 @@ icons
 .rb-stopwatch-1::before {
   content: "\ea11";
 }
+.rb-clipboard-check::before {
+  content: "\ea13";
+}
+
 
