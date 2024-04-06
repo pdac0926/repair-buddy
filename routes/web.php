@@ -83,7 +83,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/avail-service/{id}/{shopId}', [App\Http\Controllers\Driver\AvailServiceController::class, 'availService'])->name('driver.avail.service');
         Route::post('/avail-service/{id}', [App\Http\Controllers\Driver\AvailServiceController::class, 'storeService'])->name('driver.store.service');
         
-        Route::get('/cancel-service/{id}', [App\Http\Controllers\Driver\AvailServiceController::class, 'cancelService'])->name('driver.cancel.service');
+        Route::get('/cancel-service/{id}/', [App\Http\Controllers\Driver\AvailServiceController::class, 'cancelService'])->name('driver.cancel.service');
+        
 
         // service availed
         Route::get('/appointment', [App\Http\Controllers\Driver\AvailServiceController::class, 'serviceAvailed'])->name('driver.service.availed');

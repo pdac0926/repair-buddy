@@ -40,66 +40,8 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="card mb-3">
-                    <div class="card-header pb-0">
-                        <div class="d-flex align-items-center">
-                            <p class="mb-0">Mechanics</p>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Name</th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Phone</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Ratings</th>
-                                        <th class="text-secondary opacity-7"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (count($mechanics) > 0)
-                                        @foreach ($mechanics as $mechanic)
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div>
-                                                            <img src="{{ asset((new \App\Helper\Helper())->userAvatar($mechanic->avatar)) }}"
-                                                                class="avatar avatar-sm me-3" alt="user1">
-                                                        </div>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm text-capitalize">
-                                                                {{ $mechanic->firstName . ' ' . $mechanic->lastName . ' ' . $mechanic->middleName }}
-                                                            </h6>
-                                                            <p class="text-xs text-secondary mb-0">
-                                                                {{ $mechanic->email }}</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td><small>{{ $mechanic->phoneNumber }}</small></td>
-                                                <td class="text-center"><small>{!! $mechanic->mechanicAvailability == 'Available'
-                                                    ? '<span class="text-success">' . $mechanic->mechanicAvailability . '</span>'
-                                                    : $mechanic->mechanicAvailability !!}</small></td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td colspan="4" class="text-center p-5">No Mechanic found</td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
+
+            <div class="col-lg-12">
                 <div class="card mb-3">
                     <div class="card-header pb-0">
                         <div class="d-flex align-items-center">
@@ -173,6 +115,65 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-header pb-0">
+                        <div class="d-flex align-items-center">
+                            <p class="mb-0">Mechanics</p>
+                        </div>
+                    </div>  
+                    <div class="card-body">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Name</th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Phone</th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Ratings</th>
+                                        <th class="text-secondary opacity-7"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (count($mechanics) > 0)
+                                        @foreach ($mechanics as $mechanic)
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+                                                        <div>
+                                                            <img src="{{ asset((new \App\Helper\Helper())->userAvatar($mechanic->avatar)) }}"
+                                                                class="avatar avatar-sm me-3" alt="user1">
+                                                        </div>
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm text-capitalize">
+                                                                {{ $mechanic->firstName . ' ' . $mechanic->lastName . ' ' . $mechanic->middleName }}
+                                                            </h6>
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                {{ $mechanic->email }}</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><small>{{ $mechanic->phoneNumber }}</small></td>
+                                                <td class="text-center"><small>{!! $mechanic->mechanicAvailability == 'Available'
+                                                    ? '<span class="text-success">' . $mechanic->mechanicAvailability . '</span>'
+                                                    : $mechanic->mechanicAvailability !!}</small></td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="4" class="text-center p-5">No Mechanic found</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">Reviews ({{ $reviews->count() }})</div>
@@ -201,7 +202,9 @@
                                 </div>
                             @endforeach
                         @else
-                            <p>No Reviews yet.</p>
+                        <div style="text-align: center;">
+    <p>No Reviews yet.</p>
+</div>
                         @endif
                     </div>
                 </div>
