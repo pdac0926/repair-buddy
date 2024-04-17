@@ -65,7 +65,14 @@
                                                             <h6 class="mb-0 text-sm text-capitalize">
                                                                 {{ $service->service_name }}
                                                             </h6>
-                                                            <p>$ {{ $service->service_price }}</p>
+                                                            <form action="{{route('shop.owners.update.price', $service->service_id)}}" method="POST">
+                                                                @csrf
+                                                                <p class="ongoing-price">
+                                                                    $ <input type="text" name="price_to_update" class="disabled" value="{{ $service->service_price }}">
+                                                                    <button type="submit">Update</button>
+                                                                </p>
+                                                            </form>
+                                                            
                                                         </div>
                                                     </div>
                                                 </td>

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();;
             $table->enum('role', ['admin', 'driver', 'shopOwner', 'mechanic']);
             $table->boolean('privacyPolicy')->default(false);
             $table->boolean('status')->default(false);

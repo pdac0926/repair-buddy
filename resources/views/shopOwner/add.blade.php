@@ -83,7 +83,7 @@
                                                 value="{{ old('email') }}">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label">Password</label>
                                             <input class="form-control @error('password') is-invalid @enderror" type="password" name="password"
@@ -96,7 +96,7 @@
                                             <input class="form-control @error('password_confirmation') is-invalid @enderror" type="password" name="password_confirmation"
                                                 value="{{ old('password_confirmation') }}">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <hr class="horizontal dark">
                                 <p class="text-uppercase text-sm">Contact Information</p>

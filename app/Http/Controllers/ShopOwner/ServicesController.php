@@ -108,6 +108,7 @@ class ServicesController extends Controller
     public function ongoingAvail()
     {
         $services = Avail::where('shop_id', Auth::user()->shopOwnerInfo->id)->where('status', 'Approved')->orderBy('created_at', 'DESC')->get();
+
         return view('shopOwner.services.ongoing', compact('services'));
     }
 
@@ -134,5 +135,24 @@ class ServicesController extends Controller
         }
 
         return back()->with('success', 'Service status updated.');
+    }
+
+    public function updatePrice($serviceID, Request $request, Avail $services)
+    {
+        $field = $request->validate([
+            'price_to_update' => ['required']
+        ]);
+
+        $service = $services->where('service_id', $serviceID)->firstOrFail();
+
+        $isPriceUpdated = $service->update([
+            'service_price' => $field['price_to_update']
+        ]);
+
+        if(!$isPriceUpdated){
+            return back()->with('error', 'Something went wrong.');
+        }
+
+        return back()->with('success', 'Service Avail price update successfully.');
     }
 }

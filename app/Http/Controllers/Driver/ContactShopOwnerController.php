@@ -20,6 +20,7 @@ class ContactShopOwnerController extends Controller
 
         $messages = Messages::where('sender_id', Auth::id())
         ->orWhere('sender_id', $id)
+        // ->where('receiver_id', $id)
         ->where('shopID', $id)
         ->where('convoID', Auth::id() . '-' . $id)
         ->orderBy('created_at', 'ASC')

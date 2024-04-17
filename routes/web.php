@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-
 Auth::routes();
 
 Route::group(['middleware' => ['guest']], function () {
@@ -68,6 +66,9 @@ Route::middleware('auth')->group(function () {
         // messages
         Route::get('/messages', [App\Http\Controllers\ShopOwner\MessagesController::class, 'index'])->name('shop.owners.messages');
         Route::post('/send-to-driver/{driverID}', [App\Http\Controllers\ShopOwner\MessagesController::class, 'sendMessage'])->name('shop.owners.send.messages');
+
+        // update the pakshit
+        Route::post('/update-service-price/{serviceID}', [App\Http\Controllers\ShopOwner\ServicesController::class, 'updatePrice'])->name('shop.owners.update.price');
     });
 
     // load locations from map
@@ -85,6 +86,9 @@ Route::middleware('auth')->group(function () {
         
         Route::get('/cancel-service/{id}/', [App\Http\Controllers\Driver\AvailServiceController::class, 'cancelService'])->name('driver.cancel.service');
         
+
+        // messages
+        Route::get('/shop-messages', [App\Http\Controllers\Driver\MessagesController::class, 'messages'])->name('driver.messages');
 
         // service availed
         Route::get('/appointment', [App\Http\Controllers\Driver\AvailServiceController::class, 'serviceAvailed'])->name('driver.service.availed');

@@ -373,7 +373,53 @@ body::-webkit-scrollbar-track {
     }
 }
 
+.ongoing-price{
+
+    input{
+        width: 45px;
+    }
+
+    button{
+        cursor: pointer;
+        color: white;
+        font-size: 12px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        background: var(--black);
+    }
+}
+
 // contact
+
+.driver-messages{
+    padding: 20px;
+
+    a{
+        display: flex;
+        align-items: center;
+        background: rgb(215 215 215);
+        width: 300px;
+        column-gap: 20px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        margin-bottom: 10px;
+
+        img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+
+        }
+
+        p{
+            color: var(--secondary);
+            font-weight: 500;
+            margin: 0;
+        }
+    }
+}
 
 #messages {
     width: 100%;
