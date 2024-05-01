@@ -65,14 +65,20 @@
                                                             <h6 class="mb-0 text-sm text-capitalize">
                                                                 {{ $service->service_name }}
                                                             </h6>
-                                                            <form action="{{route('shop.owners.update.price', $service->service_id)}}" method="POST">
+                                                            <form
+                                                                action="{{ route('shop.owners.update.price', $service->service_id) }}"
+                                                                method="POST">
                                                                 @csrf
-                                                                <p class="ongoing-price">
-                                                                    $ <input type="text" name="price_to_update" class="disabled" value="{{ $service->service_price }}">
-                                                                    <button type="submit">Update</button>
-                                                                </p>
+                                                                <input type="text" name="description_to_update"
+                                                                class="disabled"
+                                                                value="{{ $service->service_description }}">
+                                                                $ <input type="text" name="price_to_update"
+                                                                class="disabled"
+                                                                value="{{ $service->service_price }}" style="wwidth: 50px;max-width:50px;">
+                                                           
+                                                            <button type="submit" style="background: black; color:#ffffff;border-radius:5px; font-size: 14px;">Update</button>
                                                             </form>
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </td>

@@ -72,6 +72,7 @@ class AvailServiceController extends Controller
                 'shop_name' => $shop->shopName,
                 'service_name' => $service->service_name,
                 'service_price' => $service->service_price,
+                'service_description' => $service->service_description,
                 'last_odometer_reading' => $availData['last_odometer_reading'] . ' ' . $availData['odometer_type'],
                 'notes' => $request->notes,
                 'arrival' => $availData['arrival']
@@ -90,6 +91,18 @@ class AvailServiceController extends Controller
     public function cancelService($id, Avail $avails)
     {
         $avail = $avails->where('id', $id)->firstOrFail();
+
+        $canceled = $avail->delete();
+
+        if (!$canceled) {
+            return back()->with('error', 'Something went wrong while processing your cancellation.');
+        }
+
+        return back()->with('success', 'Successfully canceled service.');
+    }
+    public function shopOwnerCancelService($id, Avail $avails)
+    {
+        $avail = $avails->where('service_id', $id)->firstOrFail();
 
         $canceled = $avail->delete();
 

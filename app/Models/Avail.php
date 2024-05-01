@@ -17,6 +17,7 @@ class Avail extends Model
         'shop_name',
         'service_name',
         'service_price',
+        'service_description',
         'last_odometer_reading',
         'notes',
         'arrival',

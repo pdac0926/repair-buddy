@@ -85,15 +85,11 @@
                                                 </td>
                                                 <td>
                                                     @if (in_array($service->id, $avail->pluck('service_id')->toArray()))
-                                                        <form action="{{ route('driver.cancel.service', $service->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            <button type="submit"
-                                                                class="text-secondary font-weight-bold text-xs btn btn-sm btn-secondary text-light"
-                                                                title="Edit Shop Owner">
-                                                                Cancel
-                                                            </button>
-                                                        </form>
+                                                        <a href="{{ route('driver.shop.cancel.service', $service->id) }}"
+                                                            class="text-secondary font-weight-bold text-xs btn btn-sm btn-secondary text-light"
+                                                            title="Edit Shop Owner">
+                                                            Cancel
+                                                        </a>
                                                     @else
                                                         <a href="/avail-service/{{ $service->id }}/{{ $shopOwner->shopOwnerInfo->id }}"
                                                             class="text-secondary font-weight-bold text-xs btn btn-sm btn-success text-light"
@@ -121,7 +117,7 @@
                         <div class="d-flex align-items-center">
                             <p class="mb-0">Mechanics</p>
                         </div>
-                    </div>  
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
@@ -196,15 +192,16 @@
                                                 @endfor
                                             </div>
                                         </div>
-                                        <small><strong>Service:</strong> {{$review->service_name}} | {{$review->created_at->diffForHumans()}}</small>
-                                        <p class="mt-2">{{$review->comment}}</p>
+                                        <small><strong>Service:</strong> {{ $review->service_name }} |
+                                            {{ $review->created_at->diffForHumans() }}</small>
+                                        <p class="mt-2">{{ $review->comment }}</p>
                                     </div>
                                 </div>
                             @endforeach
                         @else
-                        <div style="text-align: center;">
-    <p>No Reviews yet.</p>
-</div>
+                            <div style="text-align: center;">
+                                <p>No Reviews yet.</p>
+                            </div>
                         @endif
                     </div>
                 </div>

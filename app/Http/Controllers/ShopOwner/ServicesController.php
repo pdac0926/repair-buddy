@@ -140,13 +140,15 @@ class ServicesController extends Controller
     public function updatePrice($serviceID, Request $request, Avail $services)
     {
         $field = $request->validate([
-            'price_to_update' => ['required']
+            'price_to_update' => ['required'],
+            'description_to_update' => ['required'],
         ]);
 
         $service = $services->where('service_id', $serviceID)->firstOrFail();
 
         $isPriceUpdated = $service->update([
-            'service_price' => $field['price_to_update']
+            'service_price' => $field['price_to_update'],
+            'service_description' => $field['description_to_update'],
         ]);
 
         if(!$isPriceUpdated){
