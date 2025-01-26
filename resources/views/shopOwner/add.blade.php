@@ -76,25 +76,11 @@
                                                 value="{{ old('lastName') }}">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label">Email Address</label>
                                             <input class="form-control @error('email') is-invalid @enderror" type="email" name="email"
                                                 value="{{ old('email') }}">
-                                        </div>
-                                    </div>
-                                    {{-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label">Password</label>
-                                            <input class="form-control @error('password') is-invalid @enderror" type="password" name="password"
-                                                value="{{ old('password') }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label">Password Confirmation</label>
-                                            <input class="form-control @error('password_confirmation') is-invalid @enderror" type="password" name="password_confirmation"
-                                                value="{{ old('password_confirmation') }}">
                                         </div>
                                     </div> --}}
                                 </div>

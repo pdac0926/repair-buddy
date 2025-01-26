@@ -86,7 +86,7 @@
                                                 value="{{ old('lastName', $mechanics->lastName) }}">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-control-label">Email Address</label>
                                             <input class="form-control @error('email') is-invalid @enderror" type="email"
@@ -108,7 +108,7 @@
                                                 type="password" name="password_confirmation"
                                                 value="{{ old('password_confirmation', 'Laravel@123') }}">
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <hr class="horizontal dark">
                                 <p class="text-uppercase text-sm">Contact Information</p>

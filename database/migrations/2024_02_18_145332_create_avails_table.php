@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('shop_name');
             $table->string('service_name');
             $table->string('service_price');
+            $table->text('service_description')->nullable();
             $table->string('last_odometer_reading');
             $table->text('notes')->nullable();
             $table->string('arrival');

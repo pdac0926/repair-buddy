@@ -47,7 +47,7 @@ class MechanicController extends Controller
                 ],
                 'mechanicAddress' => ['required'],
                 'mechanicRating' => ['required'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'phoneNumber' => [
                     'required',
                     'numeric',
@@ -78,7 +78,8 @@ class MechanicController extends Controller
         $data = [
             'role' => 'mechanic',
             'privacyPolicy' => true,
-            'status' => true
+            'status' => true,
+            'email' => $this->generateEmail()
         ];
 
         $user = $mechanic->create(array_merge($data, $mechanicValidate));
@@ -92,6 +93,12 @@ class MechanicController extends Controller
 
             return redirect(route('shop.owners.mechanics'))->with('success', 'Successful Added ' . $mechanicValidate['firstName'] . ' as mechanic.');
         }
+    }
+
+    protected function generateEmail()
+    {
+        $randomString = bin2hex(random_bytes(5));
+        return "user" . $randomString . "@example.com";
     }
 
     // edit
@@ -122,7 +129,7 @@ class MechanicController extends Controller
                     'regex:/^09\d{9}$/'
                 ],
                 'mechanicAddress' => ['required'],
-                'email' => ['required', 'string', 'email', 'max:255'],
+                // 'email' => ['required', 'string', 'email', 'max:255'],
                 'phoneNumber' => [
                     'required',
                     'numeric',
@@ -144,39 +151,29 @@ class MechanicController extends Controller
                 'contactNumber.regex' => 'Please ensure that your contact number starts with "09" and consists of exactly 11 digits.',
             ]
         );
-        try {
-            if (!empty($request->file('avatar'))) {
-                $avatarName = $request->file('avatar')->store('profiles', 'public');
-                $shopOwnerValidate['avatar'] = $avatarName;
-            }
-
-            // if ($request->input('password') !== 'Laravel@123') {
-            //     $shopOwnerValidate['password'] = Hash::make($shopOwnerValidate['password']);
-            // } else {
-            //     unset($shopOwnerValidate['password']);
-            // }
-
-            $data = [
-                'role' => 'shopOwner',
-                'privacyPolicy' => true,
-                'status' => true
-            ];
-
-            $user = $owner->update(array_merge($data, $shopOwnerValidate));
-
-            if ($user) {
-                $owner->shopOwnerInfo()->update([
-                    'mechanicAddress' => $shopOwnerValidate['mechanicAddress'],
-                    'mechanicPhone' => $shopOwnerValidate['mechanicPhone'],
-                ]);
-
-                return back()->with('success', 'Successful update of ' . $shopOwnerValidate['firstName'] . ' as owner of ' . $shopOwnerValidate['shopName']);
-            }
-
-            return redirect()->back()->with('error', 'Failed to update user credentials.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        if (!empty($request->file('avatar'))) {
+            $avatarName = $request->file('avatar')->store('profiles', 'public');
+            $shopOwnerValidate['avatar'] = $avatarName;
         }
+
+        $data = [
+            'role' => 'mechanic',
+            'privacyPolicy' => true,
+            'status' => true
+        ];
+
+        $user = $owner->update(array_merge($data, $shopOwnerValidate));
+
+        if ($user) {
+            $owner->mechanicInfo()->update([
+                'mechanicAddress' => $shopOwnerValidate['mechanicAddress'],
+                'mechanicPhone' => $shopOwnerValidate['mechanicPhone'],
+            ]);
+
+            return back()->with('success', 'Successful update of ' . $shopOwnerValidate['firstName'] . ' as mechanic.');
+        }
+
+        return redirect()->back()->with('error', 'Failed to update user credentials.');
     }
 
     public function updateMechanicsAvailability($id, Request $request, MechanicInfo $mechanicInfos)

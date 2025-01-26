@@ -44,8 +44,8 @@
                                                             <h6 class="mb-0 text-sm text-capitalize">
                                                                 {{ $mechanic->firstName . ' ' . $mechanic->lastName . ' ' . $mechanic->middleName }}
                                                             </h6>
-                                                            <p class="text-xs text-secondary mb-0">{{ $mechanic->email }}
-                                                            </p>
+                                                            {{-- <p class="text-xs text-secondary mb-0">{{ $mechanic->email }}
+                                                            </p> --}}
                                                         </div>
                                                     </div>
                                                 </td>
