@@ -117,6 +117,7 @@
 
             notificationDialog.classList.add('hide-popup');
         }
+
     </script>
     @yield('scripts')
 </body>

@@ -27,6 +27,9 @@
                                             Your Estimated Arrival</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Notes</th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Status</th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
@@ -80,6 +83,10 @@
                                                         );
                                                     @endphp
                                                     <p class="text-xs font-weight-bold mb-0">{{ $formattedArrival }}</p>
+                                                </td>
+                                                <td class="align-middle text-center" style="max-width: 200px;text-wrap: initial;">
+                                                    <p class="text-xs">
+                                                        {{ $service->notes }}</p>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <p class="text-xs font-weight-bold mb-0 badge bg-danger">
