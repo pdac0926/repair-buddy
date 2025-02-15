@@ -55,7 +55,7 @@
                                                             <h6 class="mb-0 text-sm text-capitalize">
                                                                 {{ $user->firstName . ' ' . $user->middleName . ' ' . $user->lastName }}
                                                             </h6>
-                                                            <p>$ {{ $service->service_price }}</p>
+                                                            {{-- <p>$ {{ $service->service_price }}</p> --}}
                                                         </div>
                                                     </div>
                                                 </td>
@@ -84,15 +84,29 @@
                                                     @endphp
                                                     <p class="text-xs font-weight-bold mb-0">{{ $formattedArrival }}</p>
                                                 </td>
-                                                <td class="align-middle text-center" style="max-width: 200px;text-wrap: initial;">
-                                                    <p class="text-xs">
-                                                        {{ $service->notes }}</p>
+                                                <td class="align-middle text-center" style="max-width: 600px;text-wrap: initial;">
+                                                    <button type="button" class="btn btn-primary btn-xs mb-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">View notes</button>
+                                                    <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            {{ $service->notes }}
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <p class="text-xs font-weight-bold mb-0 badge bg-danger">
                                                         {{ $service->status }}</p>
                                                 </td>
-                                                <td class="align-middle text-center">
+                                                <td class="align-middle text-center" style="width: 200px;">
                                                     @if ($service->status)
                                                         <form
                                                             action="{{ route('shop.owners.update.services.status', $service->id) }}"

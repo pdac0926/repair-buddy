@@ -47,32 +47,19 @@ class MechanicController extends Controller
                 ],
                 'mechanicAddress' => ['required'],
                 'mechanicRating' => ['required'],
-                // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'phoneNumber' => [
                     'required',
                     'numeric',
                     'regex:/^09\d{9}$/'
                 ],
-                // 'password' => [
-                //     'required',
-                //     'string',
-                //     'min:8',
-                //     'regex:/[a-z]/',      // must contain at least one lowercase letter
-                //     'regex:/[A-Z]/',      // must contain at least one uppercase letter
-                //     'regex:/[0-9]/',      // must contain at least one digit
-                //     'regex:/[@$!%*#?&]/', // must contain a special character
-                //     'confirmed'
-                // ],
             ],
             [
-                // 'password.regex' => 'Please make sure password includes at least one uppercase letter, one lowercase letter, one digit, and one special character (e.g., @, #, $).',
                 'contactNumber.regex' => 'Please ensure that contact number starts with "09" and consists of exactly 11 digits.',
             ]
         );
 
         $avatarName = $request->file('avatar')->store('profiles', 'public');
 
-        // $mechanicValidate['password'] = Hash::make($mechanicValidate['password']);
         $mechanicValidate['avatar'] = $avatarName;
 
         $data = [
@@ -129,25 +116,13 @@ class MechanicController extends Controller
                     'regex:/^09\d{9}$/'
                 ],
                 'mechanicAddress' => ['required'],
-                // 'email' => ['required', 'string', 'email', 'max:255'],
                 'phoneNumber' => [
                     'required',
                     'numeric',
                     'regex:/^09\d{9}$/'
                 ],
-                // 'password' => [
-                //     'required',
-                //     'string',
-                //     'min:8',
-                //     'regex:/[a-z]/',      // must contain at least one lowercase letter
-                //     'regex:/[A-Z]/',      // must contain at least one uppercase letter
-                //     'regex:/[0-9]/',      // must contain at least one digit
-                //     'regex:/[@$!%*#?&]/', // must contain a special character
-                //     'confirmed'
-                // ],
             ],
             [
-                // 'password.regex' => 'Please make sure your password includes at least one uppercase letter, one lowercase letter, one digit, and one special character (e.g., @, #, $).',
                 'contactNumber.regex' => 'Please ensure that your contact number starts with "09" and consists of exactly 11 digits.',
             ]
         );
