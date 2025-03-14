@@ -41,7 +41,7 @@
                                                             <h6 class="mb-0 text-sm text-capitalize">
                                                                 {{ $service->service_name }}
                                                             </h6>
-                                                            <p>$ {{ $service->service_price }}</p>
+                                                            <p>₱ {{ $service->service_price }}</p>
                                                         </div>
                                                     </div>
                                                 </td>

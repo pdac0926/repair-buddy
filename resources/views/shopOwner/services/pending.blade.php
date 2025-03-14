@@ -20,9 +20,6 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Service Name</th>
                                         <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Shop</th>
-                                        <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Your Estimated Arrival</th>
                                         <th
@@ -72,12 +69,9 @@
                                                             <h6 class="mb-0 text-sm text-capitalize">
                                                                 {{ $service->service_name }}
                                                             </h6>
-                                                            <p>$ {{ $service->service_price }}</p>
+                                                            <p>₱ {{ $service->service_price }}</p>
                                                         </div>
                                                     </div>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $service->shop_name }}</p>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     @php

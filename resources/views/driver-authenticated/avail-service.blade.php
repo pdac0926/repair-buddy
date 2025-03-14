@@ -18,7 +18,7 @@
                                     <i class="icon rb-forklift text-danger text-lg opacity-10"></i>
                                     <h6>{{ $service->service_name }}</h6>
                                 </div>
-                                <h5>$ {{ $service->service_price }}</h5>
+                                <h5>₱ {{ $service->service_price }}</h5>
                                 <p>{{ $service->service_description }}</p>
                             </div>
                         </div>

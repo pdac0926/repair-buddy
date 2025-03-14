@@ -52,7 +52,7 @@
                                                             <h6 class="mb-0 text-sm text-capitalize">
                                                                 {{ $user->firstName . ' ' . $user->middleName . ' ' . $user->lastName }}
                                                             </h6>
-                                                            <p>$ {{ $service->service_price }}</p>
+                                                            <p>₱ {{ $service->service_price }}</p>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -72,7 +72,7 @@
                                                                 <input type="text" name="description_to_update"
                                                                 class="disabled"
                                                                 value="{{ $service->service_description }}">
-                                                                $ <input type="text" name="price_to_update"
+                                                                ₱ <input type="text" name="price_to_update"
                                                                 class="disabled"
                                                                 value="{{ $service->service_price }}" style="wwidth: 50px;max-width:50px;">
                                                            

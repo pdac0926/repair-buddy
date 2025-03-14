@@ -79,7 +79,24 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><small>{{ $service->service_description }}</small></td>
+                                                <td class="align-middle text-start" style="max-width: 600px; text-wrap: initial;">
+                                                     <button type="button" class="btn btn-light btn-xs mb-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">View Description</button>
+                                                         <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                              <div class="modal-content">
+                                                                 <div class="modal-header">
+                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                         </div>
+                                                                 <div class="modal-body">
+                                                                   {{ $service->service_description }}
+                                                                  </div>
+                                                                     <div class="modal-footer">
+                                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                         </div>
+                                                                           </div>
+                                                                             </div>
+                                                                                 </div>
+                                                                                    </td>
                                                 <td class="align-middle text-center">
                                                     <small>{{ $service->service_price }}</small>
                                                 </td>
