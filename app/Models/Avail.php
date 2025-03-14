@@ -21,7 +21,8 @@ class Avail extends Model
         'last_odometer_reading',
         'notes',
         'arrival',
-        'status'
+        'status',
+        'message',
     ];
 
     public function user()

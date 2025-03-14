@@ -7,8 +7,14 @@
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
-                    <div class="card-header pb-0 d-flex align-items-center justify-content-between">
-                        <h6>Paid Services</h6>
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <div><h6>Paid Services</h6></div>
+                        <select class="form-select w-25 d-block" aria-label="Default select example">
+                            <option selected>Filter by date</option>
+                            <option value="today">Today</option>
+                            <option value="this_month">This month</option>
+                            <option value="this_year">This year</option>
+                        </select>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -105,3 +111,12 @@
         </div>
     </div>
 @endsection
+
+<script>
+    window.onload = ()=>{
+        const selectFilter = document.querySelector('.form-select');
+        selectFilter.addEventListener('change', ()=>{
+            location.href = `?filter_by_date=${selectFilter.value}`;
+        });
+    };
+</script>

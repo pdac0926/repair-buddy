@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ShopOwner;
 use App\Http\Controllers\Controller;
 use App\Models\Avail;
 use App\Models\Services;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -112,22 +113,39 @@ class ServicesController extends Controller
         return view('shopOwner.services.ongoing', compact('services'));
     }
 
-    public function paidAvail()
+    public function paidAvail(Request $request)
     {
-        $services = Avail::where('shop_id', Auth::user()->shopOwnerInfo->id)->where('status', 'Paid')->orderBy('created_at', 'DESC')->get();
+        $filterByDate = $request->get('filter_by_date', 'all');
+
+        $query = Avail::where('shop_id', Auth::user()->shopOwnerInfo->id)
+            ->where('status', 'Paid')
+            ->orderBy('created_at', 'DESC');
+
+        if ($filterByDate === 'today') {
+            $query->whereDate('created_at', Carbon::today());
+        } elseif ($filterByDate === 'this_month') {
+            $query->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year);
+        } elseif ($filterByDate === 'this_year') {
+            $query->whereYear('created_at', Carbon::now()->year);
+        }
+
+        $services = $query->get();
         return view('shopOwner.services.paid', compact('services'));
     }
 
     public function updateServiceStatus($id, Request $request, Avail $avails)
     {
         $field = $request->validate([
-            'status' => ['required', 'string', 'in:Reject,Approved,Pending,Paid']
+            'status' => ['required', 'string', 'in:Reject,Approved,Pending,Paid'],
+            'message' => 'nullable'
         ]);
 
         $avail = $avails->findOrFail($id);
 
         $updated = $avail->update([
-            'status' => $field['status']
+            'status' => $field['status'],
+            'message' => $field['message'],
         ]);
 
         if (!$updated) {
@@ -151,7 +169,7 @@ class ServicesController extends Controller
             'service_description' => $field['description_to_update'],
         ]);
 
-        if(!$isPriceUpdated){
+        if (!$isPriceUpdated) {
             return back()->with('error', 'Something went wrong.');
         }
 

@@ -36,8 +36,12 @@
                                 </thead>
                                 <tbody>
                                     @if (count($services) > 0)
+                                        @php
+                                            $count = 0;
+                                        @endphp
                                         @foreach ($services as $service)
                                             @php
+                                                $count++;
                                                 $user = (new \App\Models\User())
                                                     ->where('id', $service->user_id)
                                                     ->where('role', 'driver')
@@ -87,19 +91,19 @@
                                                 <td class="align-middle text-center" style="max-width: 600px;text-wrap: initial;">
                                                     <button type="button" class="btn btn-primary btn-xs mb-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">View notes</button>
                                                     <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered">
-                                                        <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    {{ $service->notes }}
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="modal-body">
-                                                            {{ $service->notes }}
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        </div>
-                                                        </div>
-                                                    </div>
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-center">
@@ -110,12 +114,12 @@
                                                     @if ($service->status)
                                                         <form
                                                             action="{{ route('shop.owners.update.services.status', $service->id) }}"
-                                                            method="POST" id="formServiceStatus" class="w-75">
+                                                            method="POST" id="formServiceStatus{{$count}}" class="w-75">
                                                             @csrf
-                                                            <select name="status" class="form-select"
-                                                                aria-label="Default select example"
-                                                                onchange="document.getElementById('formServiceStatus').submit()">
-                                                                <option selected>Choose</option>
+                                                            <input type="hidden" name="message" class="d-none formServiceStatus{{$count}}"></input>
+                                                            <select name="status" class="form-select select-status"
+                                                                aria-label="Default select example" target-id="formServiceStatus{{$count}}">
+                                                                <option value="" selected>Choose</option>
                                                                 <option value="Approved">Accept</option>
                                                                 <option value="Reject">Reject</option>
                                                             </select>
@@ -144,3 +148,45 @@
         </div>
     </div>
 @endsection
+
+<div class="modal fade" id="formNotesReject" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control messageChurvaness" rows="3" placeholder="Leave a message why you reject the service."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary submitCuchu" >Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = ()=>{
+        const selectStatus = document.querySelector('.select-status');
+        const modal = new bootstrap.Modal(document.getElementById('formNotesReject'));
+
+        let targetID = '';
+        selectStatus.addEventListener('change', ()=>{
+            targetID = selectStatus.getAttribute('target-id');
+            if(selectStatus.value == '') {return};
+            if(selectStatus.value != 'Reject'){
+                document.getElementById(targetID).submit()
+            }
+            modal.show();
+        });
+
+        // submit chuchuness
+        const submitChuchuness = document.querySelector('.submitCuchu');
+        submitChuchuness.addEventListener('click', ()=>{
+            const messageChurvaness = document.querySelector('.messageChurvaness');
+            const formMessageChurvaness = document.querySelector(`.${targetID}`);
+            formMessageChurvaness.value = messageChurvaness.value;
+            document.getElementById(targetID).submit();
+        });
+    };
+</script>
