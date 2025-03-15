@@ -22,6 +22,8 @@
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Your Estimated Arrival</th>
+                    
+                                            
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Status</th>
@@ -56,23 +58,26 @@
                                                     <p class="text-xs font-weight-bold mb-0">{{ $formattedArrival }}</p>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    @if($service->status == 'Reject')
-                                                        <button type="button" class="btn btn-primary btn-xs mb-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">View notes</button>
-                                                        <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        {{ $service->message }}
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                @if($service->status == 'Reject')
+    <button type="button" class="btn btn-primary btn-xs mb-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Rejected | View Notes
+    </button>
+    <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ $service->message }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
                                                     @else
                                                         <p class="text-xs font-weight-bold mb-0">{{ ($service->status) }}</p>
                                                     @endif
