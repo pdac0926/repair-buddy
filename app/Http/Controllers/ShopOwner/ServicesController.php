@@ -143,10 +143,15 @@ class ServicesController extends Controller
 
         $avail = $avails->findOrFail($id);
 
-        $updated = $avail->update([
-            'status' => $field['status'],
-            'message' => $field['message'],
-        ]);
+        $data = [
+            'status' => $field['status']
+        ];
+
+        if($request->has('message')){
+            $data['message'] = $field['message'];
+        }
+
+        $updated = $avail->update($data);
 
         if (!$updated) {
             return back()->with('error', 'Something went wrong while updating the service.');
