@@ -115,22 +115,18 @@ class ServicesController extends Controller
 
     public function paidAvail(Request $request)
     {
-        $filterByDate = $request->get('filter_by_date', 'all');
+        $query = Avail::query();
 
-        $query = Avail::where('shop_id', Auth::user()->shopOwnerInfo->id)
-            ->where('status', 'Paid')
-            ->orderBy('created_at', 'DESC');
-
-        if ($filterByDate === 'today') {
-            $query->whereDate('created_at', Carbon::today());
-        } elseif ($filterByDate === 'this_month') {
-            $query->whereMonth('created_at', Carbon::now()->month)
-                ->whereYear('created_at', Carbon::now()->year);
-        } elseif ($filterByDate === 'this_year') {
-            $query->whereYear('created_at', Carbon::now()->year);
+        if ($request->has('filter_by_month') && $request->input('filter_by_month') !== '') {
+            $monthYear = $request->input('filter_by_month'); // Format: YYYY-MM
+            $date = Carbon::createFromFormat('Y-m', $monthYear);
+    
+            $query->whereMonth('created_at', $date->month)
+                  ->whereYear('created_at', $date->year);
         }
-
-        $services = $query->get();
+    
+        $services = $query->get(); // Fetch all records if no filter is applied
+        
         return view('shopOwner.services.paid', compact('services'));
     }
 
