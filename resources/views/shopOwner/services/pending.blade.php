@@ -116,7 +116,7 @@
                                                                 aria-label="Default select example" target-id="formServiceStatus{{$count}}">
                                                                 <option value="" selected>Choose</option>
                                                                 <option value="Approved">Accept</option>
-                                                                <option value="Reject">Reject</option>
+                                                                <option value="Rejected">Reject</option>
                                                             </select>
                                                         </form>
                                                     @endif

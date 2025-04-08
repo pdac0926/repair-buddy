@@ -113,6 +113,15 @@ class ServicesController extends Controller
         return view('shopOwner.services.ongoing', compact('services'));
     }
 
+    public function rejectedAvail()
+    {
+
+        $services = Avail::where('shop_id', Auth::user()->shopOwnerInfo->id)->where('status', 'Rejected')->orderBy('created_at', 'DESC')->get();
+
+    return view('shopOwner.services.rejected', compact('services'));
+    }
+
+
     public function paidAvail(Request $request)
     {
         $query = Avail::query();
@@ -133,7 +142,7 @@ class ServicesController extends Controller
     public function updateServiceStatus($id, Request $request, Avail $avails)
     {
         $field = $request->validate([
-            'status' => ['required', 'string', 'in:Reject,Approved,Pending,Paid'],
+            'status' => ['required', 'string', 'in:Rejected,Approved,Pending,Paid'],
             'message' => 'nullable'
         ]);
 

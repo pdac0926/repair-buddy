@@ -35,14 +35,16 @@
                                             $totalServicePrice = 0;
                                         @endphp
                                         @foreach ($services as $service)
-                                            @php
-                                                $totalServicePrice += $service->service_price;
-                                                $user = (new \App\Models\User())
-                                                    ->where('id', $service->user_id)
-                                                    ->where('role', 'driver')
-                                                    ->where('status', true)
-                                                    ->first();
-                                            @endphp
+    @if (strtolower(trim($service->status)) !== 'rejected')
+        @php
+            $totalServicePrice += $service->service_price;
+            $user = (new \App\Models\User())
+                ->where('id', $service->user_id)
+                ->where('role', 'driver')
+                ->where('status', true)
+                ->first();
+        @endphp
+        @if ($user)
                                             <tr>
                                                 <td>
                                                     <div class="d-flex gap-3 px-2 py-1">
@@ -82,6 +84,8 @@
                                                         {{ $service->status }}</p>
                                                 </td>
                                             </tr>
+                                            @endif
+                                            @endif
                                         @endforeach
                                         <tr>
                                             <td colspan="3" class="text-end font-weight-bold">Total:</td>

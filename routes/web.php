@@ -59,6 +59,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/pending-avail', [App\Http\Controllers\ShopOwner\ServicesController::class, 'pendingAvail'])->name('shop.owners.pending.avail');
         Route::post('/update-service-status/{id}', [App\Http\Controllers\ShopOwner\ServicesController::class, 'updateServiceStatus'])->name('shop.owners.update.services.status');
 
+        Route::get('/rejected', [App\Http\Controllers\ShopOwner\ServicesController::class, 'rejectedAvail'])->name('shop.owners.rejected.avail');
+
+
         //pending / paid
         Route::get('/ongoing-avail', [App\Http\Controllers\ShopOwner\ServicesController::class, 'ongoingAvail'])->name('shop.owners.ongoing.avail');
         Route::get('/paid', [App\Http\Controllers\ShopOwner\ServicesController::class, 'paidAvail'])->name('shop.owners.ongoing.paid');
@@ -67,14 +70,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/messages', [App\Http\Controllers\ShopOwner\MessagesController::class, 'index'])->name('shop.owners.messages');
         Route::post('/send-to-driver/{driverID}', [App\Http\Controllers\ShopOwner\MessagesController::class, 'sendMessage'])->name('shop.owners.send.messages');
 
-        // update the pakshit
+        // update the price
         Route::post('/update-service-price/{serviceID}', [App\Http\Controllers\ShopOwner\ServicesController::class, 'updatePrice'])->name('shop.owners.update.price');
     });
 
     // load locations from map
     Route::get('/load-shop-locations', [App\Http\Controllers\Driver\DashboardController::class, 'loadShopLocations'])->name('driver.load.shop.locations');
 
-    // Dirver routes
+    // Driver routes
     Route::middleware('isDriver')->group(function () {
         Route::get('/maintenance-history', [App\Http\Controllers\Driver\MaintenanceController::class, 'index'])->name('driver.maintenance.history');
         Route::get('/shop-owner/{id}', [App\Http\Controllers\Driver\ShopOwnerController::class, 'index'])->name('driver.view.shop.owner');
