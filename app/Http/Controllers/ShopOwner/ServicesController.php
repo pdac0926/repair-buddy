@@ -118,7 +118,7 @@ class ServicesController extends Controller
 
         $services = Avail::where('shop_id', Auth::user()->shopOwnerInfo->id)->where('status', 'Rejected')->orderBy('created_at', 'DESC')->get();
 
-    return view('shopOwner.services.rejected', compact('services'));
+        return view('shopOwner.services.rejected', compact('services'));
     }
 
 
@@ -128,14 +128,17 @@ class ServicesController extends Controller
 
         if ($request->has('filter_by_month') && $request->input('filter_by_month') !== '') {
             $monthYear = $request->input('filter_by_month'); // Format: YYYY-MM
-            $date = Carbon::createFromFormat('Y-m', $monthYear);
-    
-            $query->whereMonth('created_at', $date->month)
-                  ->whereYear('created_at', $date->year);
+            // dd($monthYear);
+
+            $year = substr($monthYear, 0, 4);
+            $month = substr($monthYear, 5, 2);
+
+            $query->whereYear('created_at', $year)
+                ->whereMonth('created_at', $month);
         }
-    
+
         $services = $query->get(); // Fetch all records if no filter is applied
-        
+
         return view('shopOwner.services.paid', compact('services'));
     }
 
@@ -152,7 +155,7 @@ class ServicesController extends Controller
             'status' => $field['status']
         ];
 
-        if($request->has('message')){
+        if ($request->has('message')) {
             $data['message'] = $field['message'];
         }
 
