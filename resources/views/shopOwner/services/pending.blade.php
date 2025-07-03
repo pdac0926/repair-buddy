@@ -169,7 +169,7 @@
         selectStatus.addEventListener('change', ()=>{
             targetID = selectStatus.getAttribute('target-id');
             if(selectStatus.value == '') {return};
-            if(selectStatus.value != 'Reject'){
+            if(selectStatus.value != 'Rejected'){
                 document.getElementById(targetID).submit()
             }
             modal.show();

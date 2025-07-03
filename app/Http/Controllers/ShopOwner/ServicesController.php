@@ -124,23 +124,19 @@ class ServicesController extends Controller
 
     public function paidAvail(Request $request)
     {
-        $query = Avail::query();
-
-        if ($request->has('filter_by_month') && $request->input('filter_by_month') !== '') {
-            $monthYear = $request->input('filter_by_month'); // Format: YYYY-MM
-            // dd($monthYear);
-
-            $year = substr($monthYear, 0, 4);
-            $month = substr($monthYear, 5, 2);
-
-            $query->whereYear('created_at', $year)
-                ->whereMonth('created_at', $month);
+        $query = Avail::query()->where('status', '!=', 'Rejected');
+    
+        if ($request->filled('start_day') && $request->filled('end_day') && $request->start_day <= $request->end_day) {
+            $query->whereDate('created_at', '>=', $request->start_day)
+                  ->whereDate('created_at', '<=', $request->end_day);
         }
-
-        $services = $query->get(); // Fetch all records if no filter is applied
-
+    
+        $services = $query->get();
+    
         return view('shopOwner.services.paid', compact('services'));
     }
+    
+    
 
     public function updateServiceStatus($id, Request $request, Avail $avails)
     {

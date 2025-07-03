@@ -9,7 +9,14 @@
                 <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
                      <h6>Paid Services</h6>
-                       <input type="date" id="monthFilter" class="form-control w-25">
+                     <form method="GET" class="d-flex gap-2 align-items-center mb-3">
+    <input type="date" name="start_day" class="form-control" value="{{ request('start_day') }}">
+    <span>to</span>
+    <input type="date" name="end_day" class="form-control" value="{{ request('end_day') }}">
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+
                 </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -20,13 +27,13 @@
                                             Name</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Service Name</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Your Estimated Arrival</th>
+                                        
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Status</th>
                                         <th class="text-secondary opacity-7"></th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Service Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,26 +75,27 @@
                                                             <h6 class="mb-0 text-sm text-capitalize">
                                                                 {{ $service->service_name }}
                                                             </h6>
-                                                            <p>₱ {{ number_format($service->service_price, 2) }}</p>
+                                                            
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="align-middle text-center">
-                                                    @php
-                                                        $arrivalDateTime = new DateTime($service->arrival);
-                                                        $formattedArrival = $arrivalDateTime->format('F j, Y | g:i A | l');
-                                                    @endphp
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $formattedArrival }}</p>
-                                                </td>
+                                                
                                                 <td class="align-middle text-center">
                                                     <p class="text-xs font-weight-bold mb-0 badge bg-success">
                                                         {{ $service->status }}</p>
                                                 </td>
+                                                <td>
+</td>
+                                                <td>
+                                                <p>₱ {{ number_format($service->service_price, 2) }}</p>
+</td>
                                             </tr>
                                             @endif
                                             @endif
                                         @endforeach
                                         <tr>
+                                            <td>
+</td>
                                             <td colspan="3" class="text-end font-weight-bold">Total:</td>
                                             <td class="text-center font-weight-bold">₱ {{ number_format($totalServicePrice, 2) }}</td>
                                         </tr>
@@ -113,12 +121,20 @@
 @endsection
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const monthFilter = document.getElementById('monthFilter');
-        monthFilter.addEventListener('change', function() {
-            const selectedMonth = monthFilter.value; // Format: YYYY-MM
-            location.href = `?filter_by_month=${selectedMonth}`;
+    document.addEventListener('DOMContentLoaded', function () {
+        const filterBtn = document.getElementById('filterBtn');
+
+        filterBtn.addEventListener('click', function () {
+            const start = document.getElementById('startDate').value;
+            const end = document.getElementById('endDate').value;
+
+            if (start && end) {
+                location.href = `?start_date=${start}&end_date=${end}`;
+            } else {
+                alert('Please select both start and end dates.');
+            }
         });
     });
 </script>
+
     
