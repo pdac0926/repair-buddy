@@ -145,22 +145,22 @@
                                 <hr class="horizontal dark">
                                 <p class="text-uppercase text-sm">Business</p>
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="form-control-label">Business Permit</label>
                                             <input class="form-control @error('permit') is-invalid @enderror" type="file" name="permit">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="form-control-label">Permit number</label>
                                             <input class="form-control @error('permitNumber') is-invalid @enderror" type="text" name="permitNumber">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="form-control-label">Expiration</label>
-                                            <input class="form-control @error('expiration') is-invalid @enderror" type="text" name="expiration">
+                                            <input id="expiration" class="form-control @error('expiration') is-invalid @enderror" type="text" name="expiration" maxlength="7" placeholder="Ex. 01/2025">
                                         </div>
                                     </div>
                                 </div>
@@ -172,6 +172,10 @@
                         @error('shopLong') border border-danger @enderror
                         @error('shopLat') border border-danger @enderror
                         @error('shopAddress') border border-danger @enderror">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button class="btn btn-danger mb-0 rounded-0" id="searchButton" type="button" id="button-addon2">Button</button>
+                        </div>
                             <div id="map"></div>
                             <div class="card-body p-3">
                                 <div class="text-center mt-4">
@@ -213,30 +217,89 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Add a marker to the map
+        // Create single marker
         var marker = L.marker([16.41122194797963, 120.59623719046016], {
             draggable: true
         }).addTo(map);
 
-        marker.on('dragend', function(event) {
-            var marker = event.target;
-            var position = marker.getLatLng();
-
-            document.querySelector('#shopLong').innerHTML = position.lng;
-            document.querySelector('#shopLat').innerHTML = position.lat;
+        // Function to update location info
+        function updateLocationInfo(position) {
+            document.querySelector('#shopLong').innerHTML = position.lng.toFixed(6);
+            document.querySelector('#shopLat').innerHTML = position.lat.toFixed(6);
             document.querySelector('[name="shopLong"]').value = position.lng;
             document.querySelector('[name="shopLat"]').value = position.lat;
             
-
+            // Fetch address using OpenCage API
             fetch('https://api.opencagedata.com/geocode/v1/json?q=' + position.lat + '+' + position.lng +
                     '&key=84b8f8b5b31c450485b329c38cad5c23')
                 .then(response => response.json())
                 .then(data => {
-                    var address = data.results[0].formatted;
-                    document.querySelector('#shopAddress').innerHTML = address;
-                    document.querySelector('[name="shopAddress"]').value = address;
+                    if (data.results && data.results.length > 0) {
+                        var address = data.results[0].formatted;
+                        document.querySelector('#shopAddress').innerHTML = address;
+                        document.querySelector('[name="shopAddress"]').value = address;
+                    } else {
+                        document.querySelector('#shopAddress').innerHTML = 'Address not found';
+                        document.querySelector('[name="shopAddress"]').value = '';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching address:', error);
+                    document.querySelector('#shopAddress').innerHTML = 'Error loading address';
                 });
+        }
+
+        // Handle marker drag
+        marker.on('dragend', function(event) {
+            var marker = event.target;
+            var position = marker.getLatLng();
+            updateLocationInfo(position);
         });
+
+        // Search functionality
+        function searchLocation(query) {
+            if (!query.trim()) {
+                alert('Please enter a search term');
+                return;
+            }
+
+            // Use OpenCage API for geocoding
+            fetch('https://api.opencagedata.com/geocode/v1/json?q=' + encodeURIComponent(query) + 
+                  '&key=84b8f8b5b31c450485b329c38cad5c23&limit=1')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.results && data.results.length > 0) {
+                        var result = data.results[0];
+                        var lat = result.geometry.lat;
+                        var lng = result.geometry.lng;
+                        
+                        // Update marker position
+                        marker.setLatLng([lat, lng]);
+                        
+                        // Center map on new location
+                        map.setView([lat, lng], 16);
+                        
+                        // Update location info
+                        updateLocationInfo({lat: lat, lng: lng});
+                    } else {
+                        alert('Location not found. Please try a different search term.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Search error:', error);
+                    alert('Error searching for location. Please try again.');
+                });
+        }
+
+        // Search button event listener
+        document.getElementById('searchButton').addEventListener('click', function() {
+            var query = document.getElementById('searchInput').value;
+            searchLocation(query);
+        });
+
+        // Initialize address on page load
+        updateLocationInfo({lat: 16.41122194797963, lng: 120.59623719046016});
+        
 
         function selectedImage(input, target) {
             let reader = new FileReader();
@@ -245,5 +308,43 @@
             };
             reader.readAsDataURL(input.files[0]);
         }
+
+        document.getElementById('expiration').addEventListener('input', function (e) {
+            let v = e.target.value;
+            v = v.replace(/[^0-9]/g, '');
+            if (v.length === 0) {
+                e.target.value = '';
+                return;
+            }
+            if (v.length === 1 && v > '1') {
+                v = '0' + v;
+            }
+            if (v.length > 2) {
+                v = v.slice(0, 2) + '/' + v.slice(2);
+            }
+            let m = v.slice(0, 2);
+            if (parseInt(m) > 12) {
+                m = '12';
+            }
+            const y = new Date().getFullYear();
+            const cm = new Date().getMonth() + 1;
+            let yr = v.slice(3, 7);
+            if (yr.length === 4) {
+                if (parseInt(yr) < y) {
+                    yr = y.toString();
+                } else if (parseInt(yr) === y) {
+                    const im = parseInt(m);
+                    if (im < cm) {
+                        m = cm < 10 ? '0' + cm : cm.toString();
+                    }
+                }
+            }
+            v = m + '/' + yr;
+            if (v.length > 7) {
+                v = v.slice(0, 7);
+            }
+            e.target.value = v;
+        });
+
     </script>
 @endsection

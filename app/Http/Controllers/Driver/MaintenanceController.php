@@ -17,7 +17,7 @@ class MaintenanceController extends Controller
     }
 
     public function index(){
-        $services = Avail::where('user_id', Auth::id())->where('status', 'Paid')->orderBy('created_at', 'DESC')->get();
+        $services = Avail::where('user_id', Auth::id())->whereIn('status', ['Paid', 'Rejected'])->orderBy('created_at', 'DESC')->get();
         return view('driver-authenticated.maintenance-history', compact('services'));
     }
 }

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('service_name');
             $table->text('service_description');
             $table->string('service_price');
+            $table->integer('service_new_price')->nullable();
+            $table->string('service_price_notes')->nullable();
 
             $table->foreign('shop_id')->references('id')->on('shop_owner_infos')->onDelete('cascade');
             $table->timestamps();

@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="{{asset('/assets/leaflet/leaflet-routing.css')}}" />
         <link rel="stylesheet" href="{{asset('/assets/leaflet/geocontrol.css')}}" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css">
     @endauth
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -261,6 +262,7 @@
         <script src="{{ asset('/assets_auth/js/core/bootstrap.min.js') }}"></script>
         <script src="{{ asset('/assets_auth/js/plugins/perfect-scrollbar.min.js') }}"></script>
         <script src="{{ asset('/assets_auth/js/plugins/smooth-scrollbar.min.js') }}"></script>
+        <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
         <script>
             var win = navigator.platform.indexOf('Win') > -1;
             if (win && document.querySelector('#sidenav-scrollbar')) {

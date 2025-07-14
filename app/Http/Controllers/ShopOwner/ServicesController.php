@@ -124,18 +124,18 @@ class ServicesController extends Controller
     public function paidAvail(Request $request)
     {
         $query = Avail::query()->where('status', '!=', 'Rejected');
-    
+
         if ($request->filled('start_day') && $request->filled('end_day') && $request->start_day <= $request->end_day) {
             $query->whereDate('created_at', '>=', $request->start_day)
-                  ->whereDate('created_at', '<=', $request->end_day);
+                ->whereDate('created_at', '<=', $request->end_day);
         }
-    
+
         $services = $query->get();
-    
+
         return view('shopOwner.services.paid', compact('services'));
     }
-    
-    
+
+
 
     public function updateServiceStatus($id, Request $request, Avail $avails)
     {
@@ -168,14 +168,26 @@ class ServicesController extends Controller
         $field = $request->validate([
             'price_to_update' => ['required'],
             'description_to_update' => ['required'],
+            'service_price_notes' => ['required_if:price_change,priceChanged']
+        ], [
+            'price_to_update.required' => 'The price to update is required.',
+            'description_to_update.required' => 'The description to update is required.',
+            'service_price_notes.required_if' => 'Service price notes are required when price changed".'
         ]);
 
         $service = $services->where('service_id', $serviceID)->firstOrFail();
 
-        $isPriceUpdated = $service->update([
+        $data = [
             'service_price' => $field['price_to_update'],
             'service_description' => $field['description_to_update'],
-        ]);
+        ];
+
+        if($request->has('price_change') && !empty($field['service_price_notes'])){
+            $data['service_new_price'] = $field['price_to_update'];
+            $data['service_price_notes'] = $field['service_price_notes'];
+        }
+
+        $isPriceUpdated = $service->update($data);
 
         if (!$isPriceUpdated) {
             return back()->with('error', 'Something went wrong.');

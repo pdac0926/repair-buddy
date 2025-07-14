@@ -23,6 +23,8 @@ class Avail extends Model
         'arrival',
         'status',
         'message',
+        'service_new_price',
+        'service_price_notes'
     ];
 
     public function user()

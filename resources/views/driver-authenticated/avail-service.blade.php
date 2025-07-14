@@ -38,7 +38,9 @@
                                             <label class="form-control-label">Date of Arrival</label>
                                             <input class="form-control @error('arrival') is-invalid @enderror"
                                                 type="datetime-local" name="arrival"
-                                                value="{{ old('arrival') }}">
+                                                value="{{ old('arrival') }}"
+                                                id="arrival"
+                                                min="" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -78,6 +80,18 @@
             const inputOdometer = document.querySelector('input[name="last_odometer_reading"]');
 
             inputOdometer.setAttribute('placeholder', value);
+        }
+        window.onload = function() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+
+            const datetime = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+            document.getElementById('arrival').setAttribute('min', datetime);
         }
     </script>
 @endsection

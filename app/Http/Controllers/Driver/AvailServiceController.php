@@ -18,7 +18,9 @@ class AvailServiceController extends Controller
 
     public function serviceAvailed()
     {
-        $services = Avail::where('user_id', Auth::id())->where('status', 'Pending')->orWhere('status', 'Reject')->orWhere('status', 'Approved')->get();
+        $services = Avail::where('user_id', Auth::id())
+            ->whereIn('status', ['Pending', 'Approved'])
+            ->get();
 
         return view('driver-authenticated.appointment', compact('services'));
     }

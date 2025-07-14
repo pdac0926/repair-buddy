@@ -71,8 +71,9 @@
                                                                 value="{{ $service->service_description }}">
                                                                 ₱ <input type="text" name="price_to_update"
                                                                 class="disabled"
-                                                                value="{{ $service->service_price }}" style="wwidth: 50px;max-width:50px;">
-                                                           
+                                                                value="{{ $service->service_price }}" old-price="{{ $service->service_price }}" style="wwidth: 50px;max-width:50px;">
+                                                                <textarea name="service_price_notes" class="form-control mt-1 service-notes mb-1 d-none" placeholder="Note for changing price" disabled></textarea>
+                                                                <input type="hidden" class="price-change" name="price_change" disabled>
                                                             <button type="submit" style="background: black; color:#ffffff;border-radius:5px; font-size: 14px;">Update</button>
                                                             </form>
 
@@ -128,4 +129,31 @@
             </div>
         </div>
     </div>
+@endsection
+
+
+@section('scripts')
+    <script>
+        window.onload = ()=>{
+
+            const priceInput = document.querySelector('input[name="price_to_update"]');
+            priceInput.addEventListener('input', ()=>{
+                const oldPrice = priceInput.getAttribute('old-price');
+                const serviceNotes = document.querySelector('.service-notes');
+                const priceObserver = document.querySelector('.price-change');
+                if(oldPrice != priceInput.value){
+                    serviceNotes.classList.remove('d-none');
+                    serviceNotes.removeAttribute('disabled');
+                    priceObserver.removeAttribute('disabled');
+                    priceObserver.value = 'priceChanged';
+                }else{
+                    serviceNotes.classList.add('d-none');
+                    serviceNotes.setAttribute('disabled', true);
+                    priceObserver.setAttribute('disabled', true);
+                    priceObserver.value = '';
+                }
+            });
+
+        };
+    </script>
 @endsection

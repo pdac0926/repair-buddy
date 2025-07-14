@@ -8,7 +8,6 @@ use App\Models\Services;
 use App\Models\ShopRating;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Models\ShopOwnerInfo;
 
 class ShopOwnerController extends Controller
 {

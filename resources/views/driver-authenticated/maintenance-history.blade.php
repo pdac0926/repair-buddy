@@ -58,8 +58,26 @@
                                                     <p class="text-xs font-weight-bold mb-0">{{ $formattedArrival }}</p>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <p class="text-xs font-weight-bold mb-0 badge bg-success">
-                                                        {{ $service->status }}</p>
+                                                    @if($service->status == 'Rejected')
+                                                        <button type="button" class="btn btn-primary btn-xs mb-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Rejected | View Reason</button>
+                                                        <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        {{ $service->message }}
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <p class="text-xs font-weight-bold mb-0">{{ ($service->status) }}</p>
+                                                    @endif
                                                 </td>
                                                 <td class="align-middle">
                                                     @php
@@ -71,13 +89,19 @@
                                                             ->first();
                                                     @endphp
 
-                                                    @if ($review)
-                                                    <p class="text-xs font-weight-bold mb-0 badge bg-warning ">
-                                                        Reviewed</p>
-                                                    @else
-                                                        <a href="/review/{{ $service->shop_id }}/{{ $service->service_id }}"
-                                                            class="btn">Rate Service</a>
+                                                    @if($service->status == 'Rejected')
+                                                        <p class="text-xs font-weight-bold mb-0 badge bg-warning ">
+                                                            Review Disabled</p>
+                                                    @else 
+                                                        @if ($review)
+                                                        <p class="text-xs font-weight-bold mb-0 badge bg-warning ">
+                                                            Reviewed</p>
+                                                        @else
+                                                            <a href="/review/{{ $service->shop_id }}/{{ $service->service_id }}"
+                                                                class="btn">Rate Service</a>
+                                                        @endif
                                                     @endif
+                                                    
                                                 </td>
                                             </tr>
                                         @endforeach
