@@ -8,6 +8,7 @@ use App\Models\Services;
 use App\Models\ShopRating;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ShopOwnerInfo;
 
 class ShopOwnerController extends Controller
 {
@@ -26,6 +27,8 @@ class ShopOwnerController extends Controller
         $avail = Avail::where('user_id', Auth::id())->where('shop_id', $shopOwner->shopOwnerInfo->id)->where('status', 'Pending')->select('service_id')->get();
         $reviews = ShopRating::where('shop_id', $shopOwner->shopOwnerInfo->id)->get();
 
-        return view('driver-authenticated.show-shop-owner-info', compact('shopOwner', 'mechanics', 'services', 'avail', 'reviews'));
+        $shopInfo = $shopOwner->shopOwnerInfo()->first();
+
+        return view('driver-authenticated.show-shop-owner-info', compact('shopOwner', 'mechanics', 'services', 'avail', 'reviews', 'shopInfo'));
     }
 }

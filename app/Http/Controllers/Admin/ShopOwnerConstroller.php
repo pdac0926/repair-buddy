@@ -35,7 +35,10 @@ class ShopOwnerConstroller extends Controller
                 'middleName' => ['required', 'string', 'max:255'],
                 'lastName' => ['required', 'string', 'max:255'],
                 'address' => ['required', 'string', 'max:255'],
+                'permitNumber' => ['required', 'numeric'],
+                'expiration' => ['string', 'numeric'],
                 'avatar' => ['required', 'image', 'mimes:jpg,png', 'max:2048'],
+                'permit' => ['required', 'image', 'mimes:jpg,png', 'max:2048'],
                 'shopName' => ['required'],
                 'shopPhone' => [
                     'required',
@@ -70,9 +73,11 @@ class ShopOwnerConstroller extends Controller
         );
 
         $avatarName = $request->file('avatar')->store('profiles', 'public');
+        $permitName = $request->file('permit')->store('permit', 'public');
 
         $shopOwnerValidate['password'] = Hash::make($shopOwnerValidate['password']);
         $shopOwnerValidate['avatar'] = $avatarName;
+        $shopOwnerValidate['permit'] = $permitName;
 
         $data = [
             'role' => 'shopOwner',
@@ -88,7 +93,10 @@ class ShopOwnerConstroller extends Controller
                 'shopAddress' => $shopOwnerValidate['shopAddress'],
                 'shopLong' => $shopOwnerValidate['shopLong'],
                 'shopLat' => $shopOwnerValidate['shopLat'],
-                'shopDescription' => $shopOwnerValidate['shopDescription']
+                'shopDescription' => $shopOwnerValidate['shopDescription'],
+                'permit' => $shopOwnerValidate['permit'],
+                'permitNumber' => $shopOwnerValidate['permitNumber'],
+                'expiration' => $shopOwnerValidate['expiration'],
             ]);
 
             return redirect(route('admin.shop.owners'))->with('success', 'Successful Addition of ' . $shopOwnerValidate['firstName'] . ' as owner of ' . $shopOwnerValidate['shopName']);

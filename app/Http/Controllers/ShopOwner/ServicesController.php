@@ -5,7 +5,6 @@ namespace App\Http\Controllers\ShopOwner;
 use App\Http\Controllers\Controller;
 use App\Models\Avail;
 use App\Models\Services;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

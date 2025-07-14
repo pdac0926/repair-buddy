@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('shopLong');
             $table->string('shopLat');
             $table->longText('shopDescription');
+            $table->string('permit');
+            $table->string('permitNumber');
+            $table->string('expiration');
             $table->timestamps();
             // relation to user id
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

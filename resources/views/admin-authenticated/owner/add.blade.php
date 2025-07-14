@@ -142,6 +142,28 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr class="horizontal dark">
+                                <p class="text-uppercase text-sm">Business</p>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Business Permit</label>
+                                            <input class="form-control @error('permit') is-invalid @enderror" type="file" name="permit">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Permit number</label>
+                                            <input class="form-control @error('permitNumber') is-invalid @enderror" type="text" name="permitNumber">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Expiration</label>
+                                            <input class="form-control @error('expiration') is-invalid @enderror" type="text" name="expiration">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

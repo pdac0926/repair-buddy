@@ -17,6 +17,9 @@ class ShopOwnerInfo extends Model
         'shopLong',
         'shopLat',
         'shopDescription',
+        'permit',
+        'permitNumber',
+        'expiration',
     ];
 
     public function user()
