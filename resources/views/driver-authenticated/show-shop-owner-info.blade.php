@@ -34,61 +34,53 @@
                                 {{ $shopOwner->shopOwnerInfo->shopDescription }}
                                 <hr>
                                 {{ $shopOwner->email }}
+                                <hr>
+                                <div class="d-flex align-items-center justify-content-between">
+    <p class="mb-0">Business Permit</p>
+    
+    @if ($shopInfo)
+        <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#businessPermitModal">
+            View Permit
+        </button>
+    @endif
+</div>
+
+@if ($shopInfo)
+<div class="modal fade" id="businessPermitModal" tabindex="-1" aria-labelledby="businessPermitModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="businessPermitModalLabel">Business Permit Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-3">
+                    <img src="{{ asset((new \App\Helper\Helper())->userAvatar($shopInfo->permit)) }}"
+                        alt="Business Permit Image"
+                        class="img-fluid border rounded shadow-sm"
+                        style="max-height: 500px;">
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <p><strong>Permit Number:</strong> {{ $shopInfo->permitNumber }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Expiration Date:</strong> {{ $shopInfo->expiration }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-12">
-                <div class="card mb-3">
-                    <div class="card-header pb-0">
-                        <div class="d-flex align-items-center">
-                            <p class="mb-0">Business Permit</p>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Permit</th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Number</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Expiration</th>
-                                        <th class="text-secondary opacity-7"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if ($shopInfo)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex gap-3 px-2 py-1">
-                                                    <img src="{{ asset((new \App\Helper\Helper())->userAvatar($shopInfo->permit)) }}"
-                                    alt="profile image" class="border-radius-lg shadow-sm img-fluid shopOwnerAvatar"
-                                    style="max-width: 400px; height: auto;">
-                                                </div>
-                                            </td>
-                                            <td><small>{{ $shopInfo->permitNumber }}</small></td>
-                                            <td class="align-middle text-center">
-                                                <small>{{ $shopInfo->expiration }}</small>
-                                            </td>
-                                        </tr>
-                                    @else
-                                        <tr>
-                                            <td colspan="4" class="text-center p-5">No Business permit</td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
 
             <div class="col-lg-12">
                 <div class="card mb-3">

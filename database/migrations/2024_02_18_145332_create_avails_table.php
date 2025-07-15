@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('last_odometer_reading');
             $table->text('notes')->nullable();
             $table->string('arrival');
+            $table->integer(column: 'service_new_price')->nullable();
+            $table->string(column: 'service_price_notes')->nullable();
+
             $table->enum('status', ['Rejected', 'Approved', 'Pending', 'Paid'])->default('Pending');
 
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
