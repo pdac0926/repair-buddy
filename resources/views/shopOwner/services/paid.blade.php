@@ -27,7 +27,9 @@
                                             Name</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Service Name</th>
-                                        
+                                            <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Date</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Status</th>
@@ -78,6 +80,15 @@
                                                             
                                                         </div>
                                                     </div>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    @php
+                                                        $arrivalDateTime = new DateTime($service->arrival);
+                                                        $formattedArrival = $arrivalDateTime->format(
+                                                            'F j, Y | g:i A | l',
+                                                        );
+                                                    @endphp
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $formattedArrival }}</p>
                                                 </td>
                                                 
                                                 <td class="align-middle text-center">
