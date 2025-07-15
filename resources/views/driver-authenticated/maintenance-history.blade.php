@@ -50,43 +50,43 @@
                                                 <td>
                                                     <div class="d-flex align-items-center gap-2">
 
-@if ($service->status !== 'Rejected')
-    <button type="button"
-        class="btn btn-sm px-3 py-1 border-0 text-secondary bg-transparent"
-        data-bs-toggle="modal"
-        data-bs-target="#viewPriceModal{{ $service->service_id }}">
-        View changes
-    </button>
+                                                @if ($service->status !== 'Rejected')
+                                                    <button type="button"
+                                                        class="btn btn-sm px-3 py-1 border-0 text-secondary bg-transparent"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#viewPriceModal{{ $service->service_id }}">
+                                                        View changes
+                                                    </button>
 
-    <div class="modal fade" id="viewPriceModal{{ $service->service_id }}" tabindex="-1" aria-labelledby="viewPriceModalLabel{{ $service->service_id }}" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="viewPriceModalLabel{{ $service->service_id }}">Price Change Note</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p><strong>Service:</strong> {{ $service->service_name }}</p>
+                                                    <div class="modal fade" id="viewPriceModal{{ $service->service_id }}" tabindex="-1" aria-labelledby="viewPriceModalLabel{{ $service->service_id }}" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="viewPriceModalLabel{{ $service->service_id }}">Price Change Note</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p><strong>Service:</strong> {{ $service->service_name }}</p>
 
-                    <p>
-                        <strong>Original Price:</strong>
-                        ₱ {{ $service->service_old_price ?? 'N/A' }}
-                    </p>
+                                                                    <p>
+                                                                        <strong>Original Price:</strong>
+                                                                        ₱ {{ $service->service_old_price ?? 'N/A' }}
+                                                                    </p>
 
-                    <p>
-                        <strong>Updated Price:</strong>
-                        ₱ {{ $service->service_price }}
-                    </p>
+                                                                    <p>
+                                                                        <strong>Updated Price:</strong>
+                                                                        ₱ {{ $service->service_price }}
+                                                                    </p>
 
-                    <p>
-                        <strong>Note:</strong>
-                        {{ $service->service_price_notes ?? 'No note provided.' }}
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-@endif
+                                                                    <p>
+                                                                        <strong>Note:</strong>
+                                                                        {{ $service->service_price_notes ?? 'No note provided.' }}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
 
                                                 </td>
                                                 <td>

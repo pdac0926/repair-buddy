@@ -74,13 +74,26 @@
                                                             <div class="modal-dialog modal-dialog-centered">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
+                                                                        <h5 class="modal-title" id="viewPriceModalLabel{{ $service->service_id }}">Price Change Note</h5>
                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                     </div>
-                                                                    <div class="modal-body">
-                                                                        {{ $service->service_price_notes }}
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <div class="modal-body text-start">
+                                                                        <p><strong>Service:</strong> {{ $service->service_name }}</p>
+
+                                                                        <p>
+                                                                            <strong>Original Price:</strong>
+                                                                            ₱ {{ $service->service_old_price ?? 'N/A' }}
+                                                                        </p>
+
+                                                                        <p>
+                                                                            <strong>Updated Price:</strong>
+                                                                            ₱ {{ $service->service_price }}
+                                                                        </p>
+
+                                                                        <p>
+                                                                            <strong>Note:</strong>
+                                                                            {{ $service->service_price_notes ?? 'No note provided.' }}
+                                                                        </p>
                                                                     </div>
                                                                 </div>
                                                             </div>

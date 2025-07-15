@@ -161,6 +161,38 @@
                                         
                                     </div>
                                 </div>
+
+                                <hr class="horizontal dark">
+                                <p class="text-uppercase text-sm">Business</p>
+                                <img src="{{ asset((new \App\Helper\Helper())->userAvatar($shopOwner->shopOwnerInfo->permit)) }}"
+                                    alt="profile_image" style="width:200px;height:200px;object-fit:cover;border-radius:10px;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Change Business Permit</label>
+                                            <input class="form-control @error('permit') is-invalid @enderror"
+                                                type="file" name="permit"
+                                                value="{{ old('permit', $shopOwner->shopOwnerInfo->permit) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Permit Number</label>
+                                            <input class="form-control @error('permitNumber') is-invalid @enderror"
+                                                type="text" name="permitNumber"
+                                                value="{{ old('permitNumber', $shopOwner->shopOwnerInfo->permitNumber) }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Expiration</label>
+                                            <input class="form-control @error('expiration') is-invalid @enderror"
+                                                type="text" name="expiration"
+                                                value="{{ old('expiration', $shopOwner->shopOwnerInfo->expiration) }}">
+                                        </div>
+                                        
+                                    </div>
+                                </div>
                                 
                             </div>
                         </div>

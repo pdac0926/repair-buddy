@@ -183,6 +183,7 @@ class ServicesController extends Controller
         ];
 
         if($request->has('price_change') && !empty($field['service_price_notes'])){
+            $data['service_old_price'] = $service->service_price;
             $data['service_new_price'] = $field['price_to_update'];
             $data['service_price_notes'] = $field['service_price_notes'];
         }

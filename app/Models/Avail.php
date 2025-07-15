@@ -24,6 +24,7 @@ class Avail extends Model
         'status',
         'message',
         'service_new_price',
+        'service_old_price',
         'service_price_notes'
     ];
 

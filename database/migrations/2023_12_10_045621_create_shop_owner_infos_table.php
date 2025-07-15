@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('shopLong');
             $table->string('shopLat');
             $table->longText('shopDescription');
-            $table->string('permit');
+            $table->string('permit')->nullable();
             $table->string('permitNumber');
             $table->string('expiration');
             $table->timestamps();

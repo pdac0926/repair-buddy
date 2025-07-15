@@ -134,6 +134,8 @@ class ShopOwnerConstroller extends Controller
                 'middleName' => ['required', 'string', 'max:255'],
                 'lastName' => ['required', 'string', 'max:255'],
                 'address' => ['required', 'string', 'max:255'],
+                'permitNumber' => ['required', 'numeric', 'digits_between:8,12'],
+                'expiration' => ['required', 'regex:/^(0[1-9]|1[0-2])\/\d{4}$/'],
                 'shopName' => ['required'],
                 'shopPhone' => [
                     'required',
@@ -154,10 +156,7 @@ class ShopOwnerConstroller extends Controller
                     'required',
                     'string',
                     'min:8',
-                    'regex:/[a-z]/',      // must contain at least one lowercase letter
-                    'regex:/[A-Z]/',      // must contain at least one uppercase letter
-                    'regex:/[0-9]/',      // must contain at least one digit
-                    'regex:/[@$!%*#?&]/', // must contain a special character
+                    'regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]+$/',
                     'confirmed'
                 ],
             ],
@@ -170,6 +169,11 @@ class ShopOwnerConstroller extends Controller
             if (!empty($request->file('avatar'))) {
                 $avatarName = $request->file('avatar')->store('profiles', 'public');
                 $shopOwnerValidate['avatar'] = $avatarName;
+            }
+
+            if (!empty($request->file('permit'))) {
+                $permitName = $request->file('permit')->store('permit', 'public');
+                $shopOwnerValidate['permit'] = $permitName;
             }
 
             if ($request->input('password') !== 'Laravel@123') {
@@ -193,7 +197,10 @@ class ShopOwnerConstroller extends Controller
                     'shopAddress' => $shopOwnerValidate['shopAddress'],
                     'shopLong' => $shopOwnerValidate['shopLong'],
                     'shopLat' => $shopOwnerValidate['shopLat'],
-                    'shopDescription' => $shopOwnerValidate['shopDescription']
+                    'shopDescription' => $shopOwnerValidate['shopDescription'],
+                    'permit' => $shopOwnerValidate['permit'],
+                    'permitNumber' => $shopOwnerValidate['permitNumber'],
+                    'expiration' => $shopOwnerValidate['expiration'],
                 ]);
 
                 return back()->with('success', 'Successful update of ' . $shopOwnerValidate['firstName'] . ' as owner of ' . $shopOwnerValidate['shopName']);

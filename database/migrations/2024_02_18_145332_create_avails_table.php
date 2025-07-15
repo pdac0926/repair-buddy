@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('last_odometer_reading');
             $table->text('notes')->nullable();
             $table->string('arrival');
+            $table->integer(column: 'service_old_price')->nullable();
             $table->integer(column: 'service_new_price')->nullable();
             $table->string(column: 'service_price_notes')->nullable();
 
