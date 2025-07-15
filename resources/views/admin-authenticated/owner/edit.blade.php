@@ -158,8 +158,10 @@
                                             <textarea class="form-control @error('shopDescription') is-invalid @enderror" name="shopDescription"
                                                 value="{{ old('shopDescription', $shopOwner->shopOwnerInfo->shopDescription) }}" cols="30" rows="4">{{ $shopOwner->shopOwnerInfo->shopDescription }}</textarea>
                                         </div>
+                                        
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
