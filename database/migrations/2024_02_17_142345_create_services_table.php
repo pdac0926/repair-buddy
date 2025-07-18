@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('service_name');
             $table->text('service_description');
             $table->string('service_price');
+            
  
 
             $table->foreign('shop_id')->references('id')->on('shop_owner_infos')->onDelete('cascade');

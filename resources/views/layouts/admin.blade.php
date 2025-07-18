@@ -183,7 +183,7 @@
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="icon rb-clipboard-check-2 text-success text-sm opacity-10"></i>
                             </div>
-                            <span class="nav-link-text ms-1">Paid</span>
+                            <span class="nav-link-text ms-1">Transactions</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -217,6 +217,21 @@
                             <span class="nav-link-text ms-1">Mechanics</span>
                         </a>
                     </li>
+
+                    
+
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('shop.owners.insight') ? 'active' : '' }}"
+        href="{{ route('shop.owners.insight') }}">
+        <div
+            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="icon rb-gear-2 text-success text-sm opacity-10"></i>
+        </div>
+        <span class="nav-link-text ms-1">Service Insights</span>
+    </a>
+</li>
+
+
                 @endif
                 <li>
                     <hr>
@@ -275,6 +290,7 @@
         <script async defer src="https://buttons.github.io/buttons.js"></script>
         <script src="{{ asset('/assets_auth/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
         <script src="{{ asset('/assets/js/axios.js') }}"></script>
+        
     @endauth
     @include('alerts.alert')
     <script>
@@ -286,6 +302,7 @@
     <script src="{{asset('assets/leaflet/leaflet.js')}}"></script>
     <script src="{{asset('assets/leaflet/routing-machine.js')}}"></script>
     <script src="{{asset('assets/leaflet/geocoder.js')}}"></script>
+    
     @yield('scripts')
 </body>
 

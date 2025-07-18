@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ShopOwner\ServicesController;
 
 Auth::routes();
 
@@ -61,6 +62,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/rejected', [App\Http\Controllers\ShopOwner\ServicesController::class, 'rejectedAvail'])->name('shop.owners.rejected.avail');
 
+Route::get('/insight', [App\Http\Controllers\ShopOwner\ServicesController::class, 'monthlySales'])->name('shop.owners.insight');
 
         //pending / paid
         Route::get('/ongoing-avail', [App\Http\Controllers\ShopOwner\ServicesController::class, 'ongoingAvail'])->name('shop.owners.ongoing.avail');

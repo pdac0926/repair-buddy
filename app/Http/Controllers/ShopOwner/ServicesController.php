@@ -7,6 +7,7 @@ use App\Models\Avail;
 use App\Models\Services;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use DateTime;
 
 class ServicesController extends Controller
 {
@@ -196,4 +197,79 @@ class ServicesController extends Controller
 
         return back()->with('success', 'Service Avail price update successfully.');
     }
+
+    
+ 
+public function monthlySales(Request $request)
+{
+    $start = $request->filled('start_day') ? $request->start_day : date('Y-m-01');
+    $end = $request->filled('end_day') ? $request->end_day : date('Y-m-t');
+
+    $query = Avail::where('status', '!=', 'Rejected')
+        ->whereDate('arrival', '>=', $start)
+        ->whereDate('arrival', '<=', $end)
+        ->get(['arrival', 'service_price']);
+
+    // Initialize date map
+    $dateMap = [];
+    $current = strtotime($start);
+    $endDate = strtotime($end);
+
+    while ($current <= $endDate) {
+        $key = date('Y-m-d', $current);
+        $dateMap[$key] = [
+            'date' => $key . ' 00:00:00',
+            'price' => 0,
+            'label' => date('F j, Y', $current),
+        ];
+        $current = strtotime('+1 day', $current);
+    }
+
+    foreach ($query as $service) {
+        $dateKey = (new DateTime($service->arrival))->format('Y-m-d');
+        if (isset($dateMap[$dateKey])) {
+            $dateMap[$dateKey]['price'] += (float) ($service->service_price ?? 0);
+        }
+    }
+
+    $salesData = array_values($dateMap);
+    usort($salesData, fn($a, $b) => strcmp($a['date'], $b['date']));
+    $totalSales = array_sum(array_column($salesData, 'price'));
+
+    // Group by YYYY-MM
+    $monthlyTotals = [];
+    foreach ($salesData as $data) {
+        $monthKey = date('Y-m', strtotime($data['date']));
+        if (!isset($monthlyTotals[$monthKey])) {
+            $monthlyTotals[$monthKey] = 0;
+        }
+        $monthlyTotals[$monthKey] += $data['price'];
+    }
+
+    // Get last 3 months from grouped data
+    $recentMonths = array_slice($monthlyTotals, -3, 3, true);
+    $forecastedSales = count($recentMonths) === 3
+        ? array_sum($recentMonths) / 3
+        : 0;
+
+    // Only show prediction if selected range spans 3 full months
+    $startDate = new DateTime($start);
+    $endDate = new DateTime($end);
+    $monthDiff = (($endDate->format('Y') - $startDate->format('Y')) * 12) + ($endDate->format('n') - $startDate->format('n')) + 1;
+    $showPrediction = $monthDiff === 3;
+
+    return view('shopOwner.services.insight', compact(
+        'salesData',
+        'start',
+        'end',
+        'totalSales',
+        'forecastedSales',
+        'showPrediction'
+    ));
+}
+
+
+
+
+
 }

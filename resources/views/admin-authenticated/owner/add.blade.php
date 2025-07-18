@@ -174,7 +174,7 @@
                         @error('shopAddress') border border-danger @enderror">
                         <div class="input-group">
                             <input type="text" class="form-control" id="searchInput" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <button class="btn btn-danger mb-0 rounded-0" id="searchButton" type="button" id="button-addon2">Button</button>
+                            <button class="btn btn-danger mb-0 rounded-0" id="searchButton" type="button" id="button-addon2">Search</button>
                         </div>
                             <div id="map"></div>
                             <div class="card-body p-3">
