@@ -122,19 +122,32 @@ class ServicesController extends Controller
     }
 
 
-    public function paidAvail(Request $request)
-    {
-        $query = Avail::query()->where('status', '!=', 'Rejected');
+ public function paidAvail(Request $request)
+{
+    $query = Avail::query()->where('status', '!=', 'Rejected');
 
-        if ($request->filled('start_day') && $request->filled('end_day') && $request->start_day <= $request->end_day) {
-            $query->whereDate('created_at', '>=', $request->start_day)
-                ->whereDate('created_at', '<=', $request->end_day);
-        }
-
-        $services = $query->get();
-
-        return view('shopOwner.services.paid', compact('services'));
+    // Filter by date range
+    if ($request->filled('start_day') && $request->filled('end_day') && $request->start_day <= $request->end_day) {
+        $query->whereDate('created_at', '>=', $request->start_day)
+              ->whereDate('created_at', '<=', $request->end_day);
     }
+
+    $sortOrder = $request->get('sort'); // null by default
+
+    // Sort by price only if explicitly selected
+    if ($sortOrder === 'asc' || $sortOrder === 'desc') {
+        $query->orderByRaw('service_price + 0 ' . $sortOrder);
+    } else {
+        // Default sort by arrival date descending
+        $query->orderBy('arrival', 'desc');
+    }
+
+    $services = $query->get();
+
+    return view('shopOwner.services.paid', compact('services', 'sortOrder'));
+}
+
+
 
 
 
@@ -207,8 +220,14 @@ public function monthlySales(Request $request)
 
     $query = Avail::where('status', '!=', 'Rejected')
         ->whereDate('arrival', '>=', $start)
-        ->whereDate('arrival', '<=', $end)
-        ->get(['arrival', 'service_price']);
+        ->whereDate('arrival', '<=', $end);
+
+    if ($request->filled('service_name')) {
+        $query->where('service_name', $request->service_name); // adjust if column name differs
+    }
+
+    $avails = $query->get(['arrival', 'service_price', 'service_name']);
+
 
     // Initialize date map
     $dateMap = [];
@@ -225,10 +244,16 @@ public function monthlySales(Request $request)
         $current = strtotime('+1 day', $current);
     }
 
-    foreach ($query as $service) {
-        $dateKey = (new DateTime($service->arrival))->format('Y-m-d');
-        if (isset($dateMap[$dateKey])) {
-            $dateMap[$dateKey]['price'] += (float) ($service->service_price ?? 0);
+foreach ($avails as $service) {
+    $dateKey = (new DateTime($service->arrival))->format('Y-m-d');
+    if (isset($dateMap[$dateKey])) {
+        $dateMap[$dateKey]['price'] += (float) ($service->service_price ?? 0);
+
+        // Append service names (initialize if not set)
+        if (!isset($dateMap[$dateKey]['service_names'])) {
+            $dateMap[$dateKey]['service_names'] = [];
+        }
+        $dateMap[$dateKey]['service_names'][] = $service->service_name ?? 'N/A';
         }
     }
 
@@ -240,23 +265,22 @@ public function monthlySales(Request $request)
     $monthlyTotals = [];
     foreach ($salesData as $data) {
         $monthKey = date('Y-m', strtotime($data['date']));
-        if (!isset($monthlyTotals[$monthKey])) {
-            $monthlyTotals[$monthKey] = 0;
-        }
-        $monthlyTotals[$monthKey] += $data['price'];
+        $monthlyTotals[$monthKey] = ($monthlyTotals[$monthKey] ?? 0) + $data['price'];
     }
 
-    // Get last 3 months from grouped data
+    // Forecasting
     $recentMonths = array_slice($monthlyTotals, -3, 3, true);
-    $forecastedSales = count($recentMonths) === 3
-        ? array_sum($recentMonths) / 3
-        : 0;
+    $forecastedSales = count($recentMonths) === 3 ? array_sum($recentMonths) / 3 : 0;
 
-    // Only show prediction if selected range spans 3 full months
     $startDate = new DateTime($start);
     $endDate = new DateTime($end);
     $monthDiff = (($endDate->format('Y') - $startDate->format('Y')) * 12) + ($endDate->format('n') - $startDate->format('n')) + 1;
     $showPrediction = $monthDiff === 3;
+
+   $services = Services::where('shop_id', Auth::user()->shopOwnerInfo->id)
+    ->orderBy('service_name')
+    ->get(['id', 'service_name']);
+
 
     return view('shopOwner.services.insight', compact(
         'salesData',
@@ -264,10 +288,10 @@ public function monthlySales(Request $request)
         'end',
         'totalSales',
         'forecastedSales',
-        'showPrediction'
+        'showPrediction',
+        'services'
     ));
 }
-
 
 
 

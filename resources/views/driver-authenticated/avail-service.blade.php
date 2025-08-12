@@ -91,7 +91,7 @@
 
             const datetime = `${year}-${month}-${day}T${hours}:${minutes}`;
 
-            document.getElementById('arrival').setAttribute('min', datetime);
+            //document.getElementById('arrival').setAttribute('min', datetime);
         }
     </script>
 @endsection

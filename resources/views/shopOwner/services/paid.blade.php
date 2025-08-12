@@ -9,12 +9,23 @@
                 <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
                      <h6>Paid Services</h6>
-                     <form method="GET" class="d-flex gap-2 align-items-center mb-3">
-    <input type="date" name="start_day" class="form-control" value="{{ request('start_day') }}">
-    <span>to</span>
-    <input type="date" name="end_day" class="form-control" value="{{ request('end_day') }}">
-    <button type="submit" class="btn btn-primary">Filter</button>
+       <form method="GET" class="d-flex align-items-center gap-2">
+    {{-- Preserve date filters if any --}}
+    @if(request('start_day'))
+        <input type="hidden" name="start_day" value="{{ request('start_day') }}">
+    @endif
+    @if(request('end_day'))
+        <input type="hidden" name="end_day" value="{{ request('end_day') }}">
+    @endif
+
+    <select name="sort" onchange="this.form.submit()" class="form-select form-select-sm w-auto">
+        <option value="">Sort by Price</option>
+        <option value="asc" {{ $sortOrder == 'asc' ? 'selected' : '' }}>Price: Low to High</option>
+        <option value="desc" {{ $sortOrder == 'desc' ? 'selected' : '' }}>Price: High to Low</option>
+    </select>
 </form>
+
+
 
 
                 </div>
